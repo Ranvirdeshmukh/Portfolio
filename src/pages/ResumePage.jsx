@@ -15,6 +15,31 @@ const ResumePage = () => {
         <h1>Resume</h1>
         {/* Add your resume content here */}
       </div>
+      <div className="fancy-container" style={styles.fancyContainer}>
+        <div className="ribbon" style={styles.ribbon}>
+          <span>Website in the making</span>
+        </div>
+      </div>
+      {/* Move the keyframes to a style tag */}
+      <style>
+        {`
+          @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+              transform: translateY(0);
+            }
+            40% {
+              transform: translateY(-10px);
+            }
+            60% {
+              transform: translateY(-5px);
+            }
+          }
+
+          .fancy-container {
+            animation: bounce 2s infinite;
+          }
+        `}
+      </style>
     </div>
   );
 };
@@ -24,7 +49,9 @@ const styles = {
     backgroundColor: '#fff',
     color: '#000',
     textAlign: 'center',
-    minHeight: '100vh'
+    minHeight: '100vh',
+    position: 'relative',
+    overflow: 'hidden',
   },
   navList: {
     listStyle: 'none',
@@ -42,7 +69,24 @@ const styles = {
   },
   resumeContent: {
     marginTop: '20px'
-  }
+  },
+  fancyContainer: {
+    position: 'absolute',
+    top: '10px',
+    left: '10px',
+    backgroundColor: '#ffcc00',
+    padding: '5px 10px',
+    borderRadius: '5px',
+    boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)',
+    zIndex: '1000',
+  },
+  ribbon: {
+    color: '#000',
+    fontSize: '16px',
+    fontWeight: 'bold',
+    textTransform: 'uppercase',
+    letterSpacing: '1px',
+  },
 };
 
 export default ResumePage;

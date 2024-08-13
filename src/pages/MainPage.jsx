@@ -1,8 +1,12 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Typing from 'react-typing-effect';
 import Navbar from '../components/Navbar';
 
 const MainPage = () => {
+  useEffect(() => {
+    document.title = 'RD/> Portfolio - Main';
+  }, []);
+
   return (
     <div className="main-page" style={styles.mainPage}>
       <Navbar />
@@ -62,7 +66,7 @@ const styles = {
     justifyContent: 'flex-end',
     alignItems: 'center',
     textAlign: 'center',
-    paddingRight: '10px',
+    paddingRight: '5px',
   },
   rightSection: {
     backgroundColor: '#000000',
@@ -87,11 +91,13 @@ const styles = {
     fontSize: '72px',
     fontWeight: '700',
     margin: 0,
+    paddingLeft: '5px',
+
   },
   staticText: {
     fontSize: '24px',
     fontWeight: '700', // Bolder weight
-    margin: '0 0 0 120px',
+    margin: '0 0 0 150px',
   },
   rightText: {
     fontSize: '72px',
