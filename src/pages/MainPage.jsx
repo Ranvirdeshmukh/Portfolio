@@ -1,121 +1,120 @@
 import React, { useEffect } from 'react';
-import Typing from 'react-typing-effect';
-import Navbar from '../components/Navbar';
 
-const MainPage = () => {
+const MinimalPortfolio = () => {
   useEffect(() => {
+    // Set page title
     document.title = 'RD/> Portfolio - Main';
   }, []);
 
   return (
-    <div className="main-page" style={styles.mainPage}>
-      <Navbar />
-      <div style={styles.splitScreen}>
-        <div style={styles.leftSection}>
-          <div style={styles.textContainer}>
-            <h1 style={styles.leftText}>Ranvir</h1>
-            <h2 style={styles.staticText}>I am a</h2>
-          </div>
-        </div>
-        <div style={styles.rightSection}>
-          <div style={styles.textContainerRight}>
-            <h1 style={styles.rightText}>Deshmukh</h1>
-            <div style={styles.typingContainer}>
-              <Typing
-                text={[
-                  ' Founder.',
-                  ' Software Engineer.',
-                  ' Machine Learning Researcher.',
-                  ' Video Producer.',
-                ]}
-                speed={100}
-                eraseDelay={1000}
-                typingDelay={500}
-                displayTextRenderer={(text, i) => {
-                  return <h2 style={styles.typingText}>{text}</h2>;
-                }}
-              />
-            </div>
-          </div>
-        </div>
+    <div style={styles.container}>
+      {/* Text-based Logo */}
+      <h1 style={styles.logo}>RD/&gt;</h1>
+
+      {/* Name / Title */}
+      <h2 style={styles.name}>Ranvir Deshmukh</h2>
+
+      {/* Short Tagline */}
+      <h3 style={styles.tagline}>
+        Founder, Software Engineer, Video Producer, and a Student.
+      </h3>
+
+   {/* Brief Bio / Description */}
+   <p style={styles.description}>
+  I’m currently building{' '}
+  <a
+    href="https://courseme.ai"
+    target="_blank"
+    rel="noopener noreferrer"
+    style={{
+      textDecoration: 'none',
+      color: '#571ce0', // CourseMe link text color
+      fontWeight: 600
+    }}
+  >
+    CourseMe
+  </a>
+  <span style={{ color: '#FD5E53', fontWeight: 600 }}>.</span> <br />
+  {/* Previously built [any prior ventures]. <br /> */}
+  Studying Computer Science at Dartmouth. <br />
+  Reach out — I’m always open to chat!
+</p>
+
+
+      {/* Links */}
+      <div style={styles.linkContainer}>
+        <a 
+          href="https://www.linkedin.com/in/ranvir-deshmukh-209706199/"
+          style={styles.linkStyle}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          LinkedIn
+        </a>
+        <span style={styles.linkSeparator}>|</span>
+        <a 
+          href="https://github.com/Ranvirdeshmukh"
+          style={styles.linkStyle}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          GitHub
+        </a>
       </div>
     </div>
   );
 };
 
 const styles = {
-  mainPage: {
-    backgroundColor: '#ffffff',
+  container: {
+    backgroundColor: '#FFFFFF',
+    color: '#000000',
     minHeight: '100vh',
     fontFamily: "'SF Pro Display', sans-serif",
-    position: 'relative',
-    overflow: 'hidden',
+    fontWeight: 500, // 'Medium' weight for SF Pro Display
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    // This margin pushes everything slightly to the right.
+    marginLeft: '20%', 
+    padding: '0 20px',
   },
-  splitScreen: {
-    display: 'grid',
-    gridTemplateColumns: '65% 35%',
-    width: '100%',
-    height: 'calc(100vh - 60px)',
-    position: 'absolute',
-    top: '60px',
+  logo: {
+    fontSize: '48px',
+    fontWeight: 600,
+    margin: '0 0 10px 0',
   },
-  leftSection: {
-    backgroundColor: '#ffffff',
+  name: {
+    fontSize: '32px',
+    margin: '0 0 10px 0',
+    fontWeight: 500,
+  },
+  tagline: {
+    fontSize: '20px',
+    margin: '0 0 25px 0',
+    opacity: 0.8,
+  },
+  description: {
+    fontSize: '16px',
+    maxWidth: '600px',
+    lineHeight: '1.6',
+    marginBottom: '30px',
+  },
+  linkContainer: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '8px',
+    marginBottom: '40px',
+  },
+  linkStyle: {
+    textDecoration: 'none',
     color: '#000000',
-    display: 'flex',
-    justifyContent: 'flex-end',
-    alignItems: 'center',
-    textAlign: 'center',
-    paddingRight: '5px',
+    fontWeight: 500,
   },
-  rightSection: {
-    backgroundColor: '#000000',
-    color: '#ffffff',
-    display: 'flex',
-    justifyContent: 'flex-start',
-    alignItems: 'center',
-    textAlign: 'center',
-    paddingLeft: '10px',
-  },
-  textContainer: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-  },
-  textContainerRight: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'flex-start',
-  },
-  leftText: {
-    fontSize: '72px',
-    fontWeight: '700',
-    margin: 0,
-    paddingLeft: '5px',
-
-  },
-  staticText: {
-    fontSize: '24px',
-    fontWeight: '700', // Bolder weight
-    margin: '0 0 0 150px',
-  },
-  rightText: {
-    fontSize: '72px',
-    fontWeight: '700',
-    margin: 0,
-  },
-  typingContainer: {
-    minHeight: '30px', // Adjust based on the expected height of the typing text
-    display: 'flex',
-    alignItems: 'center',
-  },
-  typingText: {
-    fontSize: '24px',
-    fontWeight: '700', // Bolder weight
-    color: '#ffffff',
-    margin: '0 0 0 5px',
-    textAlign: 'left',
+  linkSeparator: {
+    color: '#000000',
+    opacity: 0.6,
   },
 };
 
-export default MainPage;
+export default MinimalPortfolio;
