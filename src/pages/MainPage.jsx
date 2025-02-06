@@ -5,7 +5,7 @@ const MinimalPortfolio = () => {
   const [isDesktop, setIsDesktop] = useState(false);
 
   useEffect(() => {
-    document.title = 'RD/> Portfolio - Main';
+    document.title = 'Ranvir.';
     const timer = setTimeout(() => setIsVisible(true), 100);
 
     const handleResize = () => {
