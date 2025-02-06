@@ -16,34 +16,32 @@ const MinimalPortfolio = () => {
 
       {/* Short Tagline */}
       <h3 style={styles.tagline}>
-        Founder, Software Engineer, Video Producer, and a Student.
+        I write softwares and make videos.
       </h3>
 
-   {/* Brief Bio / Description */}
-   <p style={styles.description}>
-  I’m currently building{' '}
-  <a
-    href="https://courseme.ai"
-    target="_blank"
-    rel="noopener noreferrer"
-    style={{
-      textDecoration: 'none',
-      color: '#571ce0', // CourseMe link text color
-      fontWeight: 600
-    }}
-  >
-    CourseMe
-  </a>
-  <span style={{ color: '#FD5E53', fontWeight: 600 }}>.</span> <br />
-  {/* Previously built [any prior ventures]. <br /> */}
-  Studying Computer Science at Dartmouth. <br />
-  Reach out — I’m always open to chat!
-</p>
-
+      {/* Brief Bio / Description */}
+      <p style={styles.description}>
+        I’m currently building{' '}
+        <a
+          href="https://courseme.ai"
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{
+            textDecoration: 'none',
+            color: '#571ce0', // CourseMe link text color
+            fontWeight: 600
+          }}
+        >
+          CourseMe
+        </a>
+        <span style={{ color: '#FD5E53', fontWeight: 600 }}>.</span> <br />
+        Studying Computer Science at Dartmouth. <br />
+        Reach out — I’m always open to chat!
+      </p>
 
       {/* Links */}
       <div style={styles.linkContainer}>
-        <a 
+        <a
           href="https://www.linkedin.com/in/ranvir-deshmukh-209706199/"
           style={styles.linkStyle}
           target="_blank"
@@ -52,7 +50,7 @@ const MinimalPortfolio = () => {
           LinkedIn
         </a>
         <span style={styles.linkSeparator}>|</span>
-        <a 
+        <a
           href="https://github.com/Ranvirdeshmukh"
           style={styles.linkStyle}
           target="_blank"
@@ -75,9 +73,12 @@ const styles = {
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
-    // This margin pushes everything slightly to the right.
-    marginLeft: '20%', 
-    padding: '0 20px',
+    
+    // Make it responsive and centered:
+    margin: '0 auto',      // Centers horizontally
+    padding: '0 20px',     // Adds side padding
+    maxWidth: '600px',     // Restricts width on larger screens
+    textAlign: 'left',     // Left-aligns text; change to 'center' if preferred
   },
   logo: {
     fontSize: '48px',
@@ -96,7 +97,6 @@ const styles = {
   },
   description: {
     fontSize: '16px',
-    maxWidth: '600px',
     lineHeight: '1.6',
     marginBottom: '30px',
   },
