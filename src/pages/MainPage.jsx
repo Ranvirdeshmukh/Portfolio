@@ -1,25 +1,32 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 const MinimalPortfolio = () => {
+  // Use state to handle visibility for the fade-in effect
+  const [isVisible, setIsVisible] = useState(false);
+
   useEffect(() => {
-    // Set page title
+    // Set the document title
     document.title = 'RD/> Portfolio - Main';
+    
+    // Trigger the fade-in after a small delay (e.g. 100ms)
+    const timer = setTimeout(() => setIsVisible(true), 100);
+    
+    // Cleanup if the component unmounts quickly
+    return () => clearTimeout(timer);
   }, []);
 
   return (
-    <div style={styles.container}>
-      {/* Text-based Logo */}
-      <h1 style={styles.logo}>RD/&gt;</h1>
-
-      {/* Name / Title */}
+    <div
+      style={{
+        ...styles.container,
+        opacity: isVisible ? 1 : 0,         // Controlled by state
+        transition: 'opacity 1s ease-in'    // 1-second fade-in
+      }}
+    >
+      {/* Main Content */}
       <h2 style={styles.name}>Ranvir Deshmukh</h2>
+      <h3 style={styles.tagline}>I write software and make videos.</h3>
 
-      {/* Short Tagline */}
-      <h3 style={styles.tagline}>
-        I write softwares and make videos.
-      </h3>
-
-      {/* Brief Bio / Description */}
       <p style={styles.description}>
         I’m currently building{' '}
         <a
@@ -28,8 +35,8 @@ const MinimalPortfolio = () => {
           rel="noopener noreferrer"
           style={{
             textDecoration: 'none',
-            color: '#571ce0', // CourseMe link text color
-            fontWeight: 600
+            color: '#571ce0',
+            fontWeight: 600,
           }}
         >
           CourseMe
@@ -39,7 +46,6 @@ const MinimalPortfolio = () => {
         Reach out — I’m always open to chat!
       </p>
 
-      {/* Links */}
       <div style={styles.linkContainer}>
         <a
           href="https://www.linkedin.com/in/ranvir-deshmukh-209706199/"
@@ -59,31 +65,30 @@ const MinimalPortfolio = () => {
           GitHub
         </a>
       </div>
+
+      {/* Subtle Logo BELOW Content, Left-Aligned */}
+      <div style={styles.bottomLogo}>
+        RD/&gt;
+      </div>
     </div>
   );
 };
 
 const styles = {
   container: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#f9f9f9', // Updated background color
     color: '#000000',
     minHeight: '100vh',
     fontFamily: "'SF Pro Display', sans-serif",
-    fontWeight: 500, // 'Medium' weight for SF Pro Display
+    fontWeight: 500,
+    
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
-    
-    // Make it responsive and centered:
-    margin: '0 auto',      // Centers horizontally
-    padding: '0 20px',     // Adds side padding
-    maxWidth: '600px',     // Restricts width on larger screens
-    textAlign: 'left',     // Left-aligns text; change to 'center' if preferred
-  },
-  logo: {
-    fontSize: '48px',
-    fontWeight: 600,
-    margin: '0 0 10px 0',
+    margin: '0 auto',
+    padding: '0 20px',
+    maxWidth: '600px',
+    // We'll handle the fade-in via inline style merging above
   },
   name: {
     fontSize: '32px',
@@ -114,6 +119,14 @@ const styles = {
   linkSeparator: {
     color: '#000000',
     opacity: 0.6,
+  },
+  bottomLogo: {
+    marginTop: '40px',
+    fontSize: '14px',
+    fontWeight: 600,
+    color: '#999999',
+    opacity: 0.8,
+    alignSelf: 'flex-start',
   },
 };
 
