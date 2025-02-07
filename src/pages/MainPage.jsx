@@ -50,6 +50,11 @@ const MinimalPortfolio = () => {
       lineHeight: '1.6',
       marginBottom: '30px',
     },
+    dartmouthLink: {
+      textDecoration: 'none',
+      color: '#00693e', // Dartmouth Green
+      fontWeight: 600,
+    },
     linkContainer: {
       display: 'flex',
       alignItems: 'center',
@@ -101,7 +106,16 @@ const MinimalPortfolio = () => {
           CourseMe
         </a>
         <span style={{ color: '#FD5E53', fontWeight: 600 }}>.</span> <br />
-        Studying Computer Science at Dartmouth. <br />
+        Studying Computer Science at {' '}
+        <a
+          href="https://home.dartmouth.edu/"
+          target="_blank"
+          rel="noopener noreferrer"
+          style={styles.dartmouthLink}
+        >
+          Dartmouth
+        </a>
+        . <br />
         Reach out — I’m always open to chat!
       </p>
 
@@ -125,9 +139,7 @@ const MinimalPortfolio = () => {
         </a>
       </div>
 
-      <div style={styles.bottomLogo}>
-        RD/&gt;
-      </div>
+      <div style={styles.bottomLogo}>RD/&gt;</div>
     </div>
   );
 };
