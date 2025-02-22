@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 const MinimalPortfolio = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [isDesktop, setIsDesktop] = useState(false);
+  const [darkMode, setDarkMode] = useState(false); // New state for dark mode
 
   useEffect(() => {
     document.title = 'Ranvir.';
@@ -21,10 +22,13 @@ const MinimalPortfolio = () => {
     };
   }, []);
 
+  // Adjust styles based on darkMode state
   const styles = {
     container: {
-      backgroundColor: '#f9f9f9',
-      color: '#000000',
+      background: darkMode
+        ? 'linear-gradient(90deg, #1C093F 0%, #0C0F33 100%)'
+        : '#f9f9f9',
+      color: darkMode ? '#ffffff' : '#000000',
       minHeight: '100vh',
       fontFamily: "'SF Pro Display', sans-serif",
       fontWeight: 500,
@@ -34,6 +38,8 @@ const MinimalPortfolio = () => {
       margin: '0 auto',
       padding: '0 20px',
       maxWidth: isDesktop ? '800px' : '600px',
+      transition: 'background 0.3s ease, color 0.3s ease',
+      position: 'relative',
     },
     name: {
       fontSize: isDesktop ? '48px' : '32px',
@@ -52,7 +58,7 @@ const MinimalPortfolio = () => {
     },
     dartmouthLink: {
       textDecoration: 'none',
-      color: '#00693e', // Dartmouth Green
+      color: darkMode ? '#8bc34a' : '#00693e', // Adjust Dartmouth link for dark mode
       fontWeight: 600,
     },
     linkContainer: {
@@ -63,31 +69,49 @@ const MinimalPortfolio = () => {
     },
     linkStyle: {
       textDecoration: 'none',
-      color: '#000000',
+      color: darkMode ? '#ffffff' : '#000000',
       fontWeight: 500,
     },
     linkSeparator: {
-      color: '#000000',
+      color: darkMode ? '#ffffff' : '#000000',
       opacity: 0.6,
     },
     bottomLogo: {
       marginTop: '40px',
       fontSize: isDesktop ? '16px' : '14px',
       fontWeight: 600,
-      color: '#999999',
+      color: darkMode ? '#cccccc' : '#999999',
       opacity: 0.8,
       alignSelf: 'flex-start',
+    },
+    // Optional: styling for the dark mode toggle container
+    toggleContainer: {
+      position: 'absolute',
+      top: '20px',
+      right: '20px',
+      fontSize: '0.9rem',
+      cursor: 'pointer',
+      display: 'flex',
+      alignItems: 'center',
+    },
+    toggleInput: {
+      marginRight: '8px',
     },
   };
 
   return (
-    <div
-      style={{
-        ...styles.container,
-        opacity: isVisible ? 1 : 0,
-        transition: 'opacity 1s ease-in',
-      }}
-    >
+    <div style={{ ...styles.container, opacity: isVisible ? 1 : 0, transition: 'opacity 1s ease-in' }}>
+      {/* Dark Mode Toggle */}
+      <div style={styles.toggleContainer}>
+        <input
+          type="checkbox"
+          checked={darkMode}
+          onChange={() => setDarkMode(prev => !prev)}
+          style={styles.toggleInput}
+        />
+        Dark Mode
+      </div>
+
       <h2 style={styles.name}>Ranvir Deshmukh</h2>
       <h3 style={styles.tagline}>I write software and make videos.</h3>
 
@@ -99,14 +123,14 @@ const MinimalPortfolio = () => {
           rel="noopener noreferrer"
           style={{
             textDecoration: 'none',
-            color: '#571ce0',
+            color: darkMode ? '#c792ea' : '#571ce0', // Adjust CourseMe link color based on dark mode
             fontWeight: 600,
           }}
         >
           CourseMe
         </a>
         <span style={{ color: '#FD5E53', fontWeight: 600 }}>.</span> <br />
-        Studying Computer Science at {' '}
+        Studying Computer Science at{' '}
         <a
           href="https://home.dartmouth.edu/"
           target="_blank"
