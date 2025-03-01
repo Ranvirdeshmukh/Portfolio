@@ -22,13 +22,14 @@ const MinimalPortfolio = () => {
     };
   }, []);
 
-  // Full-screen wrapper for the background (does not affect inner layout)
+  // Full-screen wrapper for the background (position set to relative so that absolute children position relative to it)
   const wrapperStyles = {
     background: darkMode
       ? 'linear-gradient(90deg, #1C093F 0%, #0C0F33 100%)'
       : '#f9f9f9',
     minHeight: '100vh',
     transition: 'background 0.3s ease, color 0.3s ease',
+    position: 'relative',
   };
 
   // Inner container style remains as before, preserving text positioning
@@ -93,34 +94,52 @@ const MinimalPortfolio = () => {
       opacity: 0.8,
       alignSelf: 'flex-start',
     },
+    // Updated styling for the dark mode toggle switch with higher z-index
     toggleContainer: {
       position: 'absolute',
-      top: '20px',
+      bottom: '20px',
       right: '20px',
-      fontSize: '0.9rem',
-      cursor: 'pointer',
       display: 'flex',
       alignItems: 'center',
+      cursor: 'pointer',
+      zIndex: 10, // Ensure it sits above other elements
     },
-    toggleInput: {
-      marginRight: '8px',
+    toggleSwitch: {
+      position: 'relative',
+      width: '50px',
+      height: '24px',
+      backgroundColor: darkMode ? '#4cd137' : '#ccc',
+      borderRadius: '12px',
+      transition: 'background-color 0.3s',
+    },
+    toggleSwitchCircle: {
+      position: 'absolute',
+      top: '2px',
+      left: darkMode ? '26px' : '2px',
+      width: '20px',
+      height: '20px',
+      backgroundColor: '#fff',
+      borderRadius: '50%',
+      transition: 'left 0.3s',
+    },
+    toggleLabel: {
+      marginLeft: '8px',
+      fontSize: '0.9rem',
+      color: darkMode ? '#ffffff' : '#000000',
     },
   };
 
   return (
     <div style={wrapperStyles}>
-      <div style={containerStyles}>
-        {/* Dark Mode Toggle */}
-        <div style={styles.toggleContainer}>
-          <input
-            type="checkbox"
-            checked={darkMode}
-            onChange={() => setDarkMode(prev => !prev)}
-            style={styles.toggleInput}
-          />
-          Dark Mode
+      {/* Dark Mode Toggle in the corner */}
+      <div style={styles.toggleContainer} onClick={() => setDarkMode(prev => !prev)}>
+        <div style={styles.toggleSwitch}>
+          <div style={styles.toggleSwitchCircle}></div>
         </div>
+        <span style={styles.toggleLabel}>Dark Mode</span>
+      </div>
 
+      <div style={containerStyles}>
         <h2 style={styles.name}>Ranvir Deshmukh</h2>
         <h3 style={styles.tagline}>I write software and make videos.</h3>
 
