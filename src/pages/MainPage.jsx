@@ -22,25 +22,34 @@ const MinimalPortfolio = () => {
     };
   }, []);
 
-  // Adjust styles based on darkMode state
+  // Full-screen wrapper for the background (does not affect inner layout)
+  const wrapperStyles = {
+    background: darkMode
+      ? 'linear-gradient(90deg, #1C093F 0%, #0C0F33 100%)'
+      : '#f9f9f9',
+    minHeight: '100vh',
+    transition: 'background 0.3s ease, color 0.3s ease',
+  };
+
+  // Inner container style remains as before, preserving text positioning
+  const containerStyles = {
+    color: darkMode ? '#ffffff' : '#000000',
+    fontFamily: "'SF Pro Display', sans-serif",
+    fontWeight: 500,
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    margin: '0 auto',
+    padding: '0 20px',
+    maxWidth: isDesktop ? '800px' : '600px',
+    minHeight: '100vh',
+    transition: 'opacity 1s ease-in',
+    position: 'relative',
+    opacity: isVisible ? 1 : 0,
+  };
+
+  // Other styles remain unchanged
   const styles = {
-    container: {
-      background: darkMode
-        ? 'linear-gradient(90deg, #1C093F 0%, #0C0F33 100%)'
-        : '#f9f9f9',
-      color: darkMode ? '#ffffff' : '#000000',
-      minHeight: '100vh',
-      fontFamily: "'SF Pro Display', sans-serif",
-      fontWeight: 500,
-      display: 'flex',
-      flexDirection: 'column',
-      justifyContent: 'center',
-      margin: '0 auto',
-      padding: '0 20px',
-      maxWidth: isDesktop ? '800px' : '600px',
-      transition: 'background 0.3s ease, color 0.3s ease',
-      position: 'relative',
-    },
     name: {
       fontSize: isDesktop ? '48px' : '32px',
       margin: '0 0 10px 0',
@@ -58,7 +67,7 @@ const MinimalPortfolio = () => {
     },
     dartmouthLink: {
       textDecoration: 'none',
-      color: darkMode ? '#8bc34a' : '#00693e', // Adjust Dartmouth link for dark mode
+      color: darkMode ? '#8bc34a' : '#00693e',
       fontWeight: 600,
     },
     linkContainer: {
@@ -84,7 +93,6 @@ const MinimalPortfolio = () => {
       opacity: 0.8,
       alignSelf: 'flex-start',
     },
-    // Optional: styling for the dark mode toggle container
     toggleContainer: {
       position: 'absolute',
       top: '20px',
@@ -100,70 +108,72 @@ const MinimalPortfolio = () => {
   };
 
   return (
-    <div style={{ ...styles.container, opacity: isVisible ? 1 : 0, transition: 'opacity 1s ease-in' }}>
-      {/* Dark Mode Toggle */}
-      <div style={styles.toggleContainer}>
-        <input
-          type="checkbox"
-          checked={darkMode}
-          onChange={() => setDarkMode(prev => !prev)}
-          style={styles.toggleInput}
-        />
-        Dark Mode
+    <div style={wrapperStyles}>
+      <div style={containerStyles}>
+        {/* Dark Mode Toggle */}
+        <div style={styles.toggleContainer}>
+          <input
+            type="checkbox"
+            checked={darkMode}
+            onChange={() => setDarkMode(prev => !prev)}
+            style={styles.toggleInput}
+          />
+          Dark Mode
+        </div>
+
+        <h2 style={styles.name}>Ranvir Deshmukh</h2>
+        <h3 style={styles.tagline}>I write software and make videos.</h3>
+
+        <p style={styles.description}>
+          I’m currently building{' '}
+          <a
+            href="https://courseme.ai"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              textDecoration: 'none',
+              color: darkMode ? '#c792ea' : '#571ce0',
+              fontWeight: 600,
+            }}
+          >
+            CourseMe
+          </a>
+          <span style={{ color: '#FD5E53', fontWeight: 600 }}>.</span> <br />
+          Studying Computer Science at{' '}
+          <a
+            href="https://home.dartmouth.edu/"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={styles.dartmouthLink}
+          >
+            Dartmouth
+          </a>
+          . <br />
+          Reach out — I’m always open to chat!
+        </p>
+
+        <div style={styles.linkContainer}>
+          <a
+            href="https://www.linkedin.com/in/ranvir-deshmukh-209706199/"
+            style={styles.linkStyle}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            LinkedIn
+          </a>
+          <span style={styles.linkSeparator}>|</span>
+          <a
+            href="https://github.com/Ranvirdeshmukh"
+            style={styles.linkStyle}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            GitHub
+          </a>
+        </div>
+
+        <div style={styles.bottomLogo}>RD/&gt;</div>
       </div>
-
-      <h2 style={styles.name}>Ranvir Deshmukh</h2>
-      <h3 style={styles.tagline}>I write software and make videos.</h3>
-
-      <p style={styles.description}>
-        I’m currently building{' '}
-        <a
-          href="https://courseme.ai"
-          target="_blank"
-          rel="noopener noreferrer"
-          style={{
-            textDecoration: 'none',
-            color: darkMode ? '#c792ea' : '#571ce0', // Adjust CourseMe link color based on dark mode
-            fontWeight: 600,
-          }}
-        >
-          CourseMe
-        </a>
-        <span style={{ color: '#FD5E53', fontWeight: 600 }}>.</span> <br />
-        Studying Computer Science at{' '}
-        <a
-          href="https://home.dartmouth.edu/"
-          target="_blank"
-          rel="noopener noreferrer"
-          style={styles.dartmouthLink}
-        >
-          Dartmouth
-        </a>
-        . <br />
-        Reach out — I’m always open to chat!
-      </p>
-
-      <div style={styles.linkContainer}>
-        <a
-          href="https://www.linkedin.com/in/ranvir-deshmukh-209706199/"
-          style={styles.linkStyle}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          LinkedIn
-        </a>
-        <span style={styles.linkSeparator}>|</span>
-        <a
-          href="https://github.com/Ranvirdeshmukh"
-          style={styles.linkStyle}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          GitHub
-        </a>
-      </div>
-
-      <div style={styles.bottomLogo}>RD/&gt;</div>
     </div>
   );
 };
