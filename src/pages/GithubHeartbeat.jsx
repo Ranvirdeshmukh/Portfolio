@@ -39,8 +39,12 @@ const GithubHeartbeat = () => {
       const fromISO = fromDate.toISOString().split('T')[0] + "T00:00:00Z";
       const toISO = toDate.toISOString().split('T')[0] + "T23:59:59Z";
 
-      // Replace with your GitHub personal access token.
-      const token = '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';
+      // Get your GitHub token from environment variables
+      const token = process.env.REACT_APP_GITHUB_TOKEN;
+      if (!token) {
+        setError("GitHub token is not defined. Please set REACT_APP_GITHUB_TOKEN in your environment.");
+        return;
+      }
 
       // GraphQL query to fetch the contributions collection.
       const query = `
