@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
+import GithubHeartbeat from './GithubHeartbeat'; // adjust the path if needed
 
 const MinimalPortfolio = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [isDesktop, setIsDesktop] = useState(false);
-  const [darkMode, setDarkMode] = useState(false); // New state for dark mode
+  const [darkMode, setDarkMode] = useState(false); // new state for dark mode
 
   useEffect(() => {
     document.title = 'Ranvir.';
@@ -12,7 +13,7 @@ const MinimalPortfolio = () => {
     const handleResize = () => {
       setIsDesktop(window.innerWidth >= 768);
     };
-    
+
     handleResize();
     window.addEventListener('resize', handleResize);
 
@@ -22,7 +23,7 @@ const MinimalPortfolio = () => {
     };
   }, []);
 
-  // Full-screen wrapper for the background (position set to relative so that absolute children position relative to it)
+  // Full-screen wrapper for the background
   const wrapperStyles = {
     background: darkMode
       ? 'linear-gradient(90deg, #1C093F 0%, #0C0F33 100%)'
@@ -32,7 +33,7 @@ const MinimalPortfolio = () => {
     position: 'relative',
   };
 
-  // Inner container style remains as before, preserving text positioning
+  // Inner container style for text positioning
   const containerStyles = {
     color: darkMode ? '#ffffff' : '#000000',
     fontFamily: "'SF Pro Display', sans-serif",
@@ -49,7 +50,7 @@ const MinimalPortfolio = () => {
     opacity: isVisible ? 1 : 0,
   };
 
-  // Other styles remain unchanged
+  // Additional styles
   const styles = {
     name: {
       fontSize: isDesktop ? '48px' : '32px',
@@ -94,7 +95,7 @@ const MinimalPortfolio = () => {
       opacity: 0.8,
       alignSelf: 'flex-start',
     },
-    // Updated styling for the dark mode toggle switch with higher z-index
+    // Dark mode toggle styles with higher z-index
     toggleContainer: {
       position: 'absolute',
       bottom: '20px',
@@ -102,7 +103,7 @@ const MinimalPortfolio = () => {
       display: 'flex',
       alignItems: 'center',
       cursor: 'pointer',
-      zIndex: 10, // Ensure it sits above other elements
+      zIndex: 10,
     },
     toggleSwitch: {
       position: 'relative',
@@ -131,7 +132,7 @@ const MinimalPortfolio = () => {
 
   return (
     <div style={wrapperStyles}>
-      {/* Dark Mode Toggle in the corner */}
+      {/* Dark Mode Toggle */}
       <div style={styles.toggleContainer} onClick={() => setDarkMode(prev => !prev)}>
         <div style={styles.toggleSwitch}>
           <div style={styles.toggleSwitchCircle}></div>
@@ -190,6 +191,9 @@ const MinimalPortfolio = () => {
             GitHub
           </a>
         </div>
+
+        {/* GitHub Heartbeat Component */}
+        <GithubHeartbeat />
 
         <div style={styles.bottomLogo}>RD/&gt;</div>
       </div>
