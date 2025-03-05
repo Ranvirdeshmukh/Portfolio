@@ -88,6 +88,7 @@ const GithubHeartbeat = () => {
   const [totalContributions, setTotalContributions] = useState(0);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [debugInfo, setDebugInfo] = useState(null);
   // Check if we're in dark mode by looking at the background color
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [windowHeight, setWindowHeight] = useState(window.innerHeight);
@@ -149,73 +150,91 @@ const GithubHeartbeat = () => {
     const fetchContributions = async () => {
       setLoading(true);
       
-      // Calculate the date range for the past year.
-      const toDate = new Date();
-      const fromDate = new Date();
-      fromDate.setFullYear(fromDate.getFullYear() - 1);
-      // Construct ISO strings for the query (covering the whole day).
-      const fromISO = fromDate.toISOString().split('T')[0] + "T00:00:00Z";
-      const toISO = toDate.toISOString().split('T')[0] + "T23:59:59Z";
-
-      // Get your GitHub token from environment variables
-      const token = process.env.REACT_APP_GITHUB_TOKEN;
-      if (!token) {
-        console.warn("GitHub token is not defined. Using sample data instead.");
-        const sampleData = generateSampleData();
-        setContributionData(sampleData);
-        setTotalContributions(sampleData.reduce((sum, day) => sum + Math.floor(day.originalCount), 0));
-        setLoading(false);
-        return;
-      }
-
-      // GraphQL query to fetch the contributions collection.
-      const query = `
-        query {
-          user(login: "ranvirdeshmukh") {
-            contributionsCollection(from: "${fromISO}", to: "${toISO}") {
-              contributionCalendar {
-                totalContributions
-                weeks {
-                  contributionDays {
-                    date
-                    contributionCount
+      // Always use sample data for now to ensure the wave works
+      const sampleData = generateSampleData();
+      
+      try {
+        // Get your GitHub token from environment variables
+        const token = process.env.REACT_APP_GITHUB_TOKEN;
+        
+        if (!token || token === 'your_new_token_here') {
+          console.warn("GitHub token is not defined or is using the placeholder value. Using sample data instead.");
+          setDebugInfo("No valid GitHub token found. Using sample data.");
+          setContributionData(sampleData);
+          setTotalContributions(sampleData.reduce((sum, day) => sum + Math.floor(day.originalCount), 0));
+          return;
+        }
+        
+        // Log token length and first/last few characters for debugging (don't log the whole token)
+        const tokenLength = token.length;
+        const tokenPrefix = token.substring(0, 4);
+        const tokenSuffix = token.substring(tokenLength - 4);
+        console.log(`Token format check: ${tokenPrefix}...${tokenSuffix} (${tokenLength} chars)`);
+        
+        // Try a simpler API request first to test authentication
+        const userResponse = await fetch('https://api.github.com/user', {
+          headers: {
+            Authorization: `token ${token}` // Note: using 'token' prefix instead of 'bearer'
+          }
+        });
+        
+        if (!userResponse.ok) {
+          throw new Error(`GitHub API authentication test failed: ${userResponse.status} ${userResponse.statusText}`);
+        }
+        
+        const userData = await userResponse.json();
+        console.log("GitHub authentication successful for user:", userData.login);
+        
+        // Now try the GraphQL API
+        // Calculate the date range for the past year
+        const toDate = new Date();
+        const fromDate = new Date();
+        fromDate.setFullYear(fromDate.getFullYear() - 1);
+        const fromISO = fromDate.toISOString().split('T')[0] + "T00:00:00Z";
+        const toISO = toDate.toISOString().split('T')[0] + "T23:59:59Z";
+        
+        // GraphQL query to fetch the contributions collection
+        const query = `
+          query {
+            user(login: "${userData.login}") {
+              contributionsCollection(from: "${fromISO}", to: "${toISO}") {
+                contributionCalendar {
+                  totalContributions
+                  weeks {
+                    contributionDays {
+                      date
+                      contributionCount
+                    }
                   }
                 }
               }
             }
           }
-        }
-      `;
-
-      try {
-        const response = await fetch('https://api.github.com/graphql', {
+        `;
+        
+        const graphqlResponse = await fetch('https://api.github.com/graphql', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            Authorization: `bearer ${token}`,
+            Authorization: `token ${token}` // Using 'token' prefix instead of 'bearer'
           },
           body: JSON.stringify({ query }),
         });
         
-        if (!response.ok) {
-          // Handle HTTP errors like 401 Unauthorized
-          if (response.status === 401) {
-            throw new Error("GitHub API authentication failed. Your token may be invalid or expired.");
-          } else {
-            throw new Error(`GitHub API returned status ${response.status}: ${response.statusText}`);
-          }
+        if (!graphqlResponse.ok) {
+          throw new Error(`GraphQL API request failed: ${graphqlResponse.status} ${graphqlResponse.statusText}`);
         }
         
-        const result = await response.json();
-
+        const result = await graphqlResponse.json();
+        
         if (result.errors) {
-          throw new Error(result.errors.map(e => e.message).join(', '));
+          throw new Error(`GraphQL errors: ${result.errors.map(e => e.message).join(', ')}`);
         }
         
         if (!result.data || !result.data.user) {
           throw new Error("No user data returned from GitHub API. Check your username in the query.");
         }
-
+        
         const calendar = result.data.user.contributionsCollection.contributionCalendar;
         setTotalContributions(calendar.totalContributions);
         
@@ -257,13 +276,14 @@ const GithubHeartbeat = () => {
         enhancedData.sort((a, b) => new Date(a.date) - new Date(b.date));
         
         setContributionData(enhancedData);
+        setDebugInfo("GitHub data loaded successfully!");
       } catch (err) {
         console.error('Error fetching contributions:', err);
         setError(err.message);
+        setDebugInfo(`API Error: ${err.message}`);
         
         // Fall back to sample data if GitHub API fails
         console.log("Using sample data due to API error");
-        const sampleData = generateSampleData();
         setContributionData(sampleData);
         setTotalContributions(sampleData.reduce((sum, day) => sum + Math.floor(day.originalCount), 0));
       } finally {
@@ -316,6 +336,18 @@ const GithubHeartbeat = () => {
           maxWidth: '80%'
         }}>
           Note: {error}
+        </p>
+      )}
+      {debugInfo && (
+        <p style={{ 
+          color: isDarkMode ? 'rgba(200, 200, 255, 0.8)' : 'rgba(100, 100, 200, 0.8)', 
+          position: 'absolute', 
+          top: error ? '20px' : '5px', 
+          left: '20px',
+          fontSize: '10px',
+          maxWidth: '80%'
+        }}>
+          Debug: {debugInfo}
         </p>
       )}
       <div style={waveContentStyle}>
