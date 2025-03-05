@@ -87,18 +87,14 @@ const GithubHeartbeat = () => {
   const [contributionData, setContributionData] = useState([]);
   const [totalContributions, setTotalContributions] = useState(0);
   const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [debugInfo, setDebugInfo] = useState(null);
   // Check if we're in dark mode by looking at the background color
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [windowHeight, setWindowHeight] = useState(window.innerHeight);
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
   useEffect(() => {
-    // Update window dimensions on resize
+    // Update window height on resize
     const handleResize = () => {
       setWindowHeight(window.innerHeight);
-      setWindowWidth(window.innerWidth);
     };
     
     window.addEventListener('resize', handleResize);
@@ -121,173 +117,78 @@ const GithubHeartbeat = () => {
     return () => observer.disconnect();
   }, []);
 
-  // Generate sample data for the wave when no GitHub data is available
-  const generateSampleData = () => {
-    const sampleData = [];
-    const today = new Date();
-    
-    // Generate data for the past year
-    for (let i = 365; i >= 0; i -= 2) {
-      const date = new Date();
-      date.setDate(today.getDate() - i);
-      
-      // Create a wave pattern with some randomness
-      const baseValue = Math.sin(i * 0.1) * 3 + 3; // Base sine wave
-      const randomValue = Math.random() * 2; // Random noise
-      const count = Math.max(0, baseValue + randomValue);
-      
-      sampleData.push({
-        date: date.toISOString().split('T')[0],
-        count: count,
-        originalCount: Math.floor(count)
-      });
-    }
-    
-    return sampleData;
-  };
-
   useEffect(() => {
     const fetchContributions = async () => {
-      setLoading(true);
-      
-      // Always use sample data for now to ensure the wave works
-      const sampleData = generateSampleData();
-      
-      try {
-        // Get your GitHub token from environment variables
-        const token = process.env.REACT_APP_GITHUB_TOKEN;
-        
-        if (!token || token === 'your_new_token_here') {
-          console.warn("GitHub token is not defined or is using the placeholder value. Using sample data instead.");
-          setDebugInfo("No valid GitHub token found. Using sample data.");
-          setContributionData(sampleData);
-          setTotalContributions(sampleData.reduce((sum, day) => sum + Math.floor(day.originalCount), 0));
-          return;
-        }
-        
-        // Log token length and first/last few characters for debugging (don't log the whole token)
-        const tokenLength = token.length;
-        const tokenPrefix = token.substring(0, 4);
-        const tokenSuffix = token.substring(tokenLength - 4);
-        console.log(`Token format check: ${tokenPrefix}...${tokenSuffix} (${tokenLength} chars)`);
-        
-        // Try a simpler API request first to test authentication
-        const userResponse = await fetch('https://api.github.com/user', {
-          headers: {
-            Authorization: `token ${token}` // Note: using 'token' prefix instead of 'bearer'
-          }
-        });
-        
-        if (!userResponse.ok) {
-          throw new Error(`GitHub API authentication test failed: ${userResponse.status} ${userResponse.statusText}`);
-        }
-        
-        const userData = await userResponse.json();
-        console.log("GitHub authentication successful for user:", userData.login);
-        
-        // Now try the GraphQL API
-        // Calculate the date range for the past year
-        const toDate = new Date();
-        const fromDate = new Date();
-        fromDate.setFullYear(fromDate.getFullYear() - 1);
-        const fromISO = fromDate.toISOString().split('T')[0] + "T00:00:00Z";
-        const toISO = toDate.toISOString().split('T')[0] + "T23:59:59Z";
-        
-        // GraphQL query to fetch the contributions collection
-        const query = `
-          query {
-            user(login: "${userData.login}") {
-              contributionsCollection(from: "${fromISO}", to: "${toISO}") {
-                contributionCalendar {
-                  totalContributions
-                  weeks {
-                    contributionDays {
-                      date
-                      contributionCount
-                    }
+      // Calculate the date range for the past year.
+      const toDate = new Date();
+      const fromDate = new Date();
+      fromDate.setFullYear(fromDate.getFullYear() - 1);
+      // Construct ISO strings for the query (covering the whole day).
+      const fromISO = fromDate.toISOString().split('T')[0] + "T00:00:00Z";
+      const toISO = toDate.toISOString().split('T')[0] + "T23:59:59Z";
+
+      // Get your GitHub token from environment variables
+      const token = process.env.REACT_APP_GITHUB_TOKEN;
+      if (!token) {
+        setError("GitHub token is not defined. Please set REACT_APP_GITHUB_TOKEN in your environment.");
+        return;
+      }
+
+      // GraphQL query to fetch the contributions collection.
+      const query = `
+        query {
+          user(login: "ranvirdeshmukh") {
+            contributionsCollection(from: "${fromISO}", to: "${toISO}") {
+              contributionCalendar {
+                totalContributions
+                weeks {
+                  contributionDays {
+                    date
+                    contributionCount
                   }
                 }
               }
             }
           }
-        `;
-        
-        const graphqlResponse = await fetch('https://api.github.com/graphql', {
+        }
+      `;
+
+      try {
+        const response = await fetch('https://api.github.com/graphql', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            Authorization: `token ${token}` // Using 'token' prefix instead of 'bearer'
+            Authorization: `bearer ${token}`,
           },
           body: JSON.stringify({ query }),
         });
-        
-        if (!graphqlResponse.ok) {
-          throw new Error(`GraphQL API request failed: ${graphqlResponse.status} ${graphqlResponse.statusText}`);
-        }
-        
-        const result = await graphqlResponse.json();
-        
+        const result = await response.json();
+
         if (result.errors) {
-          throw new Error(`GraphQL errors: ${result.errors.map(e => e.message).join(', ')}`);
+          throw new Error(result.errors.map(e => e.message).join(', '));
         }
-        
-        if (!result.data || !result.data.user) {
-          throw new Error("No user data returned from GitHub API. Check your username in the query.");
-        }
-        
+
         const calendar = result.data.user.contributionsCollection.contributionCalendar;
         setTotalContributions(calendar.totalContributions);
         
         // Process the data to make it more wave-like
         let data = transformContributionDays(calendar.weeks);
         
-        // Filter fewer days to make the wave longer
-        data = data.filter((_, index) => index % 2 !== 0);
-        
-        // Duplicate the data to make the wave longer
-        const duplicatedData = [...data];
-        
-        // Add some randomness to the duplicated data to make it look different
-        const extendedData = duplicatedData.map(day => {
-          const randomOffset = Math.random() * 30 - 15; // Random value between -15 and 15
-          const newDate = new Date(day.date);
-          newDate.setDate(newDate.getDate() - 365); // Set date to previous year
-          
-          return {
-            ...day,
-            date: newDate.toISOString().split('T')[0],
-            count: Math.max(0, day.count + randomOffset),
-            originalCount: day.originalCount
-          };
-        });
-        
-        // Combine original and extended data
-        const combinedData = [...data, ...extendedData];
+        // Add some gaps by filtering out some days
+        data = data.filter((_, index) => index % 3 !== 0);
         
         // Enhance the wave effect by adding some randomness to the counts
         // Store the original count before modifying it for display purposes
-        const enhancedData = combinedData.map(day => ({
+        data = data.map(day => ({
           ...day,
-          originalCount: day.originalCount || day.count, // Store original count for tooltip
-          count: (day.count + Math.random() * 3) * 0.8 // Scale down to make wave smoother
+          originalCount: day.count, // Store original count for tooltip
+          count: day.count + Math.random() * 2
         }));
         
-        // Sort the combined data by date
-        enhancedData.sort((a, b) => new Date(a.date) - new Date(b.date));
-        
-        setContributionData(enhancedData);
-        setDebugInfo("GitHub data loaded successfully!");
+        setContributionData(data);
       } catch (err) {
         console.error('Error fetching contributions:', err);
         setError(err.message);
-        setDebugInfo(`API Error: ${err.message}`);
-        
-        // Fall back to sample data if GitHub API fails
-        console.log("Using sample data due to API error");
-        setContributionData(sampleData);
-        setTotalContributions(sampleData.reduce((sum, day) => sum + Math.floor(day.originalCount), 0));
-      } finally {
-        setLoading(false);
       }
     };
 
@@ -326,32 +227,9 @@ const GithubHeartbeat = () => {
 
   return (
     <div style={waveContainerStyle}>
-      {error && (
-        <p style={{ 
-          color: 'rgba(255, 100, 100, 0.8)', 
-          position: 'absolute', 
-          top: '5px', 
-          left: '20px',
-          fontSize: '10px',
-          maxWidth: '80%'
-        }}>
-          Note: {error}
-        </p>
-      )}
-      {debugInfo && (
-        <p style={{ 
-          color: isDarkMode ? 'rgba(200, 200, 255, 0.8)' : 'rgba(100, 100, 200, 0.8)', 
-          position: 'absolute', 
-          top: error ? '20px' : '5px', 
-          left: '20px',
-          fontSize: '10px',
-          maxWidth: '80%'
-        }}>
-          Debug: {debugInfo}
-        </p>
-      )}
+      {error && <p style={{ color: 'red', position: 'absolute', top: 0, left: '20px' }}>Error: {error}</p>}
       <div style={waveContentStyle}>
-        {loading ? 'Loading contributions...' : `${totalContributions} contributions in the last year`}
+        {totalContributions} contributions in the last year
       </div>
       <div style={{ width: '100%', height: '100%' }}>
         <ResponsiveContainer>
