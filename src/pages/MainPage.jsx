@@ -98,7 +98,7 @@ const MinimalPortfolio = () => {
     // Dark mode toggle styles with higher z-index
     toggleContainer: {
       position: 'absolute',
-      bottom: '20px',
+      top: '20px',
       right: '20px',
       display: 'flex',
       alignItems: 'center',
