@@ -21,25 +21,12 @@ function transformContributionDays(weeks) {
     days = days.concat(week.contributionDays);
   });
   return days
-    .map(day => ({ date: day.date, count: day.contributionCount }))
+    .map(day => ({ 
+      date: day.date, 
+      contributionCount: day.contributionCount // Keep the original name to avoid confusion
+    }))
     .sort((a, b) => new Date(a.date) - new Date(b.date));
 }
-
-// Custom curve to make the wave more pronounced
-const CustomCurve = (props) => {
-  const { points, ...rest } = props;
-  // Increase the amplitude of the wave
-  const enhancedPoints = points.map((point, index) => {
-    // Add some randomness to make it more wave-like
-    const randomFactor = Math.sin(index * 0.5) * 10;
-    return {
-      ...point,
-      y: point.y + randomFactor
-    };
-  });
-  
-  return <Curve {...rest} points={enhancedPoints} />;
-};
 
 // Custom tooltip component to display date and commit count
 const CustomTooltip = ({ active, payload, label, isDarkMode }) => {
@@ -52,7 +39,8 @@ const CustomTooltip = ({ active, payload, label, isDarkMode }) => {
       year: 'numeric' 
     });
     
-    const commitCount = Math.floor(data.originalCount || data.count);
+    // Use the exact contribution count directly
+    const commitCount = data.contributionCount;
     const commitText = commitCount === 1 ? 'commit' : 'commits';
     
     return (
@@ -174,16 +162,27 @@ const GithubHeartbeat = () => {
         // Process the data to make it more wave-like
         let data = transformContributionDays(calendar.weeks);
         
-        // Add some gaps by filtering out some days
-        data = data.filter((_, index) => index % 3 !== 0);
+        // Add some gaps by filtering out some days to make the wave look better
+        // but keep all days with contributions to ensure accuracy
+        data = data.filter((day, index) => 
+          day.contributionCount > 0 || index % 2 !== 0
+        );
         
-        // Enhance the wave effect by adding some randomness to the counts
-        // Store the original count before modifying it for display purposes
-        data = data.map(day => ({
-          ...day,
-          originalCount: day.count, // Store original count for tooltip
-          count: day.count + Math.random() * 2
-        }));
+        // Create a separate visual value for the wave while preserving the exact count
+        data = data.map((day, index) => {
+          // Create a separate visual value for the wave
+          // Base value ensures the wave starts from the bottom
+          const baseValue = 5;
+          const visualValue = baseValue + (day.contributionCount > 0 ? day.contributionCount * 2 : 1) + 
+                             Math.abs(Math.sin(index * 0.15)) * 6;
+          
+          return {
+            ...day,
+            // Keep the original contribution count
+            // Add a visual count for the wave display only
+            count: visualValue
+          };
+        });
         
         setContributionData(data);
       } catch (err) {
@@ -195,8 +194,8 @@ const GithubHeartbeat = () => {
     fetchContributions();
   }, []);
 
-  // Calculate the height as 1/4 of the viewport height
-  const waveHeight = Math.floor(windowHeight / 4);
+  // Calculate the height as 1/3 of the viewport height
+  const waveHeight = Math.floor(windowHeight / 3);
 
   const waveContainerStyle = {
     position: 'fixed',
@@ -205,7 +204,7 @@ const GithubHeartbeat = () => {
     width: '100%',
     height: `${waveHeight}px`,
     zIndex: 1,
-    pointerEvents: 'auto', // Changed to auto to allow hover interactions
+    pointerEvents: 'auto',
     overflow: 'hidden',
   };
 
@@ -213,17 +212,23 @@ const GithubHeartbeat = () => {
     position: 'absolute',
     bottom: '20px',
     left: '20px',
-    color: isDarkMode ? 'rgba(255, 255, 255, 0.7)' : 'rgba(0, 0, 0, 0.7)',
+    color: isDarkMode ? 'rgba(255, 255, 255, 0.8)' : 'rgba(0, 0, 0, 0.8)',
     zIndex: 2,
-    pointerEvents: 'auto', // Make text clickable
-    fontSize: '12px',
-    fontWeight: 300,
-    textShadow: isDarkMode ? '0 1px 2px rgba(0,0,0,0.3)' : 'none',
+    pointerEvents: 'auto',
+    fontSize: '14px',
+    fontWeight: 500,
+    textShadow: isDarkMode ? '0 1px 2px rgba(0,0,0,0.5)' : '0 1px 2px rgba(255,255,255,0.5)',
+    backdropFilter: 'blur(3px)',
+    padding: '6px 12px',
+    borderRadius: '20px',
+    backgroundColor: isDarkMode ? 'rgba(28, 9, 63, 0.3)' : 'rgba(255, 255, 255, 0.3)',
+    border: `1px solid ${isDarkMode ? 'rgba(136, 132, 216, 0.3)' : 'rgba(87, 28, 224, 0.3)'}`,
   };
 
   // Colors for light and dark mode
   const primaryColor = isDarkMode ? '#8884d8' : '#571ce0';
   const secondaryColor = isDarkMode ? '#c792ea' : '#8884d8';
+  const tertiaryColor = isDarkMode ? '#6a5acd' : '#7c4dff';
 
   return (
     <div style={waveContainerStyle}>
@@ -239,19 +244,24 @@ const GithubHeartbeat = () => {
           >
             <defs>
               <linearGradient id="colorContributions" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor={primaryColor} stopOpacity={0.6} />
-                <stop offset="95%" stopColor={secondaryColor} stopOpacity={0.1} />
+                <stop offset="5%" stopColor={primaryColor} stopOpacity={0.8} />
+                <stop offset="50%" stopColor={secondaryColor} stopOpacity={0.5} />
+                <stop offset="95%" stopColor={tertiaryColor} stopOpacity={0.2} />
               </linearGradient>
+              <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+                <feGaussianBlur stdDeviation="3" result="blur" />
+                <feComposite in="SourceGraphic" in2="blur" operator="over" />
+              </filter>
             </defs>
             <Tooltip 
               content={<CustomTooltip isDarkMode={isDarkMode} />}
               cursor={{ stroke: isDarkMode ? 'rgba(255,255,255,0.3)' : 'rgba(0,0,0,0.3)', strokeWidth: 1 }}
             />
             <Area
-              type="basis" // Changed to basis for a smoother, wavier curve
+              type="monotone" 
               dataKey="count"
               stroke={primaryColor}
-              strokeWidth={2}
+              strokeWidth={3}
               fillOpacity={1}
               fill="url(#colorContributions)"
               animationDuration={2000}
@@ -262,6 +272,7 @@ const GithubHeartbeat = () => {
                 stroke: isDarkMode ? '#1C093F' : '#fff',
                 strokeWidth: 2
               }}
+              baseValue={0}
             />
           </AreaChart>
         </ResponsiveContainer>
