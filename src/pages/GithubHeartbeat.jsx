@@ -1,5 +1,5 @@
 // GithubHeartbeat.jsx
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, useRef } from 'react';
 import {
   AreaChart,
   Area,
@@ -75,9 +75,36 @@ const GithubHeartbeat = () => {
   const [contributionData, setContributionData] = useState([]);
   const [totalContributions, setTotalContributions] = useState(0);
   const [error, setError] = useState(null);
-  // Check if we're in dark mode by looking at the background color
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [windowHeight, setWindowHeight] = useState(window.innerHeight);
+  const [animationProgress, setAnimationProgress] = useState(0);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const animationRef = useRef(null);
+
+  // Add keyframe animations for the wave reveal
+  useEffect(() => {
+    const style = document.createElement('style');
+    style.innerHTML = `
+      @keyframes waveReveal {
+        0% {
+          clip-path: polygon(0% 0%, 0% 0%, 0% 100%, 0% 100%);
+        }
+        100% {
+          clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+        }
+      }
+      
+      @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+      }
+    `;
+    document.head.appendChild(style);
+    
+    return () => {
+      document.head.removeChild(style);
+    };
+  }, []);
 
   useEffect(() => {
     // Update window height on resize
@@ -185,6 +212,13 @@ const GithubHeartbeat = () => {
         });
         
         setContributionData(data);
+        setIsLoaded(true);
+        
+        // Start the animation once data is loaded
+        // Add a small delay before starting the animation
+        setTimeout(() => {
+          startWaveAnimation();
+        }, 300);
       } catch (err) {
         console.error('Error fetching contributions:', err);
         setError(err.message);
@@ -192,6 +226,44 @@ const GithubHeartbeat = () => {
     };
 
     fetchContributions();
+  }, []);
+  
+  // Function to animate the wave reveal
+  const startWaveAnimation = () => {
+    // Cancel any existing animation
+    if (animationRef.current) {
+      cancelAnimationFrame(animationRef.current);
+    }
+    
+    const startTime = performance.now();
+    const duration = 3500; // Increased to 3.5 seconds for a slower animation
+    
+    const animateWave = (currentTime) => {
+      const elapsed = currentTime - startTime;
+      
+      // Use easeInOutQuad easing function for smoother animation
+      const progress = Math.min(elapsed / duration, 1);
+      const easedProgress = progress < 0.5 
+        ? 2 * progress * progress 
+        : 1 - Math.pow(-2 * progress + 2, 2) / 2;
+      
+      setAnimationProgress(easedProgress);
+      
+      if (progress < 1) {
+        animationRef.current = requestAnimationFrame(animateWave);
+      }
+    };
+    
+    animationRef.current = requestAnimationFrame(animateWave);
+  };
+  
+  // Clean up animation on unmount
+  useEffect(() => {
+    return () => {
+      if (animationRef.current) {
+        cancelAnimationFrame(animationRef.current);
+      }
+    };
   }, []);
 
   // Calculate the height as 1/3 of the viewport height
@@ -223,6 +295,15 @@ const GithubHeartbeat = () => {
     borderRadius: '20px',
     backgroundColor: isDarkMode ? 'rgba(28, 9, 63, 0.3)' : 'rgba(255, 255, 255, 0.3)',
     border: `1px solid ${isDarkMode ? 'rgba(136, 132, 216, 0.3)' : 'rgba(87, 28, 224, 0.3)'}`,
+    opacity: 0,
+    animation: isLoaded ? 'fadeIn 1s ease-in-out 2s forwards' : 'none', // Slower fade-in with longer delay
+  };
+
+  const waveChartStyle = {
+    width: '100%',
+    height: '100%',
+    clipPath: `polygon(0% 0%, ${animationProgress * 100}% 0%, ${animationProgress * 100}% 100%, 0% 100%)`,
+    transition: 'clip-path 0.05s linear', // Smoother transition
   };
 
   // Colors for light and dark mode
@@ -236,7 +317,7 @@ const GithubHeartbeat = () => {
       <div style={waveContentStyle}>
         {totalContributions} contributions in the last year
       </div>
-      <div style={{ width: '100%', height: '100%' }}>
+      <div style={waveChartStyle}>
         <ResponsiveContainer>
           <AreaChart 
             data={contributionData}
@@ -264,8 +345,8 @@ const GithubHeartbeat = () => {
               strokeWidth={3}
               fillOpacity={1}
               fill="url(#colorContributions)"
-              animationDuration={2000}
-              isAnimationActive={true}
+              animationDuration={0} // Disable the default animation
+              isAnimationActive={false} // We're using our own animation
               activeDot={{ 
                 r: 6, 
                 fill: isDarkMode ? '#c792ea' : '#571ce0',
