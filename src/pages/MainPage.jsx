@@ -23,6 +23,46 @@ const MinimalPortfolio = () => {
     };
   }, []);
 
+  // Add keyframe animation for the links
+  useEffect(() => {
+    const style = document.createElement('style');
+    style.innerHTML = `
+      .clickable-link {
+        position: relative;
+        padding: 3px 6px;
+        border-radius: 4px;
+        transition: all 0.3s ease;
+      }
+      
+      .clickable-link:hover {
+        background-color: rgba(${darkMode ? '255, 255, 255, 0.1' : '0, 0, 0, 0.05'});
+        transform: translateY(-2px);
+        box-shadow: 0 2px 8px rgba(${darkMode ? '255, 255, 255, 0.2' : '0, 0, 0, 0.1'});
+      }
+      
+      .clickable-link::after {
+        content: '';
+        position: absolute;
+        bottom: -2px;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background-color: ${darkMode ? '#c792ea' : '#571ce0'};
+        transform: scaleX(0);
+        transition: transform 0.3s ease;
+      }
+      
+      .clickable-link:hover::after {
+        transform: scaleX(1);
+      }
+    `;
+    document.head.appendChild(style);
+    
+    return () => {
+      document.head.removeChild(style);
+    };
+  }, [darkMode]);
+
   // Full-screen wrapper for the background
   const wrapperStyles = {
     background: darkMode
@@ -82,6 +122,8 @@ const MinimalPortfolio = () => {
       textDecoration: 'none',
       color: darkMode ? '#ffffff' : '#000000',
       fontWeight: 500,
+      display: 'inline-block',
+      position: 'relative',
     },
     linkSeparator: {
       color: darkMode ? '#ffffff' : '#000000',
@@ -145,7 +187,7 @@ const MinimalPortfolio = () => {
         <h3 style={styles.tagline}>I write software and make videos.</h3>
 
         <p style={styles.description}>
-          I’m currently building{' '}
+          I'm currently building{' '}
           <a
             href="https://courseme.ai"
             target="_blank"
@@ -169,7 +211,7 @@ const MinimalPortfolio = () => {
             Dartmouth
           </a>
           . <br />
-          Reach out — I’m always open to chat!
+          Reach out — I'm always open to chat!
         </p>
 
         <div style={styles.linkContainer}>
@@ -178,6 +220,7 @@ const MinimalPortfolio = () => {
             style={styles.linkStyle}
             target="_blank"
             rel="noopener noreferrer"
+            className="clickable-link"
           >
             LinkedIn
           </a>
@@ -187,6 +230,7 @@ const MinimalPortfolio = () => {
             style={styles.linkStyle}
             target="_blank"
             rel="noopener noreferrer"
+            className="clickable-link"
           >
             GitHub
           </a>
