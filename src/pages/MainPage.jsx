@@ -4,7 +4,14 @@ import GithubHeartbeat from './GithubHeartbeat'; // adjust the path if needed
 const MinimalPortfolio = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [isDesktop, setIsDesktop] = useState(false);
-  const [darkMode, setDarkMode] = useState(false); // new state for dark mode
+  const [darkMode, setDarkMode] = useState(true); // new state for dark mode
+
+  // Function to open Gmail compose
+  const openGmail = (e) => {
+    e.preventDefault();
+    const gmailComposeUrl = 'https://mail.google.com/mail/?view=cm&fs=1&to=ranvir.26@dartmouth.edu';
+    window.open(gmailComposeUrl, '_blank', 'noopener,noreferrer');
+  };
 
   useEffect(() => {
     document.title = 'Ranvir.';
@@ -211,7 +218,14 @@ const MinimalPortfolio = () => {
             Dartmouth
           </a>
           . <br />
-          Reach out — I'm always open to chat!
+          Reach out — I'm always <a
+            href="#"
+            style={styles.linkStyle}
+            className="clickable-link"
+            onClick={openGmail}
+          >
+            open to chat
+          </a>!
         </p>
 
         <div style={styles.linkContainer}>
