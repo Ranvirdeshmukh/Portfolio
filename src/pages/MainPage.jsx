@@ -4,7 +4,7 @@ import GithubHeartbeat from './GithubHeartbeat'; // adjust the path if needed
 const MinimalPortfolio = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [isDesktop, setIsDesktop] = useState(false);
-  const [darkMode, setDarkMode] = useState(true); // new state for dark mode
+  const [darkMode, setDarkMode] = useState(false); // new state for dark mode
 
   // Function to open Gmail compose
   const openGmail = (e) => {
