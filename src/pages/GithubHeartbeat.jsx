@@ -236,7 +236,7 @@ const GithubHeartbeat = () => {
     }
     
     const startTime = performance.now();
-    const duration = 3500; // Increased to 3.5 seconds for a slower animation
+    const duration = 6000; // Increased to 6 seconds for an even slower wave animation
     
     const animateWave = (currentTime) => {
       const elapsed = currentTime - startTime;
