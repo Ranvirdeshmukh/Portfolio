@@ -349,7 +349,7 @@ const GithubHeartbeat = () => {
               isAnimationActive={false} // We're using our own animation
               activeDot={{ 
                 r: 6, 
-                fill: isDarkMode ? '#c792ea' : '#571ce0',
+                fill: '#FD5E53',
                 stroke: isDarkMode ? '#1C093F' : '#fff',
                 strokeWidth: 2
               }}
