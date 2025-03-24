@@ -24,6 +24,12 @@ const MinimalPortfolio = () => {
     handleResize();
     window.addEventListener('resize', handleResize);
 
+    // Add custom font
+    const fontLink = document.createElement('link');
+    fontLink.href = 'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap';
+    fontLink.rel = 'stylesheet';
+    document.head.appendChild(fontLink);
+
     return () => {
       clearTimeout(timer);
       window.removeEventListener('resize', handleResize);
@@ -83,8 +89,8 @@ const MinimalPortfolio = () => {
   // Inner container style for text positioning
   const containerStyles = {
     color: darkMode ? '#ffffff' : '#000000',
-    fontFamily: "'SF Pro Display', sans-serif",
-    fontWeight: 500,
+    fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, sans-serif",
+    fontWeight: 400,
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
@@ -102,12 +108,16 @@ const MinimalPortfolio = () => {
     name: {
       fontSize: isDesktop ? '48px' : '32px',
       margin: '0 0 10px 0',
-      fontWeight: 500,
+      fontWeight: 400,
+      letterSpacing: '-0.02em',
+      lineHeight: 1.2,
     },
     tagline: {
       fontSize: isDesktop ? '24px' : '20px',
       margin: '0 0 25px 0',
-      opacity: 0.8,
+      fontWeight: 400,
+      letterSpacing: '-0.01em',
+      lineHeight: 1.3,
     },
     description: {
       fontSize: isDesktop ? '18px' : '16px',
@@ -117,7 +127,7 @@ const MinimalPortfolio = () => {
     dartmouthLink: {
       textDecoration: 'none',
       color: darkMode ? '#8bc34a' : '#00693e',
-      fontWeight: 600,
+      fontWeight: 500,
     },
     linkContainer: {
       display: 'flex',

@@ -52,7 +52,7 @@ const CustomTooltip = ({ active, payload, label, isDarkMode }) => {
         boxShadow: '0 2px 10px rgba(0, 0, 0, 0.2)',
         color: isDarkMode ? '#fff' : '#000',
         fontSize: '14px',
-        fontFamily: "'SF Pro Display', sans-serif",
+        fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, sans-serif",
         pointerEvents: 'auto',
       }}>
         <p style={{ margin: '0 0 4px 0', fontWeight: 500 }}>{formattedDate}</p>
@@ -289,6 +289,7 @@ const GithubHeartbeat = () => {
     pointerEvents: 'auto',
     fontSize: '14px',
     fontWeight: 500,
+    fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, sans-serif",
     textShadow: isDarkMode ? '0 1px 2px rgba(0,0,0,0.5)' : '0 1px 2px rgba(255,255,255,0.5)',
     backdropFilter: 'blur(3px)',
     padding: '6px 12px',
