@@ -36,10 +36,45 @@ const MinimalPortfolio = () => {
     };
   }, []);
 
-  // Add keyframe animation for the links
+  // Add keyframe animation for text elements and links
   useEffect(() => {
     const style = document.createElement('style');
     style.innerHTML = `
+      @keyframes textReveal {
+        0% {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        100% {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      
+      .name-animation {
+        opacity: 0;
+        animation: textReveal 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+        animation-delay: 0.3s;
+      }
+      
+      .tagline-animation {
+        opacity: 0;
+        animation: textReveal 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+        animation-delay: 0.6s;
+      }
+      
+      .description-animation {
+        opacity: 0;
+        animation: textReveal 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+        animation-delay: 0.9s;
+      }
+      
+      .links-animation {
+        opacity: 0;
+        animation: textReveal 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+        animation-delay: 1.2s;
+      }
+      
       .clickable-link {
         position: relative;
         padding: 3px 6px;
@@ -204,10 +239,10 @@ const MinimalPortfolio = () => {
       </div>
 
       <div style={containerStyles}>
-        <h2 style={styles.name}>Ranvir Deshmukh</h2>
-        <h3 style={styles.tagline}>I write software and make videos.</h3>
+        <h2 style={styles.name} className="name-animation">Ranvir Deshmukh</h2>
+        <h3 style={styles.tagline} className="tagline-animation">I write software and make videos.</h3>
 
-        <p style={styles.description}>
+        <p style={styles.description} className="description-animation">
           I'm currently building{' '}
           <a
             href="https://courseme.ai"
@@ -242,7 +277,7 @@ const MinimalPortfolio = () => {
           </a>!
         </p>
 
-        <div style={styles.linkContainer}>
+        <div style={styles.linkContainer} className="links-animation">
           <a
             href="https://www.linkedin.com/in/ranvir-deshmukh-209706199/"
             style={styles.linkStyle}
