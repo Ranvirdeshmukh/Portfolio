@@ -51,35 +51,45 @@ const MinimalPortfolio = () => {
         }
       }
       
+      @keyframes subtleFadeIn {
+        0% {
+          opacity: 0.3;
+        }
+        100% {
+          opacity: 0.85;
+        }
+      }
+      
       .name-animation {
         opacity: 0;
-        animation: textReveal 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+        animation: textReveal 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
         animation-delay: 0.3s;
       }
       
       .tagline-animation {
         opacity: 0;
-        animation: textReveal 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+        animation: textReveal 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
         animation-delay: 0.6s;
       }
       
       .description-animation {
         opacity: 0;
-        animation: textReveal 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+        animation: textReveal 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
         animation-delay: 0.9s;
       }
       
       .links-animation {
         opacity: 0;
-        animation: textReveal 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+        animation: textReveal 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
         animation-delay: 1.2s;
       }
       
       .clickable-link {
         position: relative;
         padding: 3px 6px;
-        border-radius: 4px;
-        transition: all 0.3s ease;
+        border-radius: 6px;
+        transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+        backface-visibility: hidden;
       }
       
       .clickable-link:hover {
@@ -97,11 +107,46 @@ const MinimalPortfolio = () => {
         height: 2px;
         background-color: ${darkMode ? '#c792ea' : '#571ce0'};
         transform: scaleX(0);
-        transition: transform 0.3s ease;
+        transform-origin: center;
+        transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
       }
       
       .clickable-link:hover::after {
         transform: scaleX(1);
+      }
+      
+      .logo-animation {
+        opacity: 0.3;
+        animation: subtleFadeIn 2.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+        animation-delay: 0.5s;
+      }
+
+      .theme-toggle {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background-color: ${darkMode ? 'rgba(30, 30, 40, 0.4)' : 'rgba(255, 255, 255, 0.7)'};
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        border: 1px solid ${darkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.05)'};
+        cursor: pointer;
+        box-shadow: ${darkMode ? '0 2px 10px rgba(0, 0, 0, 0.2)' : '0 2px 10px rgba(0, 0, 0, 0.05)'};
+        transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+      }
+      
+      .theme-toggle:hover {
+        transform: translateY(-2px);
+        box-shadow: ${darkMode ? '0 4px 12px rgba(0, 0, 0, 0.3)' : '0 4px 12px rgba(0, 0, 0, 0.1)'};
+      }
+      
+      @media (prefers-reduced-motion) {
+        .name-animation, .tagline-animation, .description-animation, .links-animation, .logo-animation {
+          animation: none;
+          opacity: 1;
+        }
       }
     `;
     document.head.appendChild(style);
@@ -114,26 +159,26 @@ const MinimalPortfolio = () => {
   // Full-screen wrapper for the background
   const wrapperStyles = {
     background: darkMode
-      ? 'linear-gradient(90deg, #1C093F 0%, #0C0F33 100%)'
-      : '#f9f9f9',
+      ? 'linear-gradient(135deg, #1C093F 0%, #0C0F33 100%)'
+      : 'linear-gradient(135deg, #f9f9f9 0%, #ffffff 100%)',
     minHeight: '100vh',
-    transition: 'background 0.3s ease, color 0.3s ease',
+    transition: 'background 0.5s cubic-bezier(0.2, 0.8, 0.2, 1), color 0.5s cubic-bezier(0.2, 0.8, 0.2, 1)',
     position: 'relative',
   };
 
   // Inner container style for text positioning
   const containerStyles = {
     color: darkMode ? '#ffffff' : '#000000',
-    fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, sans-serif",
+    fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'SF Pro Display', 'Helvetica Neue', sans-serif",
     fontWeight: 400,
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
     margin: '0 auto',
-    padding: '0 20px',
+    padding: '0 24px',
     maxWidth: isDesktop ? '800px' : '600px',
     minHeight: '100vh',
-    transition: 'opacity 1s ease-in',
+    transition: 'opacity 1s cubic-bezier(0.2, 0.8, 0.2, 1)',
     position: 'relative',
     opacity: isVisible ? 1 : 0,
   };
@@ -141,38 +186,40 @@ const MinimalPortfolio = () => {
   // Additional styles
   const styles = {
     name: {
-      fontSize: isDesktop ? '48px' : '32px',
+      fontSize: isDesktop ? '52px' : '36px',
       margin: '0 0 10px 0',
-      fontWeight: 450,
+      fontWeight: 500,
       letterSpacing: '-0.03em',
       lineHeight: 1.1,
       color: darkMode ? '#ffffff' : '#000000',
       textRendering: 'optimizeLegibility',
     },
     tagline: {
-      fontSize: isDesktop ? '24px' : '20px',
-      margin: '0 0 25px 0',
+      fontSize: isDesktop ? '26px' : '22px',
+      margin: '0 0 30px 0',
       fontWeight: 450,
       letterSpacing: '-0.02em',
       lineHeight: 1.2,
-      color: darkMode ? 'rgba(255, 255, 255, 0.9)' : 'rgba(0, 0, 0, 0.9)',
+      color: darkMode ? 'rgba(255, 255, 255, 0.95)' : 'rgba(0, 0, 0, 0.85)',
       textRendering: 'optimizeLegibility',
     },
     description: {
       fontSize: isDesktop ? '18px' : '16px',
-      lineHeight: '1.6',
-      marginBottom: '30px',
+      lineHeight: '1.4',
+      marginBottom: '35px',
+      maxWidth: '680px',
     },
     dartmouthLink: {
       textDecoration: 'none',
       color: darkMode ? '#8bc34a' : '#00693e',
       fontWeight: 500,
+      transition: 'color 0.3s cubic-bezier(0.2, 0.8, 0.2, 1), transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1)',
     },
     linkContainer: {
       display: 'flex',
       alignItems: 'center',
-      gap: '8px',
-      marginBottom: '40px',
+      gap: '10px',
+      marginBottom: '42px',
     },
     linkStyle: {
       textDecoration: 'none',
@@ -182,60 +229,69 @@ const MinimalPortfolio = () => {
       position: 'relative',
     },
     linkSeparator: {
-      color: darkMode ? '#ffffff' : '#000000',
-      opacity: 0.6,
+      color: darkMode ? 'rgba(255, 255, 255, 0.4)' : 'rgba(0, 0, 0, 0.3)',
+      margin: '0 2px',
     },
     bottomLogo: {
       marginTop: '40px',
       fontSize: isDesktop ? '16px' : '14px',
       fontWeight: 600,
-      color: darkMode ? '#cccccc' : '#999999',
-      opacity: 0.8,
+      color: darkMode ? 'rgba(255, 255, 255, 0.7)' : 'rgba(0, 0, 0, 0.6)',
+      opacity: 0.3,
       alignSelf: 'flex-start',
+      letterSpacing: '0.02em',
     },
     // Dark mode toggle styles with higher z-index
     toggleContainer: {
       position: 'absolute',
-      top: '20px',
-      right: '20px',
-      display: 'flex',
-      alignItems: 'center',
-      cursor: 'pointer',
+      top: '22px',
+      right: '24px',
       zIndex: 10,
+      transition: 'transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1)',
     },
-    toggleSwitch: {
-      position: 'relative',
-      width: '50px',
-      height: '24px',
-      backgroundColor: darkMode ? '#4cd137' : '#ccc',
-      borderRadius: '12px',
-      transition: 'background-color 0.3s',
-    },
-    toggleSwitchCircle: {
+    moonIcon: {
+      width: '22px',
+      height: '22px',
+      color: '#ffffff',
+      transition: 'transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1)',
+      transform: darkMode ? 'rotate(0deg)' : 'rotate(-90deg) scale(0.5)',
+      opacity: darkMode ? 1 : 0,
       position: 'absolute',
-      top: '2px',
-      left: darkMode ? '26px' : '2px',
-      width: '20px',
-      height: '20px',
-      backgroundColor: '#fff',
-      borderRadius: '50%',
-      transition: 'left 0.3s',
     },
-    toggleLabel: {
-      marginLeft: '8px',
-      fontSize: '0.9rem',
-      color: darkMode ? '#ffffff' : '#000000',
+    sunIcon: {
+      width: '24px',
+      height: '24px',
+      color: '#FFB700',
+      transition: 'transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1)',
+      transform: darkMode ? 'rotate(90deg) scale(0.5)' : 'rotate(0deg)',
+      opacity: darkMode ? 0 : 1,
+      position: 'absolute',
     },
   };
 
+  // Sun SVG component
+  const SunIcon = () => (
+    <svg style={styles.sunIcon} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M12 17C14.7614 17 17 14.7614 17 12C17 9.23858 14.7614 7 12 7C9.23858 7 7 9.23858 7 12C7 14.7614 9.23858 17 12 17Z" fill="currentColor" />
+      <path d="M12 1V3M12 21V23M1 12H3M21 12H23M4.22 4.22L5.64 5.64M18.36 18.36L19.78 19.78M4.22 19.78L5.64 18.36M18.36 5.64L19.78 4.22" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+    </svg>
+  );
+  
+  // Moon SVG component
+  const MoonIcon = () => (
+    <svg style={styles.moonIcon} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M21.5 14.0784C20.3003 14.7189 18.9341 15.0821 17.4849 15.0821C12.9717 15.0821 9.31313 11.4235 9.31313 6.91035C9.31313 5.46099 9.6764 4.09479 10.3168 2.895C5.98551 3.94127 2.75 7.76291 2.75 12.3407C2.75 17.8003 7.13939 22.1896 12.5989 22.1896C17.1768 22.1896 20.9984 18.9541 22.0447 14.6228C21.8694 14.4475 21.6942 14.2722 21.5 14.0784Z" fill="currentColor" stroke="currentColor" strokeWidth="1.5" />
+    </svg>
+  );
+
   return (
     <div style={wrapperStyles}>
-      {/* Dark Mode Toggle */}
+      {/* Dark Mode Toggle - Sun/Moon Icon */}
       <div style={styles.toggleContainer} onClick={() => setDarkMode(prev => !prev)}>
-        <div style={styles.toggleSwitch}>
-          <div style={styles.toggleSwitchCircle}></div>
+        <div className="theme-toggle">
+          <SunIcon />
+          <MoonIcon />
         </div>
-        <span style={styles.toggleLabel}>Dark Mode</span>
       </div>
 
       <div style={containerStyles}>
@@ -252,21 +308,20 @@ const MinimalPortfolio = () => {
               textDecoration: 'none',
               color: darkMode ? '#c792ea' : '#571ce0',
               fontWeight: 600,
+              transition: 'color 0.3s cubic-bezier(0.2, 0.8, 0.2, 1), transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1)',
             }}
+            className="clickable-link"
           >
-            CourseMe
-          </a>
-          <span style={{ color: '#FD5E53', fontWeight: 600 }}>.</span> <br />
+            CourseMe</a><span style={{ color: '#FD5E53', fontWeight: 600 }}>.</span> <br />
           Studying Computer Science at{' '}
           <a
             href="https://home.dartmouth.edu/"
             target="_blank"
             rel="noopener noreferrer"
             style={styles.dartmouthLink}
+            className="clickable-link"
           >
-            Dartmouth
-          </a>
-          . <br />
+            Dartmouth</a>. <br />
           Reach out — I'm always <a
             href="#"
             style={styles.linkStyle}
@@ -302,7 +357,7 @@ const MinimalPortfolio = () => {
         {/* GitHub Heartbeat Component - Start animation after text elements appear */}
         <GithubHeartbeat animationDelay={2500} />
 
-        <div style={styles.bottomLogo}>RD/&gt;</div>
+        <div style={styles.bottomLogo} className="logo-animation">RD/&gt;</div>
       </div>
     </div>
   );
