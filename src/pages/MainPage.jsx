@@ -299,8 +299,8 @@ const MinimalPortfolio = () => {
           </a>
         </div>
 
-        {/* GitHub Heartbeat Component */}
-        <GithubHeartbeat />
+        {/* GitHub Heartbeat Component - Start animation after text elements appear */}
+        <GithubHeartbeat animationDelay={2500} />
 
         <div style={styles.bottomLogo}>RD/&gt;</div>
       </div>

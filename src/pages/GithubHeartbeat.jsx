@@ -71,7 +71,7 @@ const CustomTooltip = ({ active, payload, label, isDarkMode }) => {
   return null;
 };
 
-const GithubHeartbeat = () => {
+const GithubHeartbeat = ({ animationDelay = 0 }) => {
   const [contributionData, setContributionData] = useState([]);
   const [totalContributions, setTotalContributions] = useState(0);
   const [error, setError] = useState(null);
@@ -80,6 +80,7 @@ const GithubHeartbeat = () => {
   const [animationProgress, setAnimationProgress] = useState(0);
   const [isLoaded, setIsLoaded] = useState(false);
   const animationRef = useRef(null);
+  const animationStartedRef = useRef(false);
 
   // Add keyframe animations for the wave reveal
   useEffect(() => {
@@ -214,11 +215,7 @@ const GithubHeartbeat = () => {
         setContributionData(data);
         setIsLoaded(true);
         
-        // Start the animation once data is loaded
-        // Add a small delay before starting the animation
-        setTimeout(() => {
-          startWaveAnimation();
-        }, 300);
+        // Don't start animation immediately - we'll coordinate it with text animations
       } catch (err) {
         console.error('Error fetching contributions:', err);
         setError(err.message);
@@ -227,6 +224,22 @@ const GithubHeartbeat = () => {
 
     fetchContributions();
   }, []);
+  
+  // New effect to coordinate animations based on the animationDelay prop
+  useEffect(() => {
+    if (isLoaded && !animationStartedRef.current) {
+      // Use the animationDelay prop to coordinate with text animations
+      // Default is 2.5s from initial text animations (2.4s for text + 0.1s buffer)
+      const startDelay = animationDelay || 2500;
+      
+      const timer = setTimeout(() => {
+        startWaveAnimation();
+        animationStartedRef.current = true;
+      }, startDelay);
+      
+      return () => clearTimeout(timer);
+    }
+  }, [isLoaded, animationDelay]);
   
   // Function to animate the wave reveal
   const startWaveAnimation = () => {
@@ -298,7 +311,8 @@ const GithubHeartbeat = () => {
     backgroundColor: isDarkMode ? 'rgba(30, 30, 30, 0.8)' : 'rgba(255, 255, 255, 0.8)',
     border: `1px solid ${isDarkMode ? 'rgba(10, 132, 255, 0.3)' : 'rgba(0, 122, 255, 0.2)'}`,
     opacity: 0,
-    animation: isLoaded ? 'fadeIn 1s ease-in-out 2s forwards' : 'none',
+    // Use the same animationDelay for the fadeIn of the text
+    animation: isLoaded ? `fadeIn 1s ease-in-out 0.5s forwards` : 'none',
   };
 
   const waveChartStyle = {
