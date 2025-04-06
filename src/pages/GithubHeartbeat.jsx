@@ -45,17 +45,21 @@ const CustomTooltip = ({ active, payload, label, isDarkMode }) => {
     
     return (
       <div style={{
-        backgroundColor: isDarkMode ? 'rgba(30, 30, 30, 0.95)' : 'rgba(255, 255, 255, 0.95)',
-        border: `1px solid ${isDarkMode ? 'rgba(10, 132, 255, 0.5)' : 'rgba(0, 122, 255, 0.2)'}`,
-        borderRadius: '10px',
-        padding: '8px 12px',
-        boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
+        backgroundColor: isDarkMode ? 'rgba(30, 30, 30, 0.85)' : 'rgba(255, 255, 255, 0.85)',
+        border: `1px solid ${isDarkMode ? 'rgba(10, 132, 255, 0.3)' : 'rgba(0, 122, 255, 0.15)'}`,
+        borderRadius: '12px',
+        padding: '10px 14px',
+        boxShadow: '0 4px 20px rgba(0, 0, 0, 0.12)',
         color: isDarkMode ? '#fff' : '#000',
         fontSize: '13px',
         fontFamily: "-apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Inter', sans-serif",
         pointerEvents: 'auto',
+        backdropFilter: 'blur(8px)',
+        WebkitBackdropFilter: 'blur(8px)',
+        transition: 'opacity 0.2s cubic-bezier(0.2, 0.8, 0.2, 1), transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1)',
+        transform: 'translateY(-2px)',
       }}>
-        <p style={{ margin: '0 0 4px 0', fontWeight: 500 }}>{formattedDate}</p>
+        <p style={{ margin: '0 0 4px 0', fontWeight: 600, letterSpacing: '-0.01em' }}>{formattedDate}</p>
         <p style={{ margin: 0 }}>
           <span style={{ 
             color: isDarkMode ? '#5AC8FA' : '#007AFF',
@@ -71,7 +75,7 @@ const CustomTooltip = ({ active, payload, label, isDarkMode }) => {
   return null;
 };
 
-const GithubHeartbeat = () => {
+const GithubHeartbeat = ({ animationDelay = 0 }) => {
   const [contributionData, setContributionData] = useState([]);
   const [totalContributions, setTotalContributions] = useState(0);
   const [error, setError] = useState(null);
@@ -80,6 +84,7 @@ const GithubHeartbeat = () => {
   const [animationProgress, setAnimationProgress] = useState(0);
   const [isLoaded, setIsLoaded] = useState(false);
   const animationRef = useRef(null);
+  const animationStartedRef = useRef(false);
 
   // Add keyframe animations for the wave reveal
   useEffect(() => {
@@ -214,11 +219,7 @@ const GithubHeartbeat = () => {
         setContributionData(data);
         setIsLoaded(true);
         
-        // Start the animation once data is loaded
-        // Add a small delay before starting the animation
-        setTimeout(() => {
-          startWaveAnimation();
-        }, 300);
+        // Don't start animation immediately - we'll coordinate it with text animations
       } catch (err) {
         console.error('Error fetching contributions:', err);
         setError(err.message);
@@ -227,6 +228,22 @@ const GithubHeartbeat = () => {
 
     fetchContributions();
   }, []);
+  
+  // New effect to coordinate animations based on the animationDelay prop
+  useEffect(() => {
+    if (isLoaded && !animationStartedRef.current) {
+      // Use the animationDelay prop to coordinate with text animations
+      // Default is 2.5s from initial text animations (2.4s for text + 0.1s buffer)
+      const startDelay = animationDelay || 2500;
+      
+      const timer = setTimeout(() => {
+        startWaveAnimation();
+        animationStartedRef.current = true;
+      }, startDelay);
+      
+      return () => clearTimeout(timer);
+    }
+  }, [isLoaded, animationDelay]);
   
   // Function to animate the wave reveal
   const startWaveAnimation = () => {
@@ -291,21 +308,24 @@ const GithubHeartbeat = () => {
     fontWeight: 500,
     fontFamily: "-apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Inter', sans-serif",
     textShadow: 'none',
-    backdropFilter: 'blur(20px)',
-    WebkitBackdropFilter: 'blur(20px)',
-    padding: '6px 12px',
-    borderRadius: '10px',
-    backgroundColor: isDarkMode ? 'rgba(30, 30, 30, 0.8)' : 'rgba(255, 255, 255, 0.8)',
+    backdropFilter: 'blur(8px)',
+    WebkitBackdropFilter: 'blur(8px)',
+    padding: '8px 14px',
+    borderRadius: '12px',
+    backgroundColor: isDarkMode ? 'rgba(30, 30, 30, 0.7)' : 'rgba(255, 255, 255, 0.7)',
     border: `1px solid ${isDarkMode ? 'rgba(10, 132, 255, 0.3)' : 'rgba(0, 122, 255, 0.2)'}`,
     opacity: 0,
-    animation: isLoaded ? 'fadeIn 1s ease-in-out 2s forwards' : 'none',
+    // Use the same animationDelay for the fadeIn of the text
+    animation: isLoaded ? `fadeIn 1s ease-in-out 0.5s forwards` : 'none',
+    boxShadow: '0 2px 8px rgba(0, 0, 0, 0.08)',
   };
 
   const waveChartStyle = {
     width: '100%',
     height: '100%',
     clipPath: `polygon(0% 0%, ${animationProgress * 100}% 0%, ${animationProgress * 100}% 100%, 0% 100%)`,
-    transition: 'clip-path 0.05s linear',
+    transition: 'clip-path 0.05s cubic-bezier(0.2, 0.8, 0.2, 1)',
+    filter: 'drop-shadow(0 2px 4px rgba(0, 0, 0, 0.05))',
   };
 
   // Colors for light and dark mode - Apple-inspired SF Blue colors
@@ -317,7 +337,7 @@ const GithubHeartbeat = () => {
     <div style={waveContainerStyle}>
       {error && <p style={{ color: 'red', position: 'absolute', top: 0, left: '20px' }}>Error: {error}</p>}
       <div style={waveContentStyle}>
-        {totalContributions} contributions in the last year
+        <span style={{ fontWeight: 600 }}>{totalContributions}</span> contributions in the last year
       </div>
       <div style={waveChartStyle}>
         <ResponsiveContainer>
@@ -327,12 +347,12 @@ const GithubHeartbeat = () => {
           >
             <defs>
               <linearGradient id="colorContributions" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor={primaryColor} stopOpacity={0.7} />
-                <stop offset="50%" stopColor={secondaryColor} stopOpacity={0.4} />
-                <stop offset="95%" stopColor={tertiaryColor} stopOpacity={0.2} />
+                <stop offset="5%" stopColor={primaryColor} stopOpacity={0.75} />
+                <stop offset="50%" stopColor={secondaryColor} stopOpacity={0.45} />
+                <stop offset="95%" stopColor={tertiaryColor} stopOpacity={0.25} />
               </linearGradient>
               <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
-                <feGaussianBlur stdDeviation="2" result="blur" />
+                <feGaussianBlur stdDeviation="3" result="blur" />
                 <feComposite in="SourceGraphic" in2="blur" operator="over" />
               </filter>
             </defs>
@@ -341,19 +361,20 @@ const GithubHeartbeat = () => {
               cursor={false}
             />
             <Area
-              type="monotone" 
+              type="natural" 
               dataKey="count"
               stroke={primaryColor}
-              strokeWidth={2}
-              fillOpacity={0.8}
+              strokeWidth={2.5}
+              fillOpacity={1}
               fill="url(#colorContributions)"
               animationDuration={0}
               isAnimationActive={false}
               activeDot={{ 
-                r: 5,
+                r: 6,
                 fill: isDarkMode ? '#5AC8FA' : '#007AFF',
                 stroke: isDarkMode ? '#1C093F' : '#fff',
-                strokeWidth: 1.5
+                strokeWidth: 2,
+                filter: 'url(#glow)'
               }}
               baseValue={0}
             />
