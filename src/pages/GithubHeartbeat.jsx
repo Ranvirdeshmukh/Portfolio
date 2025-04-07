@@ -83,6 +83,7 @@ const GithubHeartbeat = ({ animationDelay = 0 }) => {
   const [windowHeight, setWindowHeight] = useState(window.innerHeight);
   const [animationProgress, setAnimationProgress] = useState(0);
   const [isLoaded, setIsLoaded] = useState(false);
+  const [isTokenMissing, setIsTokenMissing] = useState(false);
   const animationRef = useRef(null);
   const animationStartedRef = useRef(false);
 
@@ -150,7 +151,8 @@ const GithubHeartbeat = ({ animationDelay = 0 }) => {
       // Get your GitHub token from environment variables
       const token = process.env.REACT_APP_GITHUB_TOKEN;
       if (!token) {
-        setError("GitHub token is not defined. Please set REACT_APP_GITHUB_TOKEN in your environment.");
+        setError("GitHub token is missing. Please add REACT_APP_GITHUB_TOKEN to your .env file.");
+        setIsTokenMissing(true);
         return;
       }
 
@@ -174,6 +176,7 @@ const GithubHeartbeat = ({ animationDelay = 0 }) => {
       `;
 
       try {
+        console.log("Attempting GitHub API request with token:", token ? "Token exists (first 4 chars: " + token.substring(0, 4) + "...)" : "No token");
         const response = await fetch('https://api.github.com/graphql', {
           method: 'POST',
           headers: {
@@ -182,10 +185,27 @@ const GithubHeartbeat = ({ animationDelay = 0 }) => {
           },
           body: JSON.stringify({ query }),
         });
+        
+        console.log("GitHub API response status:", response.status, response.statusText);
+        
+        // Log response details if not ok
+        if (!response.ok) {
+          const responseText = await response.text();
+          console.error("Response body:", responseText);
+          throw new Error(`GitHub API error: ${response.status} ${response.statusText} - ${responseText}`);
+        }
+        
         const result = await response.json();
-
+        
+        console.log("API result received:", result ? "Data received" : "No data");
         if (result.errors) {
+          console.error("GraphQL errors:", result.errors);
           throw new Error(result.errors.map(e => e.message).join(', '));
+        }
+        
+        if (!result.data || !result.data.user) {
+          console.error("Missing user data in response:", result);
+          throw new Error("No user data returned. Check your GitHub username in the query.");
         }
 
         const calendar = result.data.user.contributionsCollection.contributionCalendar;
@@ -223,6 +243,10 @@ const GithubHeartbeat = ({ animationDelay = 0 }) => {
       } catch (err) {
         console.error('Error fetching contributions:', err);
         setError(err.message);
+        
+        if (err.message.includes('token')) {
+          setIsTokenMissing(true);
+        }
       }
     };
 
@@ -320,6 +344,35 @@ const GithubHeartbeat = ({ animationDelay = 0 }) => {
     boxShadow: '0 2px 8px rgba(0, 0, 0, 0.08)',
   };
 
+  const errorStyle = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    backgroundColor: isDarkMode ? 'rgba(30, 30, 30, 0.9)' : 'rgba(255, 255, 255, 0.9)',
+    color: isDarkMode ? 'rgba(255, 255, 255, 0.9)' : 'rgba(0, 0, 0, 0.8)',
+    padding: '20px 25px',
+    borderRadius: '12px',
+    boxShadow: '0 4px 20px rgba(0, 0, 0, 0.15)',
+    maxWidth: '90%',
+    width: '450px',
+    textAlign: 'center',
+    zIndex: 10,
+    backdropFilter: 'blur(8px)',
+    WebkitBackdropFilter: 'blur(8px)',
+    border: `1px solid ${isDarkMode ? 'rgba(255, 69, 58, 0.4)' : 'rgba(255, 59, 48, 0.2)'}`,
+    fontSize: '15px',
+    lineHeight: 1.5,
+  };
+
+  const helpTextStyle = {
+    marginTop: '15px',
+    fontSize: '13px',
+    opacity: 0.8,
+    lineHeight: 1.6,
+    textAlign: 'left',
+  };
+
   const waveChartStyle = {
     width: '100%',
     height: '100%',
@@ -333,9 +386,42 @@ const GithubHeartbeat = ({ animationDelay = 0 }) => {
   const secondaryColor = isDarkMode ? '#5AC8FA' : '#64D2FF';
   const tertiaryColor = isDarkMode ? '#30B0C7' : '#CEECFD';
 
+  // Show a more helpful error message if token is missing
+  if (isTokenMissing) {
+    return (
+      <div style={waveContainerStyle}>
+        <div style={errorStyle}>
+          <h3 style={{ marginTop: 0, color: isDarkMode ? '#FF453A' : '#FF3B30' }}>GitHub Authentication Required</h3>
+          <p>{error}</p>
+          <div style={helpTextStyle}>
+            <p><strong>How to fix:</strong></p>
+            <ol style={{ paddingLeft: '20px', margin: '10px 0' }}>
+              <li>Go to <a href="https://github.com/settings/tokens" target="_blank" rel="noopener noreferrer" style={{ color: primaryColor }}>GitHub Token Settings</a></li>
+              <li>Create a new token with <code>read:user</code> scope</li>
+              <li>Add the token to your <code>.env</code> file:</li>
+              <code style={{ 
+                display: 'block', 
+                padding: '10px', 
+                background: isDarkMode ? 'rgba(0,0,0,0.3)' : 'rgba(0,0,0,0.05)', 
+                borderRadius: '4px',
+                marginTop: '8px',
+                fontFamily: 'monospace' 
+              }}>REACT_APP_GITHUB_TOKEN=your_new_token</code>
+              <li>Restart your development server</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div style={waveContainerStyle}>
-      {error && <p style={{ color: 'red', position: 'absolute', top: 0, left: '20px' }}>Error: {error}</p>}
+      {error && !isTokenMissing && (
+        <div style={{...errorStyle, top: '20px', transform: 'translateX(-50%)'}}>
+          <p style={{ margin: 0 }}>Error: {error}</p>
+        </div>
+      )}
       <div style={waveContentStyle}>
         <span style={{ fontWeight: 600 }}>{totalContributions}</span> contributions in the last year
       </div>
