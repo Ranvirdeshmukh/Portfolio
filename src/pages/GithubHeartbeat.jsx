@@ -84,6 +84,7 @@ const GithubHeartbeat = ({ animationDelay = 0 }) => {
   const [animationProgress, setAnimationProgress] = useState(0);
   const [isLoaded, setIsLoaded] = useState(false);
   const [isTokenMissing, setIsTokenMissing] = useState(false);
+  const [useDemoData, setUseDemoData] = useState(false);
   const animationRef = useRef(null);
   const animationStartedRef = useRef(false);
 
@@ -138,6 +139,37 @@ const GithubHeartbeat = ({ animationDelay = 0 }) => {
     return () => observer.disconnect();
   }, []);
 
+  // Demo data generation for fallback when token is missing
+  const generateDemoData = () => {
+    const demoData = [];
+    const today = new Date();
+    
+    // Generate a year's worth of dummy data
+    for (let i = 365; i >= 0; i--) {
+      const date = new Date();
+      date.setDate(today.getDate() - i);
+      
+      // Create some random data with patterns (more activity on weekdays, less on weekends)
+      const dayOfWeek = date.getDay();
+      const isWeekend = dayOfWeek === 0 || dayOfWeek === 6;
+      
+      // Base contribution is higher for weekdays
+      let baseContribution = isWeekend ? Math.floor(Math.random() * 2) : Math.floor(Math.random() * 5);
+      
+      // Add some patterns - bursts of activity every ~2 weeks
+      if (i % 14 < 5) {
+        baseContribution += Math.floor(Math.random() * 4);
+      }
+      
+      demoData.push({
+        date: date.toISOString().split('T')[0],
+        contributionCount: baseContribution
+      });
+    }
+    
+    return demoData;
+  };
+
   useEffect(() => {
     const fetchContributions = async () => {
       // Calculate the date range for the past year.
@@ -148,11 +180,25 @@ const GithubHeartbeat = ({ animationDelay = 0 }) => {
       const fromISO = fromDate.toISOString().split('T')[0] + "T00:00:00Z";
       const toISO = toDate.toISOString().split('T')[0] + "T23:59:59Z";
 
-      // Get your GitHub token from environment variables
-      const token = process.env.REACT_APP_GITHUB_TOKEN;
+      // Try to get GitHub token from various environment variables (handling different naming conventions)
+      const token = process.env.REACT_APP_GITHUB_TOKEN || 
+                     process.env.VITE_GITHUB_TOKEN || 
+                     process.env.GITHUB_TOKEN ||
+                     process.env.NEXT_PUBLIC_GITHUB_TOKEN;
+                     
       if (!token) {
-        setError("GitHub token is missing. Please add REACT_APP_GITHUB_TOKEN to your .env file.");
+        console.warn("GitHub token is missing. Using demo data.");
+        setError("GitHub token is missing. Using demo data instead.");
         setIsTokenMissing(true);
+        setUseDemoData(true);
+        
+        // Use demo data as fallback
+        const demoData = generateDemoData();
+        const totalDemoContributions = demoData.reduce((sum, day) => sum + day.contributionCount, 0);
+        
+        setTotalContributions(totalDemoContributions);
+        processContributionData(demoData);
+        setIsLoaded(true);
         return;
       }
 
@@ -176,7 +222,7 @@ const GithubHeartbeat = ({ animationDelay = 0 }) => {
       `;
 
       try {
-        console.log("Attempting GitHub API request with token:", token ? "Token exists (first 4 chars: " + token.substring(0, 4) + "...)" : "No token");
+        console.log("Attempting GitHub API request with token");
         const response = await fetch('https://api.github.com/graphql', {
           method: 'POST',
           headers: {
@@ -188,16 +234,32 @@ const GithubHeartbeat = ({ animationDelay = 0 }) => {
         
         console.log("GitHub API response status:", response.status, response.statusText);
         
-        // Log response details if not ok
+        // Handle non-OK responses
         if (!response.ok) {
           const responseText = await response.text();
           console.error("Response body:", responseText);
+          
+          // If authentication fails, use demo data
+          if (response.status === 401) {
+            console.warn("GitHub authentication failed. Using demo data instead.");
+            setError("GitHub authentication failed. Using demo data instead.");
+            setIsTokenMissing(true);
+            setUseDemoData(true);
+            
+            const demoData = generateDemoData();
+            const totalDemoContributions = demoData.reduce((sum, day) => sum + day.contributionCount, 0);
+            
+            setTotalContributions(totalDemoContributions);
+            processContributionData(demoData);
+            setIsLoaded(true);
+            return;
+          }
+          
           throw new Error(`GitHub API error: ${response.status} ${response.statusText} - ${responseText}`);
         }
         
         const result = await response.json();
         
-        console.log("API result received:", result ? "Data received" : "No data");
         if (result.errors) {
           console.error("GraphQL errors:", result.errors);
           throw new Error(result.errors.map(e => e.message).join(', '));
@@ -211,43 +273,54 @@ const GithubHeartbeat = ({ animationDelay = 0 }) => {
         const calendar = result.data.user.contributionsCollection.contributionCalendar;
         setTotalContributions(calendar.totalContributions);
         
-        // Process the data to make it more wave-like
-        let data = transformContributionDays(calendar.weeks);
-        
-        // Add some gaps by filtering out some days to make the wave look better
-        // but keep all days with contributions to ensure accuracy
-        data = data.filter((day, index) => 
-          day.contributionCount > 0 || index % 2 !== 0
-        );
-        
-        // Create a separate visual value for the wave while preserving the exact count
-        data = data.map((day, index) => {
-          // Create a separate visual value for the wave
-          // Base value ensures the wave starts from the bottom
-          const baseValue = 5;
-          const visualValue = baseValue + (day.contributionCount > 0 ? day.contributionCount * 2 : 1) + 
-                             Math.abs(Math.sin(index * 0.15)) * 6;
-          
-          return {
-            ...day,
-            // Keep the original contribution count
-            // Add a visual count for the wave display only
-            count: visualValue
-          };
-        });
-        
-        setContributionData(data);
+        // Process the contribution data
+        processContributionData(transformContributionDays(calendar.weeks));
         setIsLoaded(true);
         
-        // Don't start animation immediately - we'll coordinate it with text animations
       } catch (err) {
         console.error('Error fetching contributions:', err);
         setError(err.message);
         
-        if (err.message.includes('token')) {
+        if (err.message.includes('token') || err.message.includes('credentials')) {
           setIsTokenMissing(true);
+          setUseDemoData(true);
+          
+          // Use demo data as fallback for any auth errors
+          const demoData = generateDemoData();
+          const totalDemoContributions = demoData.reduce((sum, day) => sum + day.contributionCount, 0);
+          
+          setTotalContributions(totalDemoContributions);
+          processContributionData(demoData);
+          setIsLoaded(true);
         }
       }
+    };
+    
+    // Helper function to process contribution data for display
+    const processContributionData = (data) => {
+      // Add some gaps by filtering out some days to make the wave look better
+      // but keep all days with contributions to ensure accuracy
+      data = data.filter((day, index) => 
+        day.contributionCount > 0 || index % 2 !== 0
+      );
+      
+      // Create a separate visual value for the wave while preserving the exact count
+      data = data.map((day, index) => {
+        // Create a separate visual value for the wave
+        // Base value ensures the wave starts from the bottom
+        const baseValue = 5;
+        const visualValue = baseValue + (day.contributionCount > 0 ? day.contributionCount * 2 : 1) + 
+                           Math.abs(Math.sin(index * 0.15)) * 6;
+        
+        return {
+          ...day,
+          // Keep the original contribution count
+          // Add a visual count for the wave display only
+          count: visualValue
+        };
+      });
+      
+      setContributionData(data);
     };
 
     fetchContributions();
@@ -386,8 +459,8 @@ const GithubHeartbeat = ({ animationDelay = 0 }) => {
   const secondaryColor = isDarkMode ? '#5AC8FA' : '#64D2FF';
   const tertiaryColor = isDarkMode ? '#30B0C7' : '#CEECFD';
 
-  // Show a more helpful error message if token is missing
-  if (isTokenMissing) {
+  // Show a more helpful error message if token is missing and not using demo data
+  if (isTokenMissing && !useDemoData) {
     return (
       <div style={waveContainerStyle}>
         <div style={errorStyle}>
@@ -398,7 +471,7 @@ const GithubHeartbeat = ({ animationDelay = 0 }) => {
             <ol style={{ paddingLeft: '20px', margin: '10px 0' }}>
               <li>Go to <a href="https://github.com/settings/tokens" target="_blank" rel="noopener noreferrer" style={{ color: primaryColor }}>GitHub Token Settings</a></li>
               <li>Create a new token with <code>read:user</code> scope</li>
-              <li>Add the token to your <code>.env</code> file:</li>
+              <li>Add the token to your environment variables:</li>
               <code style={{ 
                 display: 'block', 
                 padding: '10px', 
@@ -407,7 +480,7 @@ const GithubHeartbeat = ({ animationDelay = 0 }) => {
                 marginTop: '8px',
                 fontFamily: 'monospace' 
               }}>REACT_APP_GITHUB_TOKEN=your_new_token</code>
-              <li>Restart your development server</li>
+              <li>For production environments, add this environment variable in your hosting platform settings</li>
             </ol>
           </div>
         </div>
@@ -417,13 +490,14 @@ const GithubHeartbeat = ({ animationDelay = 0 }) => {
 
   return (
     <div style={waveContainerStyle}>
-      {error && !isTokenMissing && (
+      {error && !useDemoData && (
         <div style={{...errorStyle, top: '20px', transform: 'translateX(-50%)'}}>
           <p style={{ margin: 0 }}>Error: {error}</p>
         </div>
       )}
       <div style={waveContentStyle}>
         <span style={{ fontWeight: 600 }}>{totalContributions}</span> contributions in the last year
+        {useDemoData && <span style={{ fontSize: '10px', opacity: 0.7, marginLeft: '5px' }}>(demo data)</span>}
       </div>
       <div style={waveChartStyle}>
         <ResponsiveContainer>
