@@ -174,11 +174,19 @@ const GithubHeartbeat = ({ animationDelay = 0 }) => {
     const fetchContributions = async () => {
       // Calculate the date range for the past year.
       const toDate = new Date();
-      const fromDate = new Date();
+      const fromDate = new Date(toDate);  // Clone the date to avoid reference issues
       fromDate.setFullYear(fromDate.getFullYear() - 1);
+      
       // Construct ISO strings for the query (covering the whole day).
       const fromISO = fromDate.toISOString().split('T')[0] + "T00:00:00Z";
       const toISO = toDate.toISOString().split('T')[0] + "T23:59:59Z";
+      
+      console.log("GitHub Contribution Date Range:", {
+        from: fromDate.toLocaleDateString(),
+        to: toDate.toLocaleDateString(),
+        fromISO,
+        toISO
+      });
 
       // Try to get GitHub token from various environment variables (handling different naming conventions)
       const token = process.env.REACT_APP_GITHUB_TOKEN || 
