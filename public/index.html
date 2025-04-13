@@ -2,11 +2,22 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <link 
-      rel="icon"
-      type="image/png"
-      href="%PUBLIC_URL%/logo.png"
-    />
+    <link id="favicon" rel="icon" type="image/png" href="%PUBLIC_URL%/logo.png" />
+    <script>
+      // Function to set favicon based on color scheme
+      function setFavicon() {
+        const darkModeOn = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        document.getElementById('favicon').href = darkModeOn ? '%PUBLIC_URL%/logodark.png' : '%PUBLIC_URL%/logo.png';
+      }
+      
+      // Set favicon on load
+      setFavicon();
+      
+      // Update favicon if user changes their preference
+      if (window.matchMedia) {
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', setFavicon);
+      }
+    </script>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#000000" />
     <meta
