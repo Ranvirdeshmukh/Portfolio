@@ -93,19 +93,19 @@ const MinimalPortfolio = () => {
       }
       
       .clickable-link:hover {
-        background-color: rgba(${darkMode ? '255, 255, 255, 0.1' : '0, 0, 0, 0.05'});
-        transform: translateY(-2px);
-        box-shadow: 0 2px 8px rgba(${darkMode ? '255, 255, 255, 0.2' : '0, 0, 0, 0.1'});
+        background-color: rgba(${darkMode ? '255, 255, 255, 0.05' : '0, 0, 0, 0.03'});
+        transform: translateY(-1px);
+        box-shadow: 0 1px 4px rgba(${darkMode ? '255, 255, 255, 0.1' : '0, 0, 0, 0.05'});
       }
       
       .clickable-link::after {
         content: '';
         position: absolute;
-        bottom: -2px;
+        bottom: -1px;
         left: 0;
         width: 100%;
-        height: 2px;
-        background-color: ${darkMode ? '#c792ea' : '#571ce0'};
+        height: 1px;
+        background-color: ${darkMode ? 'rgba(255, 255, 255, 0.4)' : 'rgba(0, 0, 0, 0.25)'};
         transform: scaleX(0);
         transform-origin: center;
         transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
@@ -301,18 +301,58 @@ const MinimalPortfolio = () => {
         <p style={styles.description} className="description-animation">
           I'm currently building{' '}
           <a
-            href="https://courseme.ai"
+            href="https://signpact.ai"
             target="_blank"
             rel="noopener noreferrer"
             style={{
               textDecoration: 'none',
-              color: darkMode ? '#c792ea' : '#571ce0',
+              color: darkMode ? '#ffffff' : '#000000',
               fontWeight: 600,
               transition: 'color 0.3s cubic-bezier(0.2, 0.8, 0.2, 1), transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1)',
             }}
             className="clickable-link"
           >
-            CourseMe</a><span style={{ color: '#FD5E53', fontWeight: 600 }}>.</span> <br />
+            SignPact
+          </a>
+          <span style={{ color: '#FD5E53', fontWeight: 600 }}>.</span>{' '}
+          <a 
+            href="https://signpact.ai" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            style={{ display: 'inline-block', margin: '12px 0 16px' }}
+          >
+          </a>
+          <br />
+          Previously I have built some widely used tools like{' '}
+          <a
+            href="https://courseme.ai"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              textDecoration: 'none',
+              color: darkMode ? '#ffffff' : '#000000',
+              fontWeight: 600,
+              transition: 'color 0.3s cubic-bezier(0.2, 0.8, 0.2, 1), transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1)',
+            }}
+            className="clickable-link"
+          >
+            CourseMe
+          </a> and{' '}
+          <a
+            href="https://apps.apple.com/us/app/meme-me-humor-personalized/id6482850278"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              textDecoration: 'none',
+              color: darkMode ? '#ffffff' : '#000000',
+              fontWeight: 600,
+              transition: 'color 0.3s cubic-bezier(0.2, 0.8, 0.2, 1), transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1)',
+            }}
+            className="clickable-link"
+          >
+            MemeMe
+          </a><span style={{ color: '#FD5E53', fontWeight: 600 }}>.</span>
+          <br />
           Studying Computer Science at{' '}
           <a
             href="https://home.dartmouth.edu/"
@@ -357,7 +397,6 @@ const MinimalPortfolio = () => {
         {/* GitHub Heartbeat Component - Start animation after text elements appear */}
         <GithubHeartbeat animationDelay={2500} />
 
-        <div style={styles.bottomLogo} className="logo-animation">RD/&gt;</div>
       </div>
     </div>
   );
