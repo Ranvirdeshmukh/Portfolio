@@ -198,14 +198,14 @@ const MinimalPortfolio = () => {
       lineHeight: '1.6', // Increased line height
       marginBottom: '40px', // Increased margin
       maxWidth: '680px',
-      color: darkMode ? 'rgba(255, 255, 255, 0.9)' : '#1d1d1f', // Adjust color
+      color: darkMode ? 'rgba(255, 255, 255, 0.85)' : '#515154', // Lighter base color for paragraph
       letterSpacing: '0.01em', // Slight spacing increase
     },
     // Consolidated link style
     linkBaseStyle: {
       textDecoration: 'none',
-      color: 'inherit', // Inherit color from parent paragraph
-      fontWeight: 500, // Slightly bolder than normal text (reverted)
+      color: darkMode ? '#f5f5f7' : '#1d1d1f',
+      fontWeight: 400, // Same weight as surrounding text
       transition: 'color 0.3s ease',
     },
     // Specific style for Dartmouth (if needed, otherwise use base)
