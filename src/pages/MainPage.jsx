@@ -198,14 +198,14 @@ const MinimalPortfolio = () => {
       lineHeight: '1.6', // Increased line height
       marginBottom: '40px', // Increased margin
       maxWidth: '680px',
-      color: darkMode ? 'rgba(255, 255, 255, 0.9)' : '#1d1d1f', // Adjust color
+      color: darkMode ? 'rgba(255, 255, 255, 0.85)' : '#515154', // Lighter base color for paragraph
       letterSpacing: '0.01em', // Slight spacing increase
     },
     // Consolidated link style
     linkBaseStyle: {
       textDecoration: 'none',
-      color: 'inherit', // Inherit color from parent paragraph
-      fontWeight: 500, // Slightly bolder than normal text (reverted)
+      color: darkMode ? '#f5f5f7' : '#1d1d1f',
+      fontWeight: 400, // Same weight as surrounding text
       transition: 'color 0.3s ease',
     },
     // Specific style for Dartmouth (if needed, otherwise use base)
@@ -297,15 +297,7 @@ const MinimalPortfolio = () => {
         <h3 style={styles.tagline} className="tagline-animation">I write software and make videos.</h3>
 
         <p style={styles.description} className="description-animation">
-          Building{' '}
-          <a
-            href="https://signpact.ai/"
-            target="_blank"
-            rel="noopener noreferrer"
-            style={styles.linkBaseStyle} // Use base style
-            className="clickable-link"
-          >
-            SignPact</a><span style={{ color: 'inherit', fontWeight: 400 }}>;</span> previously developed tools like{' '}
+          Having built widely-used tools like{' '}
           <a
             href="https://courseme.ai"
             target="_blank"
@@ -319,8 +311,16 @@ const MinimalPortfolio = () => {
             rel="noopener noreferrer"
             style={styles.linkBaseStyle} // Use base style
             className="clickable-link"
-          >Meme Me</a><span style={{ color: 'inherit', fontWeight: 400 }}>.</span> <br />
-          Studying Computer Science at{' '}
+          >Meme Me</a><span style={{ color: 'inherit', fontWeight: 400 }}>,</span> I'm now focused on building{' '}
+          <a
+            href="https://signpact.ai/"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={styles.linkBaseStyle} // Use base style
+            className="clickable-link"
+          >
+            SignPact</a><span style={{ color: 'inherit', fontWeight: 400 }}></span>
+          {/* Removed <br /> and added text directly */} while studying Computer Science at{' '}
           <a
             href="https://home.dartmouth.edu/"
             target="_blank"
@@ -328,7 +328,7 @@ const MinimalPortfolio = () => {
             style={{...styles.linkBaseStyle, ...styles.dartmouthLink}} // Combine base and specific
             className="clickable-link"
           >
-            Dartmouth</a>. <br />
+            Dartmouth</a><span style={{ color: 'inherit', fontWeight: 400 }}>.</span> <br />
           Reach out — I'm always <a
             href="#"
             style={styles.linkBaseStyle} // Use base style
