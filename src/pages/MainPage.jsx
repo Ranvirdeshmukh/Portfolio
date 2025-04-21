@@ -297,15 +297,7 @@ const MinimalPortfolio = () => {
         <h3 style={styles.tagline} className="tagline-animation">I write software and make videos.</h3>
 
         <p style={styles.description} className="description-animation">
-          Building{' '}
-          <a
-            href="https://signpact.ai/"
-            target="_blank"
-            rel="noopener noreferrer"
-            style={styles.linkBaseStyle} // Use base style
-            className="clickable-link"
-          >
-            SignPact</a><span style={{ color: 'inherit', fontWeight: 400 }}>;</span> previously developed tools like{' '}
+          Having built widely-used tools like{' '}
           <a
             href="https://courseme.ai"
             target="_blank"
@@ -319,7 +311,15 @@ const MinimalPortfolio = () => {
             rel="noopener noreferrer"
             style={styles.linkBaseStyle} // Use base style
             className="clickable-link"
-          >Meme Me</a><span style={{ color: 'inherit', fontWeight: 400 }}>.</span> <br />
+          >Meme Me</a><span style={{ color: 'inherit', fontWeight: 400 }}>,</span> I'm now focused on building{' '}
+          <a
+            href="https://signpact.ai/"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={styles.linkBaseStyle} // Use base style
+            className="clickable-link"
+          >
+            SignPact</a><span style={{ color: 'inherit', fontWeight: 400 }}>.</span> <br />
           Studying Computer Science at{' '}
           <a
             href="https://home.dartmouth.edu/"
