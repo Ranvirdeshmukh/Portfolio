@@ -215,7 +215,6 @@ const MinimalPortfolio = () => {
     // Specific style for Dartmouth (if needed, otherwise use base)
     dartmouthLink: {
       // Inherits from linkBaseStyle
-      color: '#00693e', // Dartmouth Green
     },
     linkContainer: {
       display: 'flex',
@@ -307,7 +306,7 @@ const MinimalPortfolio = () => {
             href="https://signpact.ai/"
             target="_blank"
             rel="noopener noreferrer"
-            style={{ ...styles.linkBaseStyle, color: '#1C39BB' }}
+            style={styles.linkBaseStyle} // Use base style
             className="clickable-link"
           >
             SignPact</a><span style={{ color: 'inherit', fontWeight: 400 }}>;</span> previously developed tools like{' '}
@@ -315,14 +314,14 @@ const MinimalPortfolio = () => {
             href="https://courseme.ai"
             target="_blank"
             rel="noopener noreferrer"
-            style={{ ...styles.linkBaseStyle, color: '#571ce0' }}
+            style={styles.linkBaseStyle} // Use base style
             className="clickable-link"
            >CourseMe</a> and{' '}
            <a
             href="https://apps.apple.com/us/app/meme-me-humor-personalized/id6482850278"
             target="_blank"
             rel="noopener noreferrer"
-            style={{ ...styles.linkBaseStyle, color: '#571ce0' }}
+            style={styles.linkBaseStyle} // Use base style
             className="clickable-link"
           >Meme Me</a><span style={{ color: 'inherit', fontWeight: 400 }}>.</span> <br />
           Studying Computer Science at{' '}
@@ -366,7 +365,7 @@ const MinimalPortfolio = () => {
           </a>
         </div>
 
-        <GithubHeartbeat animationDelay={2500} />
+        <GithubHeartbeat animationDelay={2500} darkMode={darkMode} />
 
         <div style={styles.bottomLogo} className="logo-animation">RD/&gt;</div>
       </div>
