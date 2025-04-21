@@ -44,7 +44,7 @@ const CustomTooltip = ({ active, payload, label, isDarkMode }) => {
     const commitText = commitCount === 1 ? 'commit' : 'commits';
     
     // Minimalist Tooltip Colors
-    const tooltipBg = isDarkMode ? 'rgba(40, 40, 40, 0.85)' : 'rgba(245, 245, 245, 0.85)';
+    const tooltipBg = isDarkMode ? 'rgba(40, 40, 42, 0.85)' : 'rgba(242, 242, 247, 0.85)';
     const tooltipBorder = isDarkMode ? 'rgba(255, 255, 255, 0.15)' : 'rgba(0, 0, 0, 0.1)';
     const tooltipText = isDarkMode ? '#EAEAEA' : '#1d1d1f';
     const tooltipHighlight = isDarkMode ? '#CCCCCC' : '#515154';
@@ -393,7 +393,7 @@ const GithubHeartbeat = ({ animationDelay = 0, darkMode }) => {
   };
 
   // Minimalist Info Box Colors
-  const infoBoxBg = isDarkMode ? 'rgba(40, 40, 40, 0.7)' : 'rgba(250, 250, 250, 0.7)';
+  const infoBoxBg = isDarkMode ? 'rgba(40, 40, 42, 0.7)' : 'rgba(242, 242, 247, 0.7)';
   const infoBoxBorder = isDarkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.08)';
   const infoBoxText = isDarkMode ? 'rgba(255, 255, 255, 0.9)' : '#1d1d1f';
 
@@ -421,7 +421,7 @@ const GithubHeartbeat = ({ animationDelay = 0, darkMode }) => {
   };
 
   // Minimalist Error Box Colors
-  const errorBoxBg = isDarkMode ? 'rgba(40, 40, 40, 0.9)' : 'rgba(250, 250, 250, 0.9)';
+  const errorBoxBg = isDarkMode ? 'rgba(40, 40, 42, 0.9)' : 'rgba(242, 242, 247, 0.9)';
   const errorBoxBorder = isDarkMode ? 'rgba(255, 100, 100, 0.3)' : 'rgba(200, 0, 0, 0.15)'; // Muted red
   const errorBoxText = isDarkMode ? 'rgba(255, 255, 255, 0.9)' : '#1d1d1f';
   const errorHeadingText = isDarkMode ? '#FF8A80' : '#D32F2F'; // Muted red heading
@@ -468,9 +468,9 @@ const GithubHeartbeat = ({ animationDelay = 0, darkMode }) => {
   // Minimalist Grey Colors
   // Light Mode: Dark Grey (#1d1d1f), Medium Grey (#86868b), Light Grey (#EAEAEA)
   // Dark Mode: Light Grey (#EAEAEA), Medium Grey (#86868b), Dark Grey (#333333)
-  const gradientStartColor = isDarkMode ? '#333333' : '#EAEAEA';
+  const gradientStartColor = isDarkMode ? '#28282a' : '#f2f2f7';
   const gradientEndColor = isDarkMode ? '#86868b' : '#86868b';
-  const strokeColor = isDarkMode ? '#EAEAEA' : '#1d1d1f';
+  const strokeColor = isDarkMode ? '#cccccc' : '#515154';
 
   // Show a more helpful error message if token is missing and not using demo data
   if (isTokenMissing && !useDemoData) {
@@ -520,7 +520,7 @@ const GithubHeartbeat = ({ animationDelay = 0, darkMode }) => {
           >
             <defs>
               <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor={gradientStartColor} stopOpacity={isDarkMode ? 0.4 : 0.6}/>
+                <stop offset="5%" stopColor={gradientStartColor} stopOpacity={isDarkMode ? 0.5 : 0.7}/>
                 <stop offset="80%" stopColor={gradientEndColor} stopOpacity={0.1}/>
               </linearGradient>
             </defs>
@@ -532,7 +532,7 @@ const GithubHeartbeat = ({ animationDelay = 0, darkMode }) => {
               type="monotoneX"
               dataKey="count"
               stroke={strokeColor}
-              strokeWidth={1.5}
+              strokeWidth={2.0}
               fillOpacity={1}
               fill="url(#colorUv)"
             />

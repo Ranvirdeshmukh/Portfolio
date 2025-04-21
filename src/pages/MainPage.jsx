@@ -100,12 +100,7 @@ const MinimalPortfolio = () => {
       
       /* Minimal hover effect - subtle background */
       .clickable-link:hover {
-        background-color: ${darkMode ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0, 0, 0, 0.04)'}; /* Very subtle grey highlight */
-        /* Add slight padding and rounding for the highlight */
-        padding: 2px 4px;
-        margin: -2px -4px; /* Counteract padding to maintain layout */
-        border-radius: 4px;
-        text-decoration: none; /* Ensure no underline */
+        text-decoration: underline; /* Underline on hover */
       }
       
       .logo-animation {
@@ -153,8 +148,8 @@ const MinimalPortfolio = () => {
   // Full-screen wrapper - Restore dark/light mode background
   const wrapperStyles = {
     background: darkMode
-      ? 'linear-gradient(135deg, #1C093F 0%, #0C0F33 100%)' // Original dark
-      : 'linear-gradient(135deg, #f9f9f9 0%, #ffffff 100%)', // Original light
+      ? '#1c1c1e' // Simple dark grey (Apple-like)
+      : '#ffffff', // Simple white
     minHeight: '100vh',
     transition: 'background 0.5s cubic-bezier(0.2, 0.8, 0.2, 1), color 0.5s cubic-bezier(0.2, 0.8, 0.2, 1)',
     position: 'relative',
@@ -209,7 +204,7 @@ const MinimalPortfolio = () => {
     linkBaseStyle: {
       textDecoration: 'none',
       color: 'inherit', // Inherit color from parent paragraph
-      fontWeight: 400, // Same weight as surrounding text
+      fontWeight: 500, // Slightly bolder than normal text (reverted)
       transition: 'color 0.3s ease',
     },
     // Specific style for Dartmouth (if needed, otherwise use base)
