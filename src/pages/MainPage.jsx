@@ -9,6 +9,7 @@ import GithubHeartbeat from './GithubHeartbeat'; // adjust the path if needed
 const MinimalPortfolio = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [isDesktop, setIsDesktop] = useState(false);
+  const [darkMode, setDarkMode] = useState(false);
 
   // Function to open Gmail compose
   const openGmail = (e) => {
@@ -97,19 +98,58 @@ const MinimalPortfolio = () => {
         backface-visibility: hidden;
       }
       
-      /* Subtle hover effect - underline */
+      /* Original hover effect - slightly modified */
       .clickable-link:hover {
-        text-decoration: underline;
-        /* Optional: very subtle background for hover */
-        /* background-color: rgba(0, 122, 255, 0.05); */
+        background-color: rgba(${darkMode ? '255, 255, 255, 0.1' : '0, 0, 0, 0.05'});
+        transform: translateY(-2px);
+        box-shadow: 0 2px 8px rgba(${darkMode ? '255, 255, 255, 0.2' : '0, 0, 0, 0.1'});
+        text-decoration: none; /* Remove underline on hover if bg is added */
       }
       
-      /* Removed clickable-link::after rule */
+      /* Re-add clickable-link::after rule for underline effect (optional) */
+      .clickable-link::after {
+        content: '';
+        position: absolute;
+        bottom: -2px;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background-color: ${darkMode ? '#c792ea' : '#007aff'}; /* Purple for dark, blue for light */
+        transform: scaleX(0);
+        transform-origin: center;
+        transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+      }
+
+      .clickable-link:hover::after {
+        transform: scaleX(1);
+      }
       
       .logo-animation {
         opacity: 0.3;
         animation: subtleFadeIn 2.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
         animation-delay: 0.5s;
+      }
+
+      /* Re-add theme-toggle styles */
+      .theme-toggle {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background-color: ${darkMode ? 'rgba(30, 30, 40, 0.4)' : 'rgba(255, 255, 255, 0.7)'};
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        border: 1px solid ${darkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.05)'};
+        cursor: pointer;
+        box-shadow: ${darkMode ? '0 2px 10px rgba(0, 0, 0, 0.2)' : '0 2px 10px rgba(0, 0, 0, 0.05)'};
+        transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+      }
+
+      .theme-toggle:hover {
+        transform: translateY(-2px);
+        box-shadow: ${darkMode ? '0 4px 12px rgba(0, 0, 0, 0.3)' : '0 4px 12px rgba(0, 0, 0, 0.1)'};
       }
 
       @media (prefers-reduced-motion) {
@@ -124,18 +164,21 @@ const MinimalPortfolio = () => {
     return () => {
       document.head.removeChild(style);
     };
-  }, []);
+  }, [darkMode]);
 
-  // Full-screen wrapper - Cleaner background
+  // Full-screen wrapper - Restore dark/light mode background
   const wrapperStyles = {
-    background: '#ffffff', // Plain white background
+    background: darkMode
+      ? 'linear-gradient(135deg, #1C093F 0%, #0C0F33 100%)' // Original dark
+      : 'linear-gradient(135deg, #f9f9f9 0%, #ffffff 100%)', // Original light
     minHeight: '100vh',
+    transition: 'background 0.5s cubic-bezier(0.2, 0.8, 0.2, 1), color 0.5s cubic-bezier(0.2, 0.8, 0.2, 1)',
     position: 'relative',
   };
 
-  // Inner container style - Adjusted font color
+  // Inner container style - Restore dark/light mode text color
   const containerStyles = {
-    color: '#1d1d1f', // Apple's dark grey
+    color: darkMode ? '#ffffff' : '#1d1d1f', // White for dark, dark grey for light
     fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'SF Pro Display', 'Helvetica Neue', sans-serif",
     fontWeight: 400,
     display: 'flex',
@@ -158,7 +201,7 @@ const MinimalPortfolio = () => {
       fontWeight: 500, // Reverted to previous weight
       letterSpacing: '-0.03em', // Reverted to previous spacing
       lineHeight: 1.1,
-      color: '#1d1d1f',
+      color: darkMode ? '#ffffff' : '#1d1d1f', // Adjust color based on mode
       textRendering: 'optimizeLegibility',
     },
     tagline: {
@@ -167,7 +210,7 @@ const MinimalPortfolio = () => {
       fontWeight: 400, // Standard weight tagline
       letterSpacing: '-0.01em',
       lineHeight: 1.2,
-      color: '#515154', // Apple's medium grey
+      color: darkMode ? 'rgba(255, 255, 255, 0.95)' : '#515154', // Adjust color
       textRendering: 'optimizeLegibility',
     },
     description: {
@@ -175,13 +218,13 @@ const MinimalPortfolio = () => {
       lineHeight: '1.6', // Increased line height
       marginBottom: '40px', // Increased margin
       maxWidth: '680px',
-      color: '#1d1d1f', // Main text color
+      color: darkMode ? 'rgba(255, 255, 255, 0.9)' : '#1d1d1f', // Adjust color
       letterSpacing: '0.01em', // Slight spacing increase
     },
     // Consolidated link style
     linkBaseStyle: {
       textDecoration: 'none',
-      color: '#007aff', // Apple blue
+      color: darkMode ? '#c792ea' : '#007aff', // Purple for dark, blue for light
       fontWeight: 400, // Normal weight for links
       transition: 'color 0.3s ease',
     },
@@ -198,29 +241,77 @@ const MinimalPortfolio = () => {
     // Style for LinkedIn/GitHub links
     externalLinkStyle: {
       textDecoration: 'none',
-      color: '#515154', // Medium grey for external links
+      color: darkMode ? 'rgba(255, 255, 255, 0.9)' : '#515154', // Adjust color
       fontWeight: 500,
       display: 'inline-block',
       position: 'relative',
       transition: 'color 0.3s ease',
     },
     linkSeparator: {
-      color: '#d2d2d7', // Lighter grey separator
+      color: darkMode ? 'rgba(255, 255, 255, 0.4)' : '#d2d2d7', // Adjust color
       margin: '0 2px',
     },
     bottomLogo: {
       marginTop: '40px',
       fontSize: isDesktop ? '16px' : '14px',
       fontWeight: 600,
-      color: '#86868b', // Apple's light grey
-      opacity: 0.8, // Slightly more visible
+      color: darkMode ? 'rgba(255, 255, 255, 0.7)' : '#86868b', // Adjust color
+      opacity: darkMode ? 0.7 : 0.8, // Adjust opacity
       alignSelf: 'flex-start',
       letterSpacing: '0.02em',
     },
+    // Re-add toggleContainer and icon styles
+    toggleContainer: {
+      position: 'absolute',
+      top: '22px',
+      right: '24px',
+      zIndex: 10,
+      transition: 'transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1)',
+    },
+    moonIcon: {
+      width: '22px',
+      height: '22px',
+      color: '#ffffff',
+      transition: 'transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1)',
+      transform: darkMode ? 'rotate(0deg)' : 'rotate(-90deg) scale(0.5)',
+      opacity: darkMode ? 1 : 0,
+      position: 'absolute',
+    },
+    sunIcon: {
+      width: '24px',
+      height: '24px',
+      color: '#FFB700',
+      transition: 'transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1)',
+      transform: darkMode ? 'rotate(90deg) scale(0.5)' : 'rotate(0deg)',
+      opacity: darkMode ? 0 : 1,
+      position: 'absolute',
+    },
   };
+
+  // Re-add Sun and Moon SVG components
+  const SunIcon = () => (
+    <svg style={styles.sunIcon} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M12 17C14.7614 17 17 14.7614 17 12C17 9.23858 14.7614 7 12 7C9.23858 7 7 9.23858 7 12C7 14.7614 9.23858 17 12 17Z" fill="currentColor" />
+      <path d="M12 1V3M12 21V23M1 12H3M21 12H23M4.22 4.22L5.64 5.64M18.36 18.36L19.78 19.78M4.22 19.78L5.64 18.36M18.36 5.64L19.78 4.22" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+    </svg>
+  );
+
+  const MoonIcon = () => (
+    <svg style={styles.moonIcon} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M21.5 14.0784C20.3003 14.7189 18.9341 15.0821 17.4849 15.0821C12.9717 15.0821 9.31313 11.4235 9.31313 6.91035C9.31313 5.46099 9.6764 4.09479 10.3168 2.895C5.98551 3.94127 2.75 7.76291 2.75 12.3407C2.75 17.8003 7.13939 22.1896 12.5989 22.1896C17.1768 22.1896 20.9984 18.9541 22.0447 14.6228C21.8694 14.4475 21.6942 14.2722 21.5 14.0784Z" fill="currentColor" stroke="currentColor" strokeWidth="1.5" />
+    </svg>
+  );
 
   return (
     <div style={wrapperStyles}>
+      {/* Re-add Dark Mode Toggle - Sun/Moon Icon */}
+      <div style={styles.toggleContainer} onClick={() => setDarkMode(prev => !prev)}>
+        <div className="theme-toggle">
+          <SunIcon />
+          <MoonIcon />
+        </div>
+      </div>
+
       <div style={containerStyles}>
         <h2 style={styles.name} className="name-animation">Ranvir Deshmukh</h2>
         <h3 style={styles.tagline} className="tagline-animation">I write software and make videos.</h3>
@@ -234,7 +325,7 @@ const MinimalPortfolio = () => {
             style={styles.linkBaseStyle} // Use base style
             className="clickable-link"
           >
-            SignPact</a><span style={{ color: '#1d1d1f', fontWeight: 400 }}>;</span> previously developed tools like{' '}
+            SignPact</a><span style={{ color: darkMode ? 'rgba(255, 255, 255, 0.9)' : '#1d1d1f', fontWeight: 400 }}>;</span> previously developed tools like{' '}
           <a
             href="https://courseme.ai"
             target="_blank"
@@ -248,7 +339,7 @@ const MinimalPortfolio = () => {
             rel="noopener noreferrer"
             style={styles.linkBaseStyle} // Use base style
             className="clickable-link"
-          >Meme Me</a><span style={{ color: '#1d1d1f', fontWeight: 400 }}>.</span> <br />
+          >Meme Me</a><span style={{ color: darkMode ? 'rgba(255, 255, 255, 0.9)' : '#1d1d1f', fontWeight: 400 }}>.</span> <br />
           Studying Computer Science at{' '}
           <a
             href="https://home.dartmouth.edu/"
