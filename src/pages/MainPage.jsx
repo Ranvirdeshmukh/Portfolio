@@ -226,7 +226,7 @@ const MinimalPortfolio = () => {
         <h3 style={styles.tagline} className="tagline-animation">I write software and make videos.</h3>
 
         <p style={styles.description} className="description-animation">
-          I'm currently working on{' '}
+          Building{' '}
           <a
             href="https://signpact.ai/"
             target="_blank"
@@ -234,8 +234,7 @@ const MinimalPortfolio = () => {
             style={styles.linkBaseStyle} // Use base style
             className="clickable-link"
           >
-            SignPact</a><span style={{ color: '#1d1d1f', fontWeight: 400 }}>.</span> <br />
-          I've built some widely used tools like{' '}
+            SignPact</a><span style={{ color: '#1d1d1f', fontWeight: 400 }}>;</span> previously developed tools like{' '}
           <a
             href="https://courseme.ai"
             target="_blank"
