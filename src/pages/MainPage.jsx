@@ -148,8 +148,9 @@ const MinimalPortfolio = () => {
   // Full-screen wrapper - Restore dark/light mode background
   const wrapperStyles = {
     background: darkMode
-      ? '#1c1c1e' // Simple dark grey (Apple-like)
-      : '#ffffff', // Simple white
+    ? 'linear-gradient(135deg, #1C093F 0%, #0C0F33 100%)' // Original dark
+    : 'linear-gradient(135deg, #f9f9f9 0%, #ffffff 100%)', // Original light
+// Simple white
     minHeight: '100vh',
     transition: 'background 0.5s cubic-bezier(0.2, 0.8, 0.2, 1), color 0.5s cubic-bezier(0.2, 0.8, 0.2, 1)',
     position: 'relative',
