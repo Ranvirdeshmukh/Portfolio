@@ -43,14 +43,20 @@ const CustomTooltip = ({ active, payload, label, isDarkMode }) => {
     const commitCount = data.contributionCount;
     const commitText = commitCount === 1 ? 'commit' : 'commits';
     
+    // Minimalist Tooltip Colors
+    const tooltipBg = isDarkMode ? 'rgba(40, 40, 42, 0.85)' : 'rgba(242, 242, 247, 0.85)';
+    const tooltipBorder = isDarkMode ? 'rgba(255, 255, 255, 0.15)' : 'rgba(0, 0, 0, 0.1)';
+    const tooltipText = isDarkMode ? '#EAEAEA' : '#1d1d1f';
+    const tooltipHighlight = isDarkMode ? '#CCCCCC' : '#515154';
+    
     return (
       <div style={{
-        backgroundColor: isDarkMode ? 'rgba(30, 30, 30, 0.85)' : 'rgba(255, 255, 255, 0.85)',
-        border: `1px solid ${isDarkMode ? 'rgba(10, 132, 255, 0.3)' : 'rgba(0, 122, 255, 0.15)'}`,
+        backgroundColor: tooltipBg,
+        border: `1px solid ${tooltipBorder}`,
         borderRadius: '12px',
         padding: '10px 14px',
-        boxShadow: '0 4px 20px rgba(0, 0, 0, 0.12)',
-        color: isDarkMode ? '#fff' : '#000',
+        boxShadow: '0 4px 15px rgba(0, 0, 0, 0.08)',
+        color: tooltipText,
         fontSize: '13px',
         fontFamily: "-apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Inter', sans-serif",
         pointerEvents: 'auto',
@@ -62,7 +68,7 @@ const CustomTooltip = ({ active, payload, label, isDarkMode }) => {
         <p style={{ margin: '0 0 4px 0', fontWeight: 600, letterSpacing: '-0.01em' }}>{formattedDate}</p>
         <p style={{ margin: 0 }}>
           <span style={{ 
-            color: isDarkMode ? '#5AC8FA' : '#007AFF',
+            color: tooltipHighlight,
             fontWeight: 600 
           }}>
             {commitCount}
@@ -75,11 +81,11 @@ const CustomTooltip = ({ active, payload, label, isDarkMode }) => {
   return null;
 };
 
-const GithubHeartbeat = ({ animationDelay = 0 }) => {
+const GithubHeartbeat = ({ animationDelay = 0, darkMode }) => {
   const [contributionData, setContributionData] = useState([]);
   const [totalContributions, setTotalContributions] = useState(0);
   const [error, setError] = useState(null);
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  const isDarkMode = darkMode;
   const [windowHeight, setWindowHeight] = useState(window.innerHeight);
   const [animationProgress, setAnimationProgress] = useState(0);
   const [isLoaded, setIsLoaded] = useState(false);
@@ -121,22 +127,6 @@ const GithubHeartbeat = ({ animationDelay = 0 }) => {
     
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
-  }, []);
-
-  useEffect(() => {
-    // Check if we're in dark mode by looking at the background color
-    const checkDarkMode = () => {
-      const bgColor = window.getComputedStyle(document.body).backgroundColor;
-      // If the background is dark, we're in dark mode
-      setIsDarkMode(bgColor.includes('rgb(12, 15, 51)') || bgColor.includes('rgb(28, 9, 63)'));
-    };
-
-    checkDarkMode();
-    // Listen for changes to the background color
-    const observer = new MutationObserver(checkDarkMode);
-    observer.observe(document.body, { attributes: true, attributeFilter: ['style'] });
-
-    return () => observer.disconnect();
   }, []);
 
   // Demo data generation for fallback when token is missing
@@ -402,11 +392,16 @@ const GithubHeartbeat = ({ animationDelay = 0 }) => {
     overflow: 'hidden',
   };
 
+  // Minimalist Info Box Colors
+  const infoBoxBg = isDarkMode ? 'rgba(40, 40, 42, 0.7)' : 'rgba(242, 242, 247, 0.7)';
+  const infoBoxBorder = isDarkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.08)';
+  const infoBoxText = isDarkMode ? 'rgba(255, 255, 255, 0.9)' : '#1d1d1f';
+
   const waveContentStyle = {
     position: 'absolute',
     bottom: '20px',
     left: '20px',
-    color: isDarkMode ? 'rgba(255, 255, 255, 0.9)' : 'rgba(0, 0, 0, 0.8)',
+    color: infoBoxText,
     zIndex: 2,
     pointerEvents: 'auto',
     fontSize: '13px',
@@ -417,31 +412,39 @@ const GithubHeartbeat = ({ animationDelay = 0 }) => {
     WebkitBackdropFilter: 'blur(8px)',
     padding: '8px 14px',
     borderRadius: '12px',
-    backgroundColor: isDarkMode ? 'rgba(30, 30, 30, 0.7)' : 'rgba(255, 255, 255, 0.7)',
-    border: `1px solid ${isDarkMode ? 'rgba(10, 132, 255, 0.3)' : 'rgba(0, 122, 255, 0.2)'}`,
+    backgroundColor: infoBoxBg,
+    border: `1px solid ${infoBoxBorder}`,
     opacity: 0,
     // Use the same animationDelay for the fadeIn of the text
     animation: isLoaded ? `fadeIn 1s ease-in-out 0.5s forwards` : 'none',
-    boxShadow: '0 2px 8px rgba(0, 0, 0, 0.08)',
+    boxShadow: '0 2px 8px rgba(0, 0, 0, 0.06)',
   };
+
+  // Minimalist Error Box Colors
+  const errorBoxBg = isDarkMode ? 'rgba(40, 40, 42, 0.9)' : 'rgba(242, 242, 247, 0.9)';
+  const errorBoxBorder = isDarkMode ? 'rgba(255, 100, 100, 0.3)' : 'rgba(200, 0, 0, 0.15)'; // Muted red
+  const errorBoxText = isDarkMode ? 'rgba(255, 255, 255, 0.9)' : '#1d1d1f';
+  const errorHeadingText = isDarkMode ? '#FF8A80' : '#D32F2F'; // Muted red heading
+  const errorLinkColor = isDarkMode ? '#CCCCCC' : '#515154'; // Grey link
+  const errorCodeBg = isDarkMode ? 'rgba(0,0,0,0.2)' : 'rgba(0,0,0,0.04)';
 
   const errorStyle = {
     position: 'absolute',
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    backgroundColor: isDarkMode ? 'rgba(30, 30, 30, 0.9)' : 'rgba(255, 255, 255, 0.9)',
-    color: isDarkMode ? 'rgba(255, 255, 255, 0.9)' : 'rgba(0, 0, 0, 0.8)',
+    backgroundColor: errorBoxBg,
+    color: errorBoxText,
     padding: '20px 25px',
     borderRadius: '12px',
-    boxShadow: '0 4px 20px rgba(0, 0, 0, 0.15)',
+    boxShadow: '0 4px 15px rgba(0, 0, 0, 0.1)',
     maxWidth: '90%',
     width: '450px',
     textAlign: 'center',
     zIndex: 10,
     backdropFilter: 'blur(8px)',
     WebkitBackdropFilter: 'blur(8px)',
-    border: `1px solid ${isDarkMode ? 'rgba(255, 69, 58, 0.4)' : 'rgba(255, 59, 48, 0.2)'}`,
+    border: `1px solid ${errorBoxBorder}`,
     fontSize: '15px',
     lineHeight: 1.5,
   };
@@ -462,28 +465,30 @@ const GithubHeartbeat = ({ animationDelay = 0 }) => {
     filter: 'drop-shadow(0 2px 4px rgba(0, 0, 0, 0.05))',
   };
 
-  // Colors for light and dark mode - Apple-inspired SF Blue colors
-  const primaryColor = isDarkMode ? '#0A84FF' : '#007AFF';
-  const secondaryColor = isDarkMode ? '#5AC8FA' : '#64D2FF';
-  const tertiaryColor = isDarkMode ? '#30B0C7' : '#CEECFD';
+  // Minimalist Grey Colors
+  // Light Mode: Dark Grey (#1d1d1f), Medium Grey (#86868b), Light Grey (#EAEAEA)
+  // Dark Mode: Light Grey (#EAEAEA), Medium Grey (#86868b), Dark Grey (#333333)
+  const gradientStartColor = isDarkMode ? '#28282a' : '#f2f2f7';
+  const gradientEndColor = isDarkMode ? '#86868b' : '#86868b';
+  const strokeColor = isDarkMode ? '#cccccc' : '#515154';
 
   // Show a more helpful error message if token is missing and not using demo data
   if (isTokenMissing && !useDemoData) {
     return (
       <div style={waveContainerStyle}>
         <div style={errorStyle}>
-          <h3 style={{ marginTop: 0, color: isDarkMode ? '#FF453A' : '#FF3B30' }}>GitHub Authentication Required</h3>
+          <h3 style={{ marginTop: 0, color: errorHeadingText }}>GitHub Authentication Required</h3>
           <p>{error}</p>
           <div style={helpTextStyle}>
             <p><strong>How to fix:</strong></p>
             <ol style={{ paddingLeft: '20px', margin: '10px 0' }}>
-              <li>Go to <a href="https://github.com/settings/tokens" target="_blank" rel="noopener noreferrer" style={{ color: primaryColor }}>GitHub Token Settings</a></li>
+              <li>Go to <a href="https://github.com/settings/tokens" target="_blank" rel="noopener noreferrer" style={{ color: errorLinkColor, textDecoration: 'underline' }}>GitHub Token Settings</a></li>
               <li>Create a new token with <code>read:user</code> scope</li>
               <li>Add the token to your environment variables:</li>
               <code style={{ 
                 display: 'block', 
                 padding: '10px', 
-                background: isDarkMode ? 'rgba(0,0,0,0.3)' : 'rgba(0,0,0,0.05)', 
+                background: errorCodeBg,
                 borderRadius: '4px',
                 marginTop: '8px',
                 fontFamily: 'monospace' 
@@ -511,40 +516,25 @@ const GithubHeartbeat = ({ animationDelay = 0 }) => {
         <ResponsiveContainer>
           <AreaChart 
             data={contributionData}
-            margin={{ top: 0, right: 0, left: 0, bottom: 0 }}
+            margin={{ top: 20, right: 0, left: 0, bottom: 0 }}
           >
             <defs>
-              <linearGradient id="colorContributions" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor={primaryColor} stopOpacity={0.75} />
-                <stop offset="50%" stopColor={secondaryColor} stopOpacity={0.45} />
-                <stop offset="95%" stopColor={tertiaryColor} stopOpacity={0.25} />
+              <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="5%" stopColor={gradientStartColor} stopOpacity={isDarkMode ? 0.5 : 0.7}/>
+                <stop offset="80%" stopColor={gradientEndColor} stopOpacity={0.1}/>
               </linearGradient>
-              <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
-                <feGaussianBlur stdDeviation="3" result="blur" />
-                <feComposite in="SourceGraphic" in2="blur" operator="over" />
-              </filter>
             </defs>
             <Tooltip 
               content={<CustomTooltip isDarkMode={isDarkMode} />}
               cursor={false}
             />
             <Area
-              type="natural" 
+              type="monotoneX"
               dataKey="count"
-              stroke={primaryColor}
-              strokeWidth={2.5}
+              stroke={strokeColor}
+              strokeWidth={2.0}
               fillOpacity={1}
-              fill="url(#colorContributions)"
-              animationDuration={0}
-              isAnimationActive={false}
-              activeDot={{ 
-                r: 6,
-                fill: isDarkMode ? '#5AC8FA' : '#007AFF',
-                stroke: isDarkMode ? '#1C093F' : '#fff',
-                strokeWidth: 2,
-                filter: 'url(#glow)'
-              }}
-              baseValue={0}
+              fill="url(#colorUv)"
             />
           </AreaChart>
         </ResponsiveContainer>
