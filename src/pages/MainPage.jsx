@@ -100,28 +100,7 @@ const MinimalPortfolio = () => {
       
       /* Original hover effect - slightly modified */
       .clickable-link:hover {
-        background-color: rgba(${darkMode ? '255, 255, 255, 0.1' : '0, 0, 0, 0.05'});
-        transform: translateY(-2px);
-        box-shadow: 0 2px 8px rgba(${darkMode ? '255, 255, 255, 0.2' : '0, 0, 0, 0.1'});
-        text-decoration: none; /* Remove underline on hover if bg is added */
-      }
-      
-      /* Re-add clickable-link::after rule for underline effect (optional) */
-      .clickable-link::after {
-        content: '';
-        position: absolute;
-        bottom: -2px;
-        left: 0;
-        width: 100%;
-        height: 2px;
-        background-color: ${darkMode ? '#c792ea' : '#007aff'}; /* Purple for dark, blue for light */
-        transform: scaleX(0);
-        transform-origin: center;
-        transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
-      }
-
-      .clickable-link:hover::after {
-        transform: scaleX(1);
+        text-decoration: underline; /* Simple underline on hover */
       }
       
       .logo-animation {
@@ -224,8 +203,8 @@ const MinimalPortfolio = () => {
     // Consolidated link style
     linkBaseStyle: {
       textDecoration: 'none',
-      color: darkMode ? '#c792ea' : '#007aff', // Purple for dark, blue for light
-      fontWeight: 400, // Normal weight for links
+      color: 'inherit', // Inherit color from parent paragraph
+      fontWeight: 500, // Slightly bolder than normal text (400)
       transition: 'color 0.3s ease',
     },
     // Specific style for Dartmouth (if needed, otherwise use base)
@@ -325,7 +304,7 @@ const MinimalPortfolio = () => {
             style={styles.linkBaseStyle} // Use base style
             className="clickable-link"
           >
-            SignPact</a><span style={{ color: darkMode ? 'rgba(255, 255, 255, 0.9)' : '#1d1d1f', fontWeight: 400 }}>;</span> previously developed tools like{' '}
+            SignPact</a><span style={{ color: 'inherit', fontWeight: 400 }}>;</span> previously developed tools like{' '}
           <a
             href="https://courseme.ai"
             target="_blank"
@@ -339,7 +318,7 @@ const MinimalPortfolio = () => {
             rel="noopener noreferrer"
             style={styles.linkBaseStyle} // Use base style
             className="clickable-link"
-          >Meme Me</a><span style={{ color: darkMode ? 'rgba(255, 255, 255, 0.9)' : '#1d1d1f', fontWeight: 400 }}>.</span> <br />
+          >Meme Me</a><span style={{ color: 'inherit', fontWeight: 400 }}>.</span> <br />
           Studying Computer Science at{' '}
           <a
             href="https://home.dartmouth.edu/"
