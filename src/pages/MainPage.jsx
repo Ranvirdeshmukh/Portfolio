@@ -319,8 +319,8 @@ const MinimalPortfolio = () => {
             style={styles.linkBaseStyle} // Use base style
             className="clickable-link"
           >
-            SignPact</a><span style={{ color: 'inherit', fontWeight: 400 }}>.</span> <br />
-          Studying Computer Science at{' '}
+            SignPact</a><span style={{ color: 'inherit', fontWeight: 400 }}></span>
+          {/* Removed <br /> and added text directly */} while studying Computer Science at{' '}
           <a
             href="https://home.dartmouth.edu/"
             target="_blank"
@@ -328,7 +328,7 @@ const MinimalPortfolio = () => {
             style={{...styles.linkBaseStyle, ...styles.dartmouthLink}} // Combine base and specific
             className="clickable-link"
           >
-            Dartmouth</a>. <br />
+            Dartmouth</a><span style={{ color: 'inherit', fontWeight: 400 }}>.</span> <br />
           Reach out — I'm always <a
             href="#"
             style={styles.linkBaseStyle} // Use base style
