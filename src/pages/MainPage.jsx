@@ -11,13 +11,6 @@ const MinimalPortfolio = () => {
   const [isDesktop, setIsDesktop] = useState(false);
   const [darkMode, setDarkMode] = useState(false);
 
-  // Function to open Gmail compose
-  const openGmail = (e) => {
-    e.preventDefault();
-    const gmailComposeUrl = 'https://mail.google.com/mail/?view=cm&fs=1&to=ranvir.26@dartmouth.edu';
-    window.open(gmailComposeUrl, '_blank', 'noopener,noreferrer');
-  };
-
   useEffect(() => {
     document.title = 'Ranvir.';
     const timer = setTimeout(() => setIsVisible(true), 100);
@@ -330,10 +323,11 @@ const MinimalPortfolio = () => {
           >
             Dartmouth</a><span style={{ color: 'inherit', fontWeight: 400 }}>.</span> <br />
           Reach out — I'm always <a
-            href="#"
-            style={styles.linkBaseStyle} // Use base style
+            href="https://cal.com/ranvirdeshmukh/quick-chat"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={styles.linkBaseStyle}
             className="clickable-link"
-            onClick={openGmail}
           >
             open to chat
           </a>!
