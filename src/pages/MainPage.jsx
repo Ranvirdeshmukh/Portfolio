@@ -1,10 +1,14 @@
+/*
+Copyright 2024 Ranvir. All rights reserved.
+Use of this source code is governed by a MIT-style license that can be found
+in the LICENSE file or at https://opensource.org/licenses/MIT.
+*/
 import React, { useEffect, useState } from 'react';
 import GithubHeartbeat from './GithubHeartbeat'; // adjust the path if needed
 
 const MinimalPortfolio = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [isDesktop, setIsDesktop] = useState(false);
-  const [darkMode, setDarkMode] = useState(false); // new state for dark mode
 
   // Function to open Gmail compose
   const openGmail = (e) => {
@@ -84,36 +88,23 @@ const MinimalPortfolio = () => {
         animation-delay: 1.2s;
       }
       
+      /* Simplified clickable-link style */
       .clickable-link {
         position: relative;
-        padding: 3px 6px;
-        border-radius: 6px;
-        transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+        padding: 2px 0; /* Minimal padding */
+        border-radius: 4px;
+        transition: color 0.3s ease, background-color 0.3s ease;
         backface-visibility: hidden;
       }
       
+      /* Subtle hover effect - underline */
       .clickable-link:hover {
-        background-color: rgba(${darkMode ? '255, 255, 255, 0.1' : '0, 0, 0, 0.05'});
-        transform: translateY(-2px);
-        box-shadow: 0 2px 8px rgba(${darkMode ? '255, 255, 255, 0.2' : '0, 0, 0, 0.1'});
+        text-decoration: underline;
+        /* Optional: very subtle background for hover */
+        /* background-color: rgba(0, 122, 255, 0.05); */
       }
       
-      .clickable-link::after {
-        content: '';
-        position: absolute;
-        bottom: -2px;
-        left: 0;
-        width: 100%;
-        height: 2px;
-        background-color: ${darkMode ? '#c792ea' : '#571ce0'};
-        transform: scaleX(0);
-        transform-origin: center;
-        transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
-      }
-      
-      .clickable-link:hover::after {
-        transform: scaleX(1);
-      }
+      /* Removed clickable-link::after rule */
       
       .logo-animation {
         opacity: 0.3;
@@ -121,27 +112,6 @@ const MinimalPortfolio = () => {
         animation-delay: 0.5s;
       }
 
-      .theme-toggle {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        background-color: ${darkMode ? 'rgba(30, 30, 40, 0.4)' : 'rgba(255, 255, 255, 0.7)'};
-        backdrop-filter: blur(8px);
-        -webkit-backdrop-filter: blur(8px);
-        border: 1px solid ${darkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.05)'};
-        cursor: pointer;
-        box-shadow: ${darkMode ? '0 2px 10px rgba(0, 0, 0, 0.2)' : '0 2px 10px rgba(0, 0, 0, 0.05)'};
-        transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
-      }
-      
-      .theme-toggle:hover {
-        transform: translateY(-2px);
-        box-shadow: ${darkMode ? '0 4px 12px rgba(0, 0, 0, 0.3)' : '0 4px 12px rgba(0, 0, 0, 0.1)'};
-      }
-      
       @media (prefers-reduced-motion) {
         .name-animation, .tagline-animation, .description-animation, .links-animation, .logo-animation {
           animation: none;
@@ -154,21 +124,18 @@ const MinimalPortfolio = () => {
     return () => {
       document.head.removeChild(style);
     };
-  }, [darkMode]);
+  }, []);
 
-  // Full-screen wrapper for the background
+  // Full-screen wrapper - Cleaner background
   const wrapperStyles = {
-    background: darkMode
-      ? 'linear-gradient(135deg, #1C093F 0%, #0C0F33 100%)'
-      : 'linear-gradient(135deg, #f9f9f9 0%, #ffffff 100%)',
+    background: '#ffffff', // Plain white background
     minHeight: '100vh',
-    transition: 'background 0.5s cubic-bezier(0.2, 0.8, 0.2, 1), color 0.5s cubic-bezier(0.2, 0.8, 0.2, 1)',
     position: 'relative',
   };
 
-  // Inner container style for text positioning
+  // Inner container style - Adjusted font color
   const containerStyles = {
-    color: darkMode ? '#ffffff' : '#000000',
+    color: '#1d1d1f', // Apple's dark grey
     fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'SF Pro Display', 'Helvetica Neue', sans-serif",
     fontWeight: 400,
     display: 'flex',
@@ -183,37 +150,44 @@ const MinimalPortfolio = () => {
     opacity: isVisible ? 1 : 0,
   };
 
-  // Additional styles
+  // Updated styles for Apple-like look
   const styles = {
     name: {
       fontSize: isDesktop ? '52px' : '36px',
       margin: '0 0 10px 0',
-      fontWeight: 500,
-      letterSpacing: '-0.03em',
+      fontWeight: 500, // Reverted to previous weight
+      letterSpacing: '-0.03em', // Reverted to previous spacing
       lineHeight: 1.1,
-      color: darkMode ? '#ffffff' : '#000000',
+      color: '#1d1d1f',
       textRendering: 'optimizeLegibility',
     },
     tagline: {
       fontSize: isDesktop ? '26px' : '22px',
       margin: '0 0 30px 0',
-      fontWeight: 450,
-      letterSpacing: '-0.02em',
+      fontWeight: 400, // Standard weight tagline
+      letterSpacing: '-0.01em',
       lineHeight: 1.2,
-      color: darkMode ? 'rgba(255, 255, 255, 0.95)' : 'rgba(0, 0, 0, 0.85)',
+      color: '#515154', // Apple's medium grey
       textRendering: 'optimizeLegibility',
     },
     description: {
       fontSize: isDesktop ? '18px' : '16px',
-      lineHeight: '1.4',
-      marginBottom: '35px',
+      lineHeight: '1.6', // Increased line height
+      marginBottom: '40px', // Increased margin
       maxWidth: '680px',
+      color: '#1d1d1f', // Main text color
+      letterSpacing: '0.01em', // Slight spacing increase
     },
-    dartmouthLink: {
+    // Consolidated link style
+    linkBaseStyle: {
       textDecoration: 'none',
-      color: darkMode ? '#8bc34a' : '#00693e',
-      fontWeight: 500,
-      transition: 'color 0.3s cubic-bezier(0.2, 0.8, 0.2, 1), transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1)',
+      color: '#007aff', // Apple blue
+      fontWeight: 400, // Normal weight for links
+      transition: 'color 0.3s ease',
+    },
+    // Specific style for Dartmouth (if needed, otherwise use base)
+    dartmouthLink: {
+      // Inherits from linkBaseStyle
     },
     linkContainer: {
       display: 'flex',
@@ -221,110 +195,73 @@ const MinimalPortfolio = () => {
       gap: '10px',
       marginBottom: '42px',
     },
-    linkStyle: {
+    // Style for LinkedIn/GitHub links
+    externalLinkStyle: {
       textDecoration: 'none',
-      color: darkMode ? '#ffffff' : '#000000',
+      color: '#515154', // Medium grey for external links
       fontWeight: 500,
       display: 'inline-block',
       position: 'relative',
+      transition: 'color 0.3s ease',
     },
     linkSeparator: {
-      color: darkMode ? 'rgba(255, 255, 255, 0.4)' : 'rgba(0, 0, 0, 0.3)',
+      color: '#d2d2d7', // Lighter grey separator
       margin: '0 2px',
     },
     bottomLogo: {
       marginTop: '40px',
       fontSize: isDesktop ? '16px' : '14px',
       fontWeight: 600,
-      color: darkMode ? 'rgba(255, 255, 255, 0.7)' : 'rgba(0, 0, 0, 0.6)',
-      opacity: 0.3,
+      color: '#86868b', // Apple's light grey
+      opacity: 0.8, // Slightly more visible
       alignSelf: 'flex-start',
       letterSpacing: '0.02em',
     },
-    // Dark mode toggle styles with higher z-index
-    toggleContainer: {
-      position: 'absolute',
-      top: '22px',
-      right: '24px',
-      zIndex: 10,
-      transition: 'transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1)',
-    },
-    moonIcon: {
-      width: '22px',
-      height: '22px',
-      color: '#ffffff',
-      transition: 'transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1)',
-      transform: darkMode ? 'rotate(0deg)' : 'rotate(-90deg) scale(0.5)',
-      opacity: darkMode ? 1 : 0,
-      position: 'absolute',
-    },
-    sunIcon: {
-      width: '24px',
-      height: '24px',
-      color: '#FFB700',
-      transition: 'transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1)',
-      transform: darkMode ? 'rotate(90deg) scale(0.5)' : 'rotate(0deg)',
-      opacity: darkMode ? 0 : 1,
-      position: 'absolute',
-    },
   };
-
-  // Sun SVG component
-  const SunIcon = () => (
-    <svg style={styles.sunIcon} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M12 17C14.7614 17 17 14.7614 17 12C17 9.23858 14.7614 7 12 7C9.23858 7 7 9.23858 7 12C7 14.7614 9.23858 17 12 17Z" fill="currentColor" />
-      <path d="M12 1V3M12 21V23M1 12H3M21 12H23M4.22 4.22L5.64 5.64M18.36 18.36L19.78 19.78M4.22 19.78L5.64 18.36M18.36 5.64L19.78 4.22" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-    </svg>
-  );
-  
-  // Moon SVG component
-  const MoonIcon = () => (
-    <svg style={styles.moonIcon} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M21.5 14.0784C20.3003 14.7189 18.9341 15.0821 17.4849 15.0821C12.9717 15.0821 9.31313 11.4235 9.31313 6.91035C9.31313 5.46099 9.6764 4.09479 10.3168 2.895C5.98551 3.94127 2.75 7.76291 2.75 12.3407C2.75 17.8003 7.13939 22.1896 12.5989 22.1896C17.1768 22.1896 20.9984 18.9541 22.0447 14.6228C21.8694 14.4475 21.6942 14.2722 21.5 14.0784Z" fill="currentColor" stroke="currentColor" strokeWidth="1.5" />
-    </svg>
-  );
 
   return (
     <div style={wrapperStyles}>
-      {/* Dark Mode Toggle - Sun/Moon Icon */}
-      <div style={styles.toggleContainer} onClick={() => setDarkMode(prev => !prev)}>
-        <div className="theme-toggle">
-          <SunIcon />
-          <MoonIcon />
-        </div>
-      </div>
-
       <div style={containerStyles}>
         <h2 style={styles.name} className="name-animation">Ranvir Deshmukh</h2>
         <h3 style={styles.tagline} className="tagline-animation">I write software and make videos.</h3>
 
         <p style={styles.description} className="description-animation">
-          I'm currently building{' '}
+          I'm currently working on{' '}
+          <a
+            href="https://signpact.ai/"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={styles.linkBaseStyle} // Use base style
+            className="clickable-link"
+          >
+            SignPact</a><span style={{ color: '#1d1d1f', fontWeight: 400 }}>.</span> <br />
+          I've built some widely used tools like{' '}
           <a
             href="https://courseme.ai"
             target="_blank"
             rel="noopener noreferrer"
-            style={{
-              textDecoration: 'none',
-              color: darkMode ? '#c792ea' : '#571ce0',
-              fontWeight: 600,
-              transition: 'color 0.3s cubic-bezier(0.2, 0.8, 0.2, 1), transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1)',
-            }}
+            style={styles.linkBaseStyle} // Use base style
             className="clickable-link"
-          >
-            CourseMe</a><span style={{ color: '#FD5E53', fontWeight: 600 }}>.</span> <br />
+           >CourseMe</a> and{' '}
+           <a
+            href="https://apps.apple.com/us/app/meme-me-humor-personalized/id6482850278"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={styles.linkBaseStyle} // Use base style
+            className="clickable-link"
+          >Meme Me</a><span style={{ color: '#1d1d1f', fontWeight: 400 }}>.</span> <br />
           Studying Computer Science at{' '}
           <a
             href="https://home.dartmouth.edu/"
             target="_blank"
             rel="noopener noreferrer"
-            style={styles.dartmouthLink}
+            style={{...styles.linkBaseStyle, ...styles.dartmouthLink}} // Combine base and specific
             className="clickable-link"
           >
             Dartmouth</a>. <br />
           Reach out — I'm always <a
             href="#"
-            style={styles.linkStyle}
+            style={styles.linkBaseStyle} // Use base style
             className="clickable-link"
             onClick={openGmail}
           >
@@ -335,7 +272,7 @@ const MinimalPortfolio = () => {
         <div style={styles.linkContainer} className="links-animation">
           <a
             href="https://www.linkedin.com/in/ranvir-deshmukh-209706199/"
-            style={styles.linkStyle}
+            style={styles.externalLinkStyle} // Use external link style
             target="_blank"
             rel="noopener noreferrer"
             className="clickable-link"
@@ -345,7 +282,7 @@ const MinimalPortfolio = () => {
           <span style={styles.linkSeparator}>|</span>
           <a
             href="https://github.com/Ranvirdeshmukh"
-            style={styles.linkStyle}
+            style={styles.externalLinkStyle} // Use external link style
             target="_blank"
             rel="noopener noreferrer"
             className="clickable-link"
@@ -354,7 +291,6 @@ const MinimalPortfolio = () => {
           </a>
         </div>
 
-        {/* GitHub Heartbeat Component - Start animation after text elements appear */}
         <GithubHeartbeat animationDelay={2500} />
 
         <div style={styles.bottomLogo} className="logo-animation">RD/&gt;</div>
