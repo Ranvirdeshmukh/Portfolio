@@ -110,10 +110,30 @@ const ImageProcessor = () => {
   };
 
   const canvasStyle = {
-    border: '1px solid #ddd',
+    border: 'none',
     borderRadius: '50%',
     marginTop: '50px',
-    boxShadow: '0 4px 8px rgba(0,0,0,0.1)'
+    boxShadow: '0 10px 30px rgba(0, 0, 0, 0.05), 0 1px 8px rgba(0, 0, 0, 0.07)'
+  };
+
+  const canvasContainerStyle = {
+    width: '500px',
+    height: '500px',
+    borderRadius: '50%',
+    overflow: 'hidden',
+    position: 'relative',
+    border: '1px solid rgba(255, 255, 255, 0.3)',
+    padding: '6px',
+    background: 'linear-gradient(145deg, rgba(255,255,255,0.03), rgba(255,255,255,0.1))'
+  };
+
+  const innerCanvasContainerStyle = {
+    width: '100%',
+    height: '100%',
+    borderRadius: '50%',
+    overflow: 'hidden',
+    border: '1px solid rgba(255, 255, 255, 0.2)',
+    position: 'relative'
   };
 
   const instructionStyle = {
@@ -159,7 +179,11 @@ const ImageProcessor = () => {
       </div>
 
       <div>
-        <canvas ref={canvasRef} style={canvasStyle} />
+        <div style={canvasContainerStyle}>
+          <div style={innerCanvasContainerStyle}>
+            <canvas ref={canvasRef} style={canvasStyle} />
+          </div>
+        </div>
       </div>
     </div>
   );

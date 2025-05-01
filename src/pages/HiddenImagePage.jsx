@@ -22,7 +22,20 @@ const HiddenImagePage = () => {
     height: '500px',
     borderRadius: '50%',
     overflow: 'hidden',
-    boxShadow: '0 4px 20px rgba(0, 0, 0, 0.1)',
+    boxShadow: '0 10px 30px rgba(0, 0, 0, 0.05), 0 1px 8px rgba(0, 0, 0, 0.07)',
+    position: 'relative',
+    border: '1px solid rgba(255, 255, 255, 0.3)',
+    padding: '6px', // Adds space for the inner border
+    background: 'linear-gradient(145deg, rgba(255,255,255,0.03), rgba(255,255,255,0.1))'
+  };
+
+  // Inner container with second subtle border
+  const innerCircleStyle = {
+    width: '100%',
+    height: '100%',
+    borderRadius: '50%',
+    overflow: 'hidden',
+    border: '1px solid rgba(255, 255, 255, 0.2)',
     position: 'relative'
   };
 
@@ -37,11 +50,13 @@ const HiddenImagePage = () => {
   return (
     <div style={pageStyle}>
       <div style={circleContainerStyle}>
-        <img 
-          src="/profile.jpg" 
-          alt="Ranvir Deshmukh Profile" 
-          style={imageStyle}
-        />
+        <div style={innerCircleStyle}>
+          <img 
+            src="/profile.jpg" 
+            alt="Ranvir Deshmukh Profile" 
+            style={imageStyle}
+          />
+        </div>
       </div>
       <div style={{ display: 'none' }}>
         <h1>Ranvir Deshmukh</h1>
