@@ -143,12 +143,12 @@ const GithubHeartbeat = ({ animationDelay = 0, darkMode }) => {
       const dayOfWeek = date.getDay();
       const isWeekend = dayOfWeek === 0 || dayOfWeek === 6;
       
-      // Base contribution is higher for weekdays
-      let baseContribution = isWeekend ? Math.floor(Math.random() * 2) : Math.floor(Math.random() * 5);
+      // Increase base contribution values to ensure more non-zero data points
+      let baseContribution = isWeekend ? Math.floor(Math.random() * 3) + 1 : Math.floor(Math.random() * 5) + 2;
       
       // Add some patterns - bursts of activity every ~2 weeks
       if (i % 14 < 5) {
-        baseContribution += Math.floor(Math.random() * 4);
+        baseContribution += Math.floor(Math.random() * 4) + 2;
       }
       
       demoData.push({
@@ -298,9 +298,18 @@ const GithubHeartbeat = ({ animationDelay = 0, darkMode }) => {
     const processContributionData = (data) => {
       // Add some gaps by filtering out some days to make the wave look better
       // but keep all days with contributions to ensure accuracy
-      data = data.filter((day, index) => 
-        day.contributionCount > 0 || index % 2 !== 0
-      );
+      // For demo data, use a different filter criteria to retain more points
+      if (useDemoData) {
+        // For demo data, keep more points to avoid gaps (keep 70% of points)
+        data = data.filter((day, index) => 
+          day.contributionCount > 0 || index % 3 !== 0
+        );
+      } else {
+        // For real data, use original filter
+        data = data.filter((day, index) => 
+          day.contributionCount > 0 || index % 2 !== 0
+        );
+      }
       
       // Create a separate visual value for the wave while preserving the exact count
       data = data.map((day, index) => {
