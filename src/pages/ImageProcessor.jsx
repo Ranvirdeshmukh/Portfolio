@@ -49,8 +49,12 @@ const ImageProcessor = () => {
     
     // Calculate aspect ratio to cover the circle
     const scale = Math.max(canvas.width / image.width, canvas.height / image.height);
-    const x = (canvas.width / 2) - (image.width / 2) * scale;
-    const y = (canvas.height / 2) - (image.height / 2) * scale;
+    
+    // Add slight southeast offset (right and down)
+    const xOffset = 25; // Move slightly right
+    const yOffset = 25; // Move slightly down
+    const x = (canvas.width / 2) - (image.width / 2) * scale + xOffset;
+    const y = (canvas.height / 2) - (image.height / 2) * scale + yOffset;
     
     // Draw image
     ctx.drawImage(image, x, y, image.width * scale, image.height * scale);
@@ -107,7 +111,7 @@ const ImageProcessor = () => {
   const canvasStyle = {
     border: '1px solid #ddd',
     borderRadius: '50%',
-    marginTop: '20px',
+    marginTop: '50px',
     boxShadow: '0 4px 8px rgba(0,0,0,0.1)'
   };
 
