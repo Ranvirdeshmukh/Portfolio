@@ -122,9 +122,9 @@ const ImageProcessor = () => {
     borderRadius: '50%',
     overflow: 'hidden',
     position: 'relative',
-    border: '1px solid rgba(255, 255, 255, 0.3)',
+    border: '1px solid rgba(200, 200, 200, 0.5)',
     padding: '6px',
-    background: 'linear-gradient(145deg, rgba(255,255,255,0.03), rgba(255,255,255,0.1))'
+    background: 'rgba(250, 250, 250, 0.05)'
   };
 
   const innerCanvasContainerStyle = {
@@ -132,7 +132,7 @@ const ImageProcessor = () => {
     height: '100%',
     borderRadius: '50%',
     overflow: 'hidden',
-    border: '1px solid rgba(255, 255, 255, 0.2)',
+    border: '1px solid rgba(210, 210, 210, 0.4)',
     position: 'relative'
   };
 
