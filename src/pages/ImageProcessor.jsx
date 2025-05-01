@@ -48,10 +48,11 @@ const ImageProcessor = () => {
     ctx.clip();
     
     // Calculate aspect ratio to cover the circle
-    const scale = Math.max(canvas.width / image.width, canvas.height / image.height);
+    const zoomOutFactor = 0.95; // Subtle zoom out (5%)
+    const scale = Math.max(canvas.width / image.width, canvas.height / image.height) * zoomOutFactor;
     
     // Add slight southeast offset (right and down)
-    const xOffset = 25; // Move slightly right
+    const xOffset = 30; // Move slightly right
     const yOffset = 25; // Move slightly down
     const x = (canvas.width / 2) - (image.width / 2) * scale + xOffset;
     const y = (canvas.height / 2) - (image.height / 2) * scale + yOffset;

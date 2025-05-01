@@ -29,7 +29,7 @@ const HiddenImagePage = () => {
   // Styling for the profile image itself
   const imageStyle = {
     width: '100%',
-    height: '110%',
+    height: '105%', // Slightly reduced from 110% for minor zoom out
     objectFit: 'cover',
     objectPosition: '60% 50%' // Move slightly southeast
   };
