@@ -3,7 +3,8 @@ Copyright 2024 Ranvir. All rights reserved.
 Use of this source code is governed by a MIT-style license that can be found
 in the LICENSE file or at https://opensource.org/licenses/MIT.
 */
-import React from 'react';
+import React, { useEffect } from 'react';
+import { Helmet } from 'react-helmet';
 
 const HiddenImagePage = () => {
   // Styling for the page container
@@ -48,23 +49,38 @@ const HiddenImagePage = () => {
   };
 
   return (
-    <div style={pageStyle}>
-      <div style={circleContainerStyle}>
-        <div style={innerCircleStyle}>
-          <img 
-            src="/profile.jpg" 
-            alt="Ranvir Deshmukh Profile" 
-            style={imageStyle}
-          />
+    <>
+      <Helmet>
+        <title>Ranvir Deshmukh | Profile Image</title>
+        <meta name="description" content="Official profile image of Ranvir Deshmukh - Software Developer, Video Creator and Computer Science student at Dartmouth." />
+        <meta name="keywords" content="Ranvir Deshmukh, profile picture, software developer, Dartmouth, CourseMe" />
+        <meta property="og:title" content="Ranvir Deshmukh | Profile Image" />
+        <meta property="og:description" content="Official profile image of Ranvir Deshmukh - Software Developer, Video Creator and Computer Science student at Dartmouth." />
+        <meta property="og:image" content="https://www.ranvirdeshmukh.com/profile.jpg" />
+        <meta property="og:url" content="https://www.ranvirdeshmukh.com/profile-image" />
+        <meta property="og:type" content="profile" />
+        <link rel="canonical" href="https://www.ranvirdeshmukh.com/profile-image" />
+      </Helmet>
+      <div style={pageStyle}>
+        <div style={circleContainerStyle}>
+          <div style={innerCircleStyle}>
+            <img 
+              src="/profile.jpg" 
+              alt="Ranvir Deshmukh Profile" 
+              style={imageStyle}
+            />
+          </div>
+        </div>
+        <div style={{ display: 'none' }}>
+          <h1>Ranvir Deshmukh</h1>
+          <p>Software Developer and Video Creator at Dartmouth College</p>
+          <p>Building CourseMe and creating educational content</p>
+          <p>This is the official profile image of Ranvir Deshmukh, a software developer and computer science student at Dartmouth College.</p>
+          <p>Connect with me on LinkedIn: Ranvir Deshmukh</p>
+          <p>Check out my projects on GitHub: RanvirDeshmukh</p>
         </div>
       </div>
-      <div style={{ display: 'none' }}>
-        <h1>Ranvir Deshmukh</h1>
-        <p>Software Developer and Video Creator</p>
-        {/* Hidden metadata for better SEO */}
-        <p>Personal website and portfolio</p>
-      </div>
-    </div>
+    </>
   );
 };
 
