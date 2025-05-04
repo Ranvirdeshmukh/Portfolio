@@ -15,7 +15,25 @@ root.render(
   </React.StrictMode>
 );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+// Send performance metrics to Google Analytics
+// Learn more: https://bit.ly/CRA-vitals
+reportWebVitals(metric => {
+  // You can send the metrics to your analytics endpoint
+  // Example: send to Google Analytics
+  if (process.env.NODE_ENV === 'production' && 
+      process.env.REACT_APP_GA_MEASUREMENT_ID) {
+    // Track Core Web Vitals
+    const eventName = `web-vital-${metric.name}`;
+    const eventParams = {
+      category: 'Web Vitals',
+      action: metric.name,
+      label: metric.id,
+      value: Math.round(metric.name === 'CLS' ? metric.value * 1000 : metric.value), // Convert CLS to milliseconds for consistency
+      nonInteraction: true, // Doesn't affect bounce rate
+    };
+    
+    import('./analytics').then(({ trackEvent }) => {
+      trackEvent(eventParams.category, eventParams.action, eventParams.label, eventParams.value);
+    });
+  }
+});
