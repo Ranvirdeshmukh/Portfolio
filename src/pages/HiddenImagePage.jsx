@@ -5,6 +5,7 @@ in the LICENSE file or at https://opensource.org/licenses/MIT.
 */
 import React, { useEffect } from 'react';
 import { Helmet } from 'react-helmet';
+import { trackEvent } from '../analytics';
 
 const HiddenImagePage = () => {
   // Styling for the page container
@@ -47,6 +48,19 @@ const HiddenImagePage = () => {
     objectFit: 'cover',
     objectPosition: '60% 50%' // Move slightly southeast
   };
+  
+  // Track profile image view when component mounts
+  useEffect(() => {
+    trackEvent('Profile', 'ImageView', 'ProfileImage', 1);
+    
+    // Track how long the user stays on the page
+    const startTime = new Date();
+    
+    return () => {
+      const viewDuration = Math.round((new Date() - startTime) / 1000); // in seconds
+      trackEvent('Profile', 'ViewDuration', 'ProfileImage', viewDuration);
+    };
+  }, []);
 
   return (
     <>
@@ -62,12 +76,14 @@ const HiddenImagePage = () => {
         <link rel="canonical" href="https://www.ranvirdeshmukh.com/profile-image" />
       </Helmet>
       <div style={pageStyle}>
-        <div style={circleContainerStyle}>
+        <div style={circleContainerStyle} 
+             onClick={() => trackEvent('Profile', 'ImageClick', 'ProfileImageClicked')}>
           <div style={innerCircleStyle}>
             <img 
               src="/profile.jpg" 
               alt="Ranvir Deshmukh Profile" 
               style={imageStyle}
+              onLoad={() => trackEvent('Profile', 'ImageLoaded', 'ProfileImageLoaded')}
             />
           </div>
         </div>
