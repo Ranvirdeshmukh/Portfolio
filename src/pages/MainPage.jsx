@@ -4,6 +4,7 @@ Use of this source code is governed by a MIT-style license that can be found
 in the LICENSE file or at https://opensource.org/licenses/MIT.
 */
 import React, { useEffect, useState } from 'react';
+import { Helmet } from 'react-helmet';
 import GithubHeartbeat from './GithubHeartbeat'; // adjust the path if needed
 
 const MinimalPortfolio = () => {
@@ -276,90 +277,116 @@ const MinimalPortfolio = () => {
   );
 
   return (
-    <div style={wrapperStyles}>
-      {/* Re-add Dark Mode Toggle - Sun/Moon Icon */}
-      <div style={styles.toggleContainer} onClick={() => setDarkMode(prev => !prev)}>
-        <div className="theme-toggle">
-          <SunIcon />
-          <MoonIcon />
-        </div>
-      </div>
-
-      <div style={containerStyles}>
-        <h2 style={styles.name} className="name-animation">Ranvir Deshmukh</h2>
-        <h3 style={styles.tagline} className="tagline-animation">I write software and make videos.</h3>
-
-        <p style={styles.description} className="description-animation">
-          Having built widely-used tools like{' '}
-          <a
-            href="https://courseme.ai"
-            target="_blank"
-            rel="noopener noreferrer"
-            style={styles.linkBaseStyle} // Use base style
-            className="clickable-link"
-           >CourseMe</a> and{' '}
-           <a
-            href="https://apps.apple.com/us/app/meme-me-humor-personalized/id6482850278"
-            target="_blank"
-            rel="noopener noreferrer"
-            style={styles.linkBaseStyle} // Use base style
-            className="clickable-link"
-          >Meme Me</a><span style={{ color: 'inherit', fontWeight: 400 }}>,</span> I'm now focused on building{' '}
-          <a
-            href="https://signpact.ai/"
-            target="_blank"
-            rel="noopener noreferrer"
-            style={styles.linkBaseStyle} // Use base style
-            className="clickable-link"
-          >
-            SignPact</a><span style={{ color: 'inherit', fontWeight: 400 }}></span>
-          {/* Removed <br /> and added text directly */} while studying Computer Science at{' '}
-          <a
-            href="https://home.dartmouth.edu/"
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{...styles.linkBaseStyle, ...styles.dartmouthLink}} // Combine base and specific
-            className="clickable-link"
-          >
-            Dartmouth</a><span style={{ color: 'inherit', fontWeight: 400 }}>.</span> <br />
-          Reach out — I'm always <a
-            href="https://cal.com/ranvirdeshmukh/quick-chat"
-            target="_blank"
-            rel="noopener noreferrer"
-            style={styles.linkBaseStyle}
-            className="clickable-link"
-          >
-            open to chat
-          </a>!
-        </p>
-
-        <div style={styles.linkContainer} className="links-animation">
-          <a
-            href="https://www.linkedin.com/in/ranvir-deshmukh-209706199/"
-            style={styles.externalLinkStyle} // Use external link style
-            target="_blank"
-            rel="noopener noreferrer"
-            className="clickable-link"
-          >
-            LinkedIn
-          </a>
-          <span style={styles.linkSeparator}>|</span>
-          <a
-            href="https://github.com/Ranvirdeshmukh"
-            style={styles.externalLinkStyle} // Use external link style
-            target="_blank"
-            rel="noopener noreferrer"
-            className="clickable-link"
-          >
-            GitHub
-          </a>
+    <>
+      <Helmet>
+        <title>Ranvir Deshmukh | Software Developer & Video Creator</title>
+        <meta name="description" content="Personal website of Ranvir Deshmukh - Software developer, video creator, and Computer Science student at Dartmouth. Building CourseMe and creating educational content." />
+        <meta name="keywords" content="Ranvir Deshmukh, software developer, Dartmouth, CourseMe, video creator, portfolio, computer science" />
+        <meta name="author" content="Ranvir Deshmukh" />
+        
+        {/* Canonical URL */}
+        <link rel="canonical" href="https://www.ranvirdeshmukh.com/" />
+        
+        {/* Open Graph / Facebook */}
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://www.ranvirdeshmukh.com/" />
+        <meta property="og:title" content="Ranvir Deshmukh | Software Developer & Video Creator" />
+        <meta property="og:description" content="Personal website of Ranvir Deshmukh - Software developer at CourseMe, video creator, and Computer Science student at Dartmouth." />
+        <meta property="og:image" content="https://www.ranvirdeshmukh.com/profile.jpg" />
+        
+        {/* Twitter */}
+        <meta property="twitter:card" content="summary_large_image" />
+        <meta property="twitter:url" content="https://www.ranvirdeshmukh.com/" />
+        <meta property="twitter:title" content="Ranvir Deshmukh | Software Developer & Video Creator" />
+        <meta property="twitter:description" content="Personal website of Ranvir Deshmukh - Software developer at CourseMe, video creator, and Computer Science student at Dartmouth." />
+        <meta property="twitter:image" content="https://www.ranvirdeshmukh.com/profile.jpg" />
+      </Helmet>
+      
+      <div style={wrapperStyles}>
+        {/* Re-add Dark Mode Toggle - Sun/Moon Icon */}
+        <div style={styles.toggleContainer} onClick={() => setDarkMode(prev => !prev)}>
+          <div className="theme-toggle">
+            <SunIcon />
+            <MoonIcon />
+          </div>
         </div>
 
-        <GithubHeartbeat animationDelay={2500} darkMode={darkMode} />
+        <div style={containerStyles}>
+          <h2 style={styles.name} className="name-animation">Ranvir Deshmukh</h2>
+          <h3 style={styles.tagline} className="tagline-animation">I write software and make videos.</h3>
 
-        <div style={styles.bottomLogo} className="logo-animation">RD/&gt;</div>
+          <p style={styles.description} className="description-animation">
+            Having built widely-used tools like{' '}
+            <a
+              href="https://courseme.ai"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={styles.linkBaseStyle} // Use base style
+              className="clickable-link"
+             >CourseMe</a> and{' '}
+             <a
+              href="https://apps.apple.com/us/app/meme-me-humor-personalized/id6482850278"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={styles.linkBaseStyle} // Use base style
+              className="clickable-link"
+            >Meme Me</a><span style={{ color: 'inherit', fontWeight: 400 }}>,</span> I'm now focused on building{' '}
+            <a
+              href="https://signpact.ai/"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={styles.linkBaseStyle} // Use base style
+              className="clickable-link"
+            >
+              SignPact</a><span style={{ color: 'inherit', fontWeight: 400 }}></span>
+            {/* Removed <br /> and added text directly */} while studying Computer Science at{' '}
+            <a
+              href="https://home.dartmouth.edu/"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{...styles.linkBaseStyle, ...styles.dartmouthLink}} // Combine base and specific
+              className="clickable-link"
+            >
+              Dartmouth</a><span style={{ color: 'inherit', fontWeight: 400 }}>.</span> <br />
+            Reach out — I'm always <a
+              href="https://cal.com/ranvirdeshmukh/quick-chat"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={styles.linkBaseStyle}
+              className="clickable-link"
+            >
+              open to chat
+            </a>!
+          </p>
+
+          <div style={styles.linkContainer} className="links-animation">
+            <a
+              href="https://www.linkedin.com/in/ranvir-deshmukh-209706199/"
+              style={styles.externalLinkStyle} // Use external link style
+              target="_blank"
+              rel="noopener noreferrer"
+              className="clickable-link"
+            >
+              LinkedIn
+            </a>
+            <span style={styles.linkSeparator}>|</span>
+            <a
+              href="https://github.com/Ranvirdeshmukh"
+              style={styles.externalLinkStyle} // Use external link style
+              target="_blank"
+              rel="noopener noreferrer"
+              className="clickable-link"
+            >
+              GitHub
+            </a>
+          </div>
+
+          <GithubHeartbeat animationDelay={2500} darkMode={darkMode} />
+
+          <div style={styles.bottomLogo} className="logo-animation">RD/&gt;</div>
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 
