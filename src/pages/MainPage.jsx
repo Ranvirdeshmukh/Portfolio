@@ -50,6 +50,8 @@ const MinimalPortfolio = () => {
         }
       }
       
+
+      
       @keyframes subtleFadeIn {
         0% {
           opacity: 0.3;
@@ -144,10 +146,13 @@ const MinimalPortfolio = () => {
     background: darkMode
     ? 'linear-gradient(135deg, #1C093F 0%, #0C0F33 100%)' // Original dark
     : 'linear-gradient(135deg, #f9f9f9 0%, #ffffff 100%)', // Original light
-// Simple white
     minHeight: '100vh',
     transition: 'background 0.5s cubic-bezier(0.2, 0.8, 0.2, 1), color 0.5s cubic-bezier(0.2, 0.8, 0.2, 1)',
     position: 'relative',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: '20px',
   };
 
   // Inner container style - Restore dark/light mode text color
@@ -158,10 +163,11 @@ const MinimalPortfolio = () => {
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
-    margin: '0 auto',
-    padding: '0 24px',
-    maxWidth: isDesktop ? '800px' : '600px',
-    minHeight: '100vh',
+    width: '100%',
+    maxWidth: isDesktop ? '650px' : '500px',
+    minHeight: 'auto',
+    margin: '0',
+    padding: '0',
     transition: 'opacity 1s cubic-bezier(0.2, 0.8, 0.2, 1)',
     position: 'relative',
     opacity: isVisible ? 1 : 0,
@@ -226,7 +232,7 @@ const MinimalPortfolio = () => {
       margin: '0 2px',
     },
     bottomLogo: {
-      marginTop: '40px',
+      marginTop: '30px',
       fontSize: isDesktop ? '16px' : '14px',
       fontWeight: 600,
       color: darkMode ? 'rgba(255, 255, 255, 0.7)' : '#86868b', // Adjust color
@@ -237,8 +243,8 @@ const MinimalPortfolio = () => {
     // Re-add toggleContainer and icon styles
     toggleContainer: {
       position: 'absolute',
-      top: '22px',
-      right: '24px',
+      top: '20px',
+      right: '20px',
       zIndex: 10,
       transition: 'transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1)',
     },
@@ -312,6 +318,7 @@ const MinimalPortfolio = () => {
         </div>
 
         <div style={containerStyles}>
+
           <h2 style={styles.name} className="name-animation">Ranvir Deshmukh</h2>
           <h3 style={styles.tagline} className="tagline-animation">I write software and make videos.</h3>
 
