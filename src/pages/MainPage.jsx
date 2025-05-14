@@ -176,60 +176,70 @@ const MinimalPortfolio = () => {
   // Updated styles for Apple-like look
   const styles = {
     name: {
-      fontSize: isDesktop ? '52px' : '36px',
-      margin: '0 0 10px 0',
-      fontWeight: 500, // Reverted to previous weight
-      letterSpacing: '-0.03em', // Reverted to previous spacing
+      fontSize: isDesktop ? '48px' : '34px',
+      margin: '0 0 14px 0',
+      fontWeight: 600, // SF Pro Display / Inter semibold weight (Apple-like)
+      letterSpacing: '-0.04em', // Tighter tracking for headings (Apple-style)
       lineHeight: 1.1,
-      color: darkMode ? '#ffffff' : '#1d1d1f', // Adjust color based on mode
+      color: darkMode ? '#ffffff' : '#000000', // Pure black in light mode (Apple-style)
       textRendering: 'optimizeLegibility',
     },
     tagline: {
-      fontSize: isDesktop ? '26px' : '22px',
-      margin: '0 0 30px 0',
-      fontWeight: 400, // Standard weight tagline
-      letterSpacing: '-0.01em',
-      lineHeight: 1.2,
-      color: darkMode ? 'rgba(255, 255, 255, 0.95)' : '#515154', // Adjust color
+      fontSize: isDesktop ? '24px' : '20px',
+      margin: '0 0 40px 0', // More spacing between sections (Notion-style)
+      fontWeight: 400,
+      letterSpacing: '-0.02em', 
+      lineHeight: 1.3,
+      color: darkMode ? 'rgba(255, 255, 255, 0.95)' : 'rgba(0, 0, 0, 0.8)', // Slightly softer black (Notion-style)
       textRendering: 'optimizeLegibility',
     },
     description: {
-      fontSize: isDesktop ? '18px' : '16px',
-      lineHeight: '1.6', // Increased line height
-      marginBottom: '40px', // Increased margin
-      maxWidth: '680px',
-      color: darkMode ? 'rgba(255, 255, 255, 0.85)' : '#515154', // Lighter base color for paragraph
-      letterSpacing: '0.01em', // Slight spacing increase
+      fontSize: isDesktop ? '17px' : '16px', // Apple typically uses 17px for body text
+      lineHeight: '1.7', // Increased line height for readability (Notion-style)
+      marginBottom: '50px', // More spacing between sections
+      maxWidth: '580px', // Slightly narrower for better readability
+      color: darkMode ? 'rgba(255, 255, 255, 0.85)' : 'rgba(0, 0, 0, 0.7)', // Softer text for paragraphs
+      letterSpacing: '0.01em',
+      fontWeight: 400,
+    },
+    paragraph: {
+      marginBottom: '20px', // Space between paragraphs
     },
     // Consolidated link style
     linkBaseStyle: {
       textDecoration: 'none',
-      color: darkMode ? '#f5f5f7' : '#1d1d1f',
-      fontWeight: 400, // Same weight as surrounding text
-      transition: 'color 0.3s ease',
+      color: darkMode ? '#64D2FF' : '#0071e3', // Apple blue in light mode, softer blue in dark mode
+      fontWeight: 500, // Slightly bolder than surrounding text (subtle distinction)
+      transition: 'all 0.2s ease',
+      borderBottom: `1px solid ${darkMode ? 'rgba(100, 210, 255, 0.2)' : 'rgba(0, 113, 227, 0.2)'}`, // Subtle underline (Notion-style)
+      paddingBottom: '1px',
     },
     // Specific style for Dartmouth (if needed, otherwise use base)
     dartmouthLink: {
-      // Inherits from linkBaseStyle
+      color: darkMode ? '#50C878' : '#00693E', // Dartmouth green colors
+      borderBottom: `1px solid ${darkMode ? 'rgba(80, 200, 120, 0.2)' : 'rgba(0, 105, 62, 0.2)'}`
     },
     linkContainer: {
       display: 'flex',
       alignItems: 'center',
-      gap: '10px',
-      marginBottom: '42px',
+      gap: '16px', // Slightly more spacing between links
+      marginBottom: '52px', // More bottom margin
+      fontSize: '16px', // Specific size for external links
     },
     // Style for LinkedIn/GitHub links
     externalLinkStyle: {
       textDecoration: 'none',
-      color: darkMode ? 'rgba(255, 255, 255, 0.9)' : '#515154', // Adjust color
-      fontWeight: 500,
+      color: darkMode ? 'rgba(255, 255, 255, 0.9)' : 'rgba(0, 0, 0, 0.75)', // Adjust color
+      fontWeight: 500, 
       display: 'inline-block',
       position: 'relative',
-      transition: 'color 0.3s ease',
+      transition: 'all 0.2s ease',
+      padding: '6px 12px', // Padding for button-like appearance
+      borderRadius: '6px', // Rounded corners (Notion-style)
+      backgroundColor: darkMode ? 'rgba(255, 255, 255, 0.07)' : 'rgba(0, 0, 0, 0.03)', // Subtle button background
     },
     linkSeparator: {
-      color: darkMode ? 'rgba(255, 255, 255, 0.4)' : '#d2d2d7', // Adjust color
-      margin: '0 2px',
+      display: 'none', // Remove separator for button-style links
     },
     bottomLogo: {
       marginTop: '30px',
@@ -322,49 +332,49 @@ const MinimalPortfolio = () => {
           <h2 style={styles.name} className="name-animation">Ranvir Deshmukh</h2>
           <h3 style={styles.tagline} className="tagline-animation">I write software and make videos.</h3>
 
-          <p style={styles.description} className="description-animation">
-            Having built widely-used tools like{' '}
-            <a
-              href="https://courseme.ai"
-              target="_blank"
-              rel="noopener noreferrer"
-              style={styles.linkBaseStyle} // Use base style
-              className="clickable-link"
-             >CourseMe</a> and{' '}
-             <a
-              href="https://apps.apple.com/us/app/meme-me-humor-personalized/id6482850278"
-              target="_blank"
-              rel="noopener noreferrer"
-              style={styles.linkBaseStyle} // Use base style
-              className="clickable-link"
-            >Meme Me</a><span style={{ color: 'inherit', fontWeight: 400 }}>,</span> I'm now focused on building{' '}
-            <a
-              href="https://signpact.ai/"
-              target="_blank"
-              rel="noopener noreferrer"
-              style={styles.linkBaseStyle} // Use base style
-              className="clickable-link"
-            >
-              SignPact</a><span style={{ color: 'inherit', fontWeight: 400 }}></span>
-            {/* Removed <br /> and added text directly */} while studying Computer Science at{' '}
-            <a
-              href="https://home.dartmouth.edu/"
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{...styles.linkBaseStyle, ...styles.dartmouthLink}} // Combine base and specific
-              className="clickable-link"
-            >
-              Dartmouth</a><span style={{ color: 'inherit', fontWeight: 400 }}>.</span> <br />
-            Reach out — I'm always <a
-              href="https://cal.com/ranvirdeshmukh/quick-chat"
-              target="_blank"
-              rel="noopener noreferrer"
-              style={styles.linkBaseStyle}
-              className="clickable-link"
-            >
-              open to chat
-            </a>!
-          </p>
+          <div style={styles.description} className="description-animation">
+            <p style={styles.paragraph}>
+              Having built widely-used tools like{' '}
+              <a
+                href="https://courseme.ai"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={styles.linkBaseStyle}
+                className="clickable-link"
+              >CourseMe</a> and{' '}
+              <a
+                href="https://apps.apple.com/us/app/meme-me-humor-personalized/id6482850278"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={styles.linkBaseStyle}
+                className="clickable-link"
+              >Meme Me</a>, I'm now focused on building{' '}
+              <a
+                href="https://signpact.ai/"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={styles.linkBaseStyle}
+                className="clickable-link"
+              >SignPact</a> while studying Computer Science at{' '}
+              <a
+                href="https://home.dartmouth.edu/"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{...styles.linkBaseStyle, ...styles.dartmouthLink}}
+                className="clickable-link"
+              >Dartmouth</a>.
+            </p>
+            <p style={styles.paragraph}>
+              Reach out — I'm always{' '}
+              <a
+                href="https://cal.com/ranvirdeshmukh/quick-chat"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={styles.linkBaseStyle}
+                className="clickable-link"
+              >open to chat</a>!
+            </p>
+          </div>
 
           <div style={styles.linkContainer} className="links-animation">
             <a
