@@ -97,6 +97,32 @@ const MinimalPortfolio = () => {
       .clickable-link:hover {
         text-decoration: underline; /* Underline on hover */
       }
+
+      /* Apple-like hover effects for external links (social media) */
+      .external-link {
+        position: relative;
+        padding: 8px 16px;
+        border-radius: 8px;
+        transition: all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        transform: translateZ(0);
+        will-change: transform, background-color;
+      }
+
+      .external-link:hover {
+        background-color: ${darkMode 
+          ? 'rgba(255, 255, 255, 0.08)' 
+          : 'rgba(0, 0, 0, 0.04)'};
+        transform: translateY(-1px) scale(1.02);
+        text-decoration: none;
+        box-shadow: ${darkMode 
+          ? '0 4px 12px rgba(0, 0, 0, 0.3)' 
+          : '0 4px 12px rgba(0, 0, 0, 0.08)'};
+      }
+
+      .external-link:active {
+        transform: translateY(0) scale(0.98);
+        transition: all 0.1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      }
       
       .logo-animation {
         opacity: 0.3;
@@ -366,7 +392,7 @@ const MinimalPortfolio = () => {
               style={styles.externalLinkStyle} // Use external link style
               target="_blank"
               rel="noopener noreferrer"
-              className="clickable-link"
+              className="external-link"
             >
               LinkedIn
             </a>
@@ -376,7 +402,7 @@ const MinimalPortfolio = () => {
               style={styles.externalLinkStyle} // Use external link style
               target="_blank"
               rel="noopener noreferrer"
-              className="clickable-link"
+              className="external-link"
             >
               GitHub
             </a>
@@ -386,7 +412,7 @@ const MinimalPortfolio = () => {
               style={styles.externalLinkStyle} // Use external link style
               target="_blank"
               rel="noopener noreferrer"
-              className="clickable-link"
+              className="external-link"
             >
               X
             </a>
