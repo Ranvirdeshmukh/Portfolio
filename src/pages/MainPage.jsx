@@ -380,6 +380,16 @@ const MinimalPortfolio = () => {
             >
               GitHub
             </a>
+            <span style={styles.linkSeparator}>|</span>
+            <a
+              href="https://x.com/ranvirdeshmukh_"
+              style={styles.externalLinkStyle} // Use external link style
+              target="_blank"
+              rel="noopener noreferrer"
+              className="clickable-link"
+            >
+              X
+            </a>
           </div>
 
           <GithubHeartbeat animationDelay={2500} darkMode={darkMode} />
