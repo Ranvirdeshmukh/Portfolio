@@ -88,14 +88,24 @@ const MinimalPortfolio = () => {
       .clickable-link {
         position: relative;
         padding: 2px 0; /* Minimal padding */
-        border-radius: 4px;
-        transition: color 0.3s ease, background-color 0.3s ease;
+        border-radius: 2px;
+        transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+        transform: translateZ(0);
         backface-visibility: hidden;
+        color: ${darkMode ? '#f5f5f7' : '#1d1d1f'} !important;
       }
       
-      /* Minimal hover effect - subtle background */
+      /* Minimal hover effect - consistent with external links */
       .clickable-link:hover {
-        text-decoration: underline; /* Underline on hover */
+        color: ${darkMode 
+          ? 'rgba(255, 255, 255, 1)' 
+          : '#1d1d1f'} !important;
+        transform: translateY(-1px);
+      }
+
+      .clickable-link:active {
+        transform: translateY(0);
+        transition: all 0.1s cubic-bezier(0.2, 0.8, 0.2, 1);
       }
 
       /* Minimal hover effects for external links (social media) */
@@ -106,13 +116,13 @@ const MinimalPortfolio = () => {
         transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
         transform: translateZ(0);
         backface-visibility: hidden;
+        color: ${darkMode ? 'rgba(255, 255, 255, 0.9)' : '#515154'} !important;
       }
 
       .external-link:hover {
-        text-decoration: underline;
         color: ${darkMode 
           ? 'rgba(255, 255, 255, 1)' 
-          : '#1d1d1f'};
+          : '#1d1d1f'} !important;
         transform: translateY(-1px);
       }
 
@@ -222,9 +232,7 @@ const MinimalPortfolio = () => {
     // Consolidated link style
     linkBaseStyle: {
       textDecoration: 'none',
-      color: darkMode ? '#f5f5f7' : '#1d1d1f',
       fontWeight: 400, // Same weight as surrounding text
-      transition: 'color 0.3s ease',
     },
     // Specific style for Dartmouth (if needed, otherwise use base)
     dartmouthLink: {
@@ -239,11 +247,9 @@ const MinimalPortfolio = () => {
     // Style for LinkedIn/GitHub links
     externalLinkStyle: {
       textDecoration: 'none',
-      color: darkMode ? 'rgba(255, 255, 255, 0.9)' : '#515154', // Adjust color
       fontWeight: 400, // Match other link weight
       display: 'inline-block',
       position: 'relative',
-      transition: 'color 0.3s ease',
     },
     linkSeparator: {
       color: darkMode ? 'rgba(255, 255, 255, 0.4)' : '#d2d2d7', // Adjust color
