@@ -98,30 +98,27 @@ const MinimalPortfolio = () => {
         text-decoration: underline; /* Underline on hover */
       }
 
-      /* Apple-like hover effects for external links (social media) */
+      /* Minimal hover effects for external links (social media) */
       .external-link {
         position: relative;
-        padding: 8px 16px;
-        border-radius: 8px;
-        transition: all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        padding: 2px 0;
+        border-radius: 2px;
+        transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
         transform: translateZ(0);
-        will-change: transform, background-color;
+        backface-visibility: hidden;
       }
 
       .external-link:hover {
-        background-color: ${darkMode 
-          ? 'rgba(255, 255, 255, 0.08)' 
-          : 'rgba(0, 0, 0, 0.04)'};
-        transform: translateY(-1px) scale(1.02);
-        text-decoration: none;
-        box-shadow: ${darkMode 
-          ? '0 4px 12px rgba(0, 0, 0, 0.3)' 
-          : '0 4px 12px rgba(0, 0, 0, 0.08)'};
+        text-decoration: underline;
+        color: ${darkMode 
+          ? 'rgba(255, 255, 255, 1)' 
+          : '#1d1d1f'};
+        transform: translateY(-1px);
       }
 
       .external-link:active {
-        transform: translateY(0) scale(0.98);
-        transition: all 0.1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        transform: translateY(0);
+        transition: all 0.1s cubic-bezier(0.2, 0.8, 0.2, 1);
       }
       
       .logo-animation {
@@ -243,7 +240,7 @@ const MinimalPortfolio = () => {
     externalLinkStyle: {
       textDecoration: 'none',
       color: darkMode ? 'rgba(255, 255, 255, 0.9)' : '#515154', // Adjust color
-      fontWeight: 500,
+      fontWeight: 400, // Match other link weight
       display: 'inline-block',
       position: 'relative',
       transition: 'color 0.3s ease',
