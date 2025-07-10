@@ -309,7 +309,7 @@ const MinimalPortfolio = () => {
   return (
     <>
       <Helmet>
-        <title>Ranvir Deshmukh | Software Developer & Video Creator</title>
+        <title>Ranvir Deshmukh</title>
         <meta name="description" content="Personal website of Ranvir Deshmukh - Software developer, video creator, and Computer Science student at Dartmouth. Building CourseMe and creating educational content." />
         <meta name="keywords" content="Ranvir Deshmukh, software developer, Dartmouth, CourseMe, video creator, portfolio, computer science" />
         <meta name="author" content="Ranvir Deshmukh" />
@@ -320,14 +320,14 @@ const MinimalPortfolio = () => {
         {/* Open Graph / Facebook */}
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://www.ranvirdeshmukh.com/" />
-        <meta property="og:title" content="Ranvir Deshmukh | Software Developer & Video Creator" />
+        <meta property="og:title" content="Ranvir Deshmukh" />
         <meta property="og:description" content="Personal website of Ranvir Deshmukh - Software developer at CourseMe, video creator, and Computer Science student at Dartmouth." />
         <meta property="og:image" content="https://www.ranvirdeshmukh.com/profile.jpg" />
         
         {/* Twitter */}
         <meta property="twitter:card" content="summary_large_image" />
         <meta property="twitter:url" content="https://www.ranvirdeshmukh.com/" />
-        <meta property="twitter:title" content="Ranvir Deshmukh | Software Developer & Video Creator" />
+        <meta property="twitter:title" content="Ranvir Deshmukh" />
         <meta property="twitter:description" content="Personal website of Ranvir Deshmukh - Software developer at CourseMe, video creator, and Computer Science student at Dartmouth." />
         <meta property="twitter:image" content="https://www.ranvirdeshmukh.com/profile.jpg" />
       </Helmet>
