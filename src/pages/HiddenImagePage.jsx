@@ -66,10 +66,10 @@ const HiddenImagePage = () => {
     <>
       <Helmet>
         <title>Ranvir Deshmukh | Profile Image</title>
-        <meta name="description" content="Official profile image of Ranvir Deshmukh - Software Developer, Video Creator and Computer Science student at Dartmouth." />
+        <meta name="description" content="Official profile image of Ranvir Deshmukh - Computer Science student at Dartmouth." />
         <meta name="keywords" content="Ranvir Deshmukh, profile picture, software developer, Dartmouth, CourseMe" />
         <meta property="og:title" content="Ranvir Deshmukh | Profile Image" />
-        <meta property="og:description" content="Official profile image of Ranvir Deshmukh - Software Developer, Video Creator and Computer Science student at Dartmouth." />
+        <meta property="og:description" content="Official profile image of Ranvir Deshmukh - Computer Science student at Dartmouth." />
         <meta property="og:image" content="https://www.ranvirdeshmukh.com/profile.jpg" />
         <meta property="og:url" content="https://www.ranvirdeshmukh.com/profile-image" />
         <meta property="og:type" content="profile" />
