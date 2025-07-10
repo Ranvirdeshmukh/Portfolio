@@ -27,7 +27,7 @@ const MinimalPortfolio = () => {
   };
 
   const taglineStyle = {
-    fontSize: '18px',
+    fontSize: '20px',
     fontWeight: '400',
     margin: '0 0 24px 0',
     color: '#1d1d1f'
