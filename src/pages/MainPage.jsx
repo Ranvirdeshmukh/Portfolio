@@ -16,28 +16,32 @@ const MinimalPortfolio = () => {
     lineHeight: '1.6',
     color: '#1d1d1f',
     backgroundColor: '#ffffff',
-    minHeight: '100vh'
+    minHeight: '100vh',
+    textAlign: 'left'
   };
 
   const headingStyle = {
     fontSize: '32px',
     fontWeight: '600',
     margin: '0 0 8px 0',
-    color: '#1d1d1f'
+    color: '#1d1d1f',
+    textAlign: 'left'
   };
 
   const taglineStyle = {
     fontSize: '20px',
     fontWeight: '400',
     margin: '0 0 24px 0',
-    color: '#1d1d1f'
+    color: '#1d1d1f',
+    textAlign: 'left'
   };
 
   const paragraphStyle = {
     fontSize: '18px',
     fontWeight: '400',
     margin: '0 0 24px 0',
-    color: '#1d1d1f'
+    color: '#1d1d1f',
+    textAlign: 'left'
   };
 
   const linkStyle = {
@@ -48,7 +52,8 @@ const MinimalPortfolio = () => {
   const socialLinksStyle = {
     fontSize: '18px',
     margin: '0',
-    color: '#1d1d1f'
+    color: '#1d1d1f',
+    textAlign: 'left'
   };
 
   return (
@@ -87,7 +92,7 @@ const MinimalPortfolio = () => {
         </p>
 
         <p style={socialLinksStyle}>
-          You can find me on <a href="https://www.linkedin.com/in/ranvir-deshmukh-209706199/" target="_blank" rel="noopener noreferrer" style={linkStyle}>LinkedIn</a>, <a href="https://github.com/Ranvirdeshmukh" target="_blank" rel="noopener noreferrer" style={linkStyle}>GitHub</a>, and <a href="https://x.com/ranvirdeshmukh_" target="_blank" rel="noopener noreferrer" style={linkStyle}>X</a>.
+        You can find me on <a href="https://www.linkedin.com/in/ranvir-deshmukh-209706199/" target="_blank" rel="noopener noreferrer" style={linkStyle}>LinkedIn</a>, <a href="https://github.com/Ranvirdeshmukh" target="_blank" rel="noopener noreferrer" style={linkStyle}>GitHub</a>, and <a href="https://x.com/ranvirdeshmukh_" target="_blank" rel="noopener noreferrer" style={linkStyle}>X</a>.
         </p>
       </div>
     </>
