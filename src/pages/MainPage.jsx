@@ -24,7 +24,7 @@ const MinimalPortfolio = () => {
     fontSize: '32px',
     fontWeight: '600',
     margin: '0 0 8px 0',
-    color: '#1d1d1f',
+    color: '#374151',
     textAlign: 'left'
   };
 
@@ -32,7 +32,7 @@ const MinimalPortfolio = () => {
     fontSize: '20px',
     fontWeight: '400',
     margin: '0 0 24px 0',
-    color: '#1d1d1f',
+    color: '#4b5563',
     textAlign: 'left'
   };
 
@@ -45,10 +45,8 @@ const MinimalPortfolio = () => {
   };
 
   const linkStyle = {
-    color: 'inherit',
-    textDecoration: 'underline',
-    textDecorationColor: '#d1d5db',
-    textUnderlineOffset: '2px'
+    color: '#374151',
+    textDecoration: 'none'
   };
 
   const socialLinksStyle = {
