@@ -87,11 +87,11 @@ const MinimalPortfolio = () => {
         
         <p style={taglineStyle}>I write software and make videos.</p>
 
-        <p style={paragraphStyle}>
+        <p style={{...paragraphStyle, color: '#6b7280'}}>
           Having built widely-used tools like <a href="https://courseme.ai" target="_blank" rel="noopener noreferrer" style={linkStyle}>CourseMe</a> and <a href="https://apps.apple.com/us/app/meme-me-humor-personalized/id6482850278" target="_blank" rel="noopener noreferrer" style={linkStyle}>Meme Me</a>, I'm now focused on building <a href="https://signpact.ai/" target="_blank" rel="noopener noreferrer" style={linkStyle}>SignPact</a> while studying Computer Science at <a href="https://home.dartmouth.edu/" target="_blank" rel="noopener noreferrer" style={linkStyle}>Dartmouth</a>. Reach out — I'm always <a href="https://cal.com/ranvirdeshmukh/quick-chat" target="_blank" rel="noopener noreferrer" style={linkStyle}>open to chat</a>!
         </p>
 
-        <p style={socialLinksStyle}>
+        <p style={{...socialLinksStyle, color: '#6b7280'}}>
         You can find me on <a href="https://www.linkedin.com/in/ranvir-deshmukh-209706199/" target="_blank" rel="noopener noreferrer" style={linkStyle}>LinkedIn</a>, <a href="https://github.com/Ranvirdeshmukh" target="_blank" rel="noopener noreferrer" style={linkStyle}>GitHub</a>, and <a href="https://x.com/ranvirdeshmukh_" target="_blank" rel="noopener noreferrer" style={linkStyle}>X</a>.
         </p>
       </div>
