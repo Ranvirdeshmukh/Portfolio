@@ -16,7 +16,6 @@ const MinimalPortfolio = () => {
     lineHeight: '1.6',
     color: '#1d1d1f',
     backgroundColor: '#ffffff',
-    minHeight: '100vh',
     textAlign: 'left'
   };
 
