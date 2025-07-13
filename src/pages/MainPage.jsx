@@ -45,8 +45,10 @@ const MinimalPortfolio = () => {
   };
 
   const linkStyle = {
-    color: '#007AFF',
-    textDecoration: 'none'
+    color: 'inherit',
+    textDecoration: 'underline',
+    textDecorationColor: '#d1d5db',
+    textUnderlineOffset: '2px'
   };
 
   const socialLinksStyle = {
