@@ -28,7 +28,7 @@ const MinimalPortfolio = () => {
   const headingStyle = {
     fontSize: 'clamp(28px, 4vw, 36px)',
     fontWeight: '600',
-    margin: '0 0 clamp(12px, 2vw, 16px) 0',
+    margin: '0 0 clamp(6px, 1vw, 8px) 0',
     color: '#1d1d1f',
     textAlign: 'left',
     letterSpacing: '-0.02em',
