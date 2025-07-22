@@ -18,8 +18,8 @@ const MinimalPortfolio = () => {
     color: '#1d1d1f',
     backgroundColor: '#ffffff',
     textAlign: 'left',
-    // Mobile-first responsive padding
-    padding: 'clamp(40px, 8vw, 80px) clamp(20px, 5vw, 120px)',
+    // Mobile-first responsive padding - fixed for mobile
+    padding: 'clamp(32px, 6vh, 80px) clamp(16px, 4vw, 120px)',
     // Ensure smooth transitions
     transition: 'padding 0.3s ease-in-out'
   };
@@ -53,7 +53,7 @@ const MinimalPortfolio = () => {
     color: '#4b5563',
     textAlign: 'left',
     lineHeight: '1.7',
-    maxWidth: '65ch' // Optimal reading width
+    maxWidth: '65ch'
   };
 
   // Refined link styling
@@ -81,7 +81,9 @@ const MinimalPortfolio = () => {
   // Content wrapper for better text width control
   const contentStyle = {
     width: '100%',
-    maxWidth: '100%'
+    maxWidth: '100%',
+    wordBreak: 'break-word',
+    overflowWrap: 'break-word'
   };
 
   return (
@@ -114,11 +116,15 @@ const MinimalPortfolio = () => {
         
         {/* Custom CSS for enhanced responsive design and link hover effects */}
         <style>{`
-          @media (max-width: 768px) {
-            body {
-              -webkit-text-size-adjust: 100%;
-              text-size-adjust: 100%;
-            }
+          /* Global optimizations */
+          * {
+            box-sizing: border-box;
+          }
+          
+          html, body {
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
           }
           
           a {
@@ -132,15 +138,6 @@ const MinimalPortfolio = () => {
           /* Ensure smooth scrolling */
           html {
             scroll-behavior: smooth;
-          }
-          
-          /* Enhanced touch targets for mobile */
-          @media (max-width: 768px) {
-            a {
-              min-height: 44px;
-              display: inline-block;
-              line-height: 1.4;
-            }
           }
         `}</style>
       </Helmet>
