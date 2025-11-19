@@ -76,12 +76,13 @@ const MinimalPortfolio = () => {
     fontSize: 'clamp(20px, 2.5vw, 24px)',
     fontWeight: '700',
     color: '#d1d5db', // Subtle gray
-    marginTop: 'clamp(32px, 4vw, 48px)',
+    marginTop: 'clamp(16px, 2vw, 20px)', // Matches paragraphStyle margin
     fontFamily: 'Menlo, Monaco, Consolas, "Courier New", monospace',
     userSelect: 'none',
     opacity: '0.8',
     filter: 'blur(0.3px)', // Slight blur effect
-    animation: 'blink 1.2s infinite' // Blinking animation
+    animation: 'blink 1.2s infinite', // Blinking animation
+    letterSpacing: '-0.1em' // Tighter spacing between / and >
   };
 
   // Content wrapper for better text width control
