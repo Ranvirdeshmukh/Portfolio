@@ -26,16 +26,16 @@ const MinimalPortfolio = () => {
 
   // Enhanced heading with better spacing
   const headingStyle = {
-    fontSize: 'clamp(28px, 4vw, 36px)',
+    fontSize: 'clamp(24px, 3vw, 30px)',
     fontWeight: '600',
-    margin: '0 0 clamp(6px, 1vw, 8px) 0',
+    margin: '0 0 clamp(20px, 2.5vw, 28px) 0',
     color: '#1d1d1f',
     textAlign: 'left',
     letterSpacing: '-0.02em',
     lineHeight: '1.2'
   };
 
-  // Improved tagline spacing
+  // Improved tagline spacing - Not used currently but kept for reference
   const taglineStyle = {
     fontSize: 'clamp(18px, 2.5vw, 22px)',
     fontWeight: '400',
@@ -47,7 +47,7 @@ const MinimalPortfolio = () => {
 
   // Enhanced paragraph spacing
   const paragraphStyle = {
-    fontSize: 'clamp(16px, 2vw, 18px)',
+    fontSize: 'clamp(15px, 1.8vw, 17px)',
     fontWeight: '400',
     margin: '0 0 clamp(16px, 2vw, 20px) 0',
     color: '#4b5563',
@@ -70,7 +70,7 @@ const MinimalPortfolio = () => {
 
   // Social links with better spacing
   const socialLinksStyle = {
-    fontSize: 'clamp(16px, 2vw, 18px)',
+    fontSize: 'clamp(15px, 1.8vw, 17px)',
     margin: '0',
     color: '#4b5563',
     textAlign: 'left',
@@ -90,8 +90,8 @@ const MinimalPortfolio = () => {
     <>
       <Helmet>
         <title>Ranvir Deshmukh</title>
-        <meta name="description" content="Personal website of Ranvir Deshmukh - Software developer, video creator, and Computer Science student at Dartmouth. Building CourseMe and creating educational content." />
-        <meta name="keywords" content="Ranvir Deshmukh, software developer, Dartmouth, CourseMe, video creator, portfolio, computer science" />
+        <meta name="description" content="Personal website of Ranvir Deshmukh - Building RealPact. AI native OS for real estate." />
+        <meta name="keywords" content="Ranvir Deshmukh, software developer, RealPact, CourseMe, portfolio, computer science" />
         <meta name="author" content="Ranvir Deshmukh" />
         
         {/* Viewport meta for responsive design */}
@@ -104,14 +104,14 @@ const MinimalPortfolio = () => {
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://www.ranvirdeshmukh.com/" />
         <meta property="og:title" content="Ranvir Deshmukh" />
-        <meta property="og:description" content="Personal website of Ranvir Deshmukh - Software developer at CourseMe, video creator, and Computer Science student at Dartmouth." />
+        <meta property="og:description" content="Personal website of Ranvir Deshmukh - Building RealPact." />
         <meta property="og:image" content="https://www.ranvirdeshmukh.com/profile.jpg" />
         
         {/* Twitter */}
         <meta property="twitter:card" content="summary_large_image" />
         <meta property="twitter:url" content="https://www.ranvirdeshmukh.com/" />
         <meta property="twitter:title" content="Ranvir Deshmukh" />
-        <meta property="twitter:description" content="Personal website of Ranvir Deshmukh - Software developer at CourseMe, video creator, and Computer Science student at Dartmouth." />
+        <meta property="twitter:description" content="Personal website of Ranvir Deshmukh - Building RealPact." />
         <meta property="twitter:image" content="https://www.ranvirdeshmukh.com/profile.jpg" />
         
         {/* Custom CSS for enhanced responsive design and link hover effects */}
@@ -146,18 +146,20 @@ const MinimalPortfolio = () => {
         <div style={contentStyle}>
           <h1 style={headingStyle}>Ranvir Deshmukh</h1>
           
-          <p style={taglineStyle}>I write software and make videos.</p>
-
           <p style={paragraphStyle}>
-            Having built some widely-used tools like <a href="https://courseme.ai" target="_blank" rel="noopener noreferrer" style={linkStyle}>CourseMe</a> and <a href="https://apps.apple.com/us/app/meme-me-humor-personalized/id6482850278" target="_blank" rel="noopener noreferrer" style={linkStyle}>Meme Me</a>, I'm now focused on building <a href="https://signpact.ai/" target="_blank" rel="noopener noreferrer" style={linkStyle}>SignPact</a> while studying Computer Science at <a href="https://home.dartmouth.edu/" target="_blank" rel="noopener noreferrer" style={linkStyle}>Dartmouth</a>.
+            I am currently building <a href="https://realpact.ai" target="_blank" rel="noopener noreferrer" style={linkStyle}>RealPact</a> — an AI-native operating system for real estate brokerages, starting with automating their contract workflows.
           </p>
 
           <p style={paragraphStyle}>
-            Reach out — I'm always <a href="https://cal.com/ranvirdeshmukh/quick-chat" target="_blank" rel="noopener noreferrer" style={linkStyle}>open to chat</a>!
+            I deeply value minimalistic design and creating the maximum impact through the products I create.
+          </p>
+
+          <p style={paragraphStyle}>
+            Some other widely used tools I've made include <a href="https://courseme.ai" target="_blank" rel="noopener noreferrer" style={linkStyle}>CourseMe</a> and <a href="https://signpact.ai/" target="_blank" rel="noopener noreferrer" style={linkStyle}>SignPact</a>.
           </p>
 
           <p style={socialLinksStyle}>
-            You can find me on <a href="https://www.linkedin.com/in/ranvir-deshmukh-209706199/" target="_blank" rel="noopener noreferrer" style={linkStyle}>LinkedIn</a>, <a href="https://github.com/Ranvirdeshmukh" target="_blank" rel="noopener noreferrer" style={linkStyle}>GitHub</a>, and <a href="https://x.com/ranvirdeshmukh_" target="_blank" rel="noopener noreferrer" style={linkStyle}>X</a>.
+            You can find my experiences on <a href="https://www.linkedin.com/in/ranvir-deshmukh-209706199/" target="_blank" rel="noopener noreferrer" style={linkStyle}>LinkedIn</a>, my witty side on <a href="https://x.com/ranvirdeshmukh_" target="_blank" rel="noopener noreferrer" style={linkStyle}>X</a>, and my code on <a href="https://github.com/Ranvirdeshmukh" target="_blank" rel="noopener noreferrer" style={linkStyle}>GitHub</a>.
           </p>
         </div>
       </div>
