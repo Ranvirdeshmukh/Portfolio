@@ -71,6 +71,19 @@ const MinimalPortfolio = () => {
     maxWidth: '65ch'
   };
 
+  // Logo style for the footer
+  const logoStyle = {
+    fontSize: 'clamp(20px, 2.5vw, 24px)',
+    fontWeight: '700',
+    color: '#d1d5db', // Subtle gray
+    marginTop: 'clamp(32px, 4vw, 48px)',
+    fontFamily: 'Menlo, Monaco, Consolas, "Courier New", monospace',
+    userSelect: 'none',
+    opacity: '0.8',
+    filter: 'blur(0.3px)', // Slight blur effect
+    animation: 'blink 1.2s infinite' // Blinking animation
+  };
+
   // Content wrapper for better text width control
   const contentStyle = {
     width: '100%',
@@ -145,6 +158,12 @@ const MinimalPortfolio = () => {
             scroll-behavior: smooth;
           }
 
+          /* Blink animation for the cursor */
+          @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+          }
+          
           /* Fade-in animation - Opacity only to prevent layout shifts */
           @keyframes fadeIn {
             from { opacity: 0; }
@@ -172,6 +191,10 @@ const MinimalPortfolio = () => {
           <p style={socialLinksStyle}>
             You can find my experiences on <a href="https://www.linkedin.com/in/ranvir-deshmukh-209706199/" target="_blank" rel="noopener noreferrer" style={linkStyle}>LinkedIn</a>, my witty side on <a href="https://x.com/ranvirdeshmukh_" target="_blank" rel="noopener noreferrer" style={linkStyle}>X</a>, and my code on <a href="https://github.com/Ranvirdeshmukh" target="_blank" rel="noopener noreferrer" style={linkStyle}>GitHub</a>.
           </p>
+          
+          <div style={logoStyle}>
+            {"/>"}
+          </div>
         </div>
       </div>
     </>
