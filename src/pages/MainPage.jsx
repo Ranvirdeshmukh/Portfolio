@@ -16,12 +16,15 @@ const MinimalPortfolio = () => {
     fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", system-ui, sans-serif',
     lineHeight: '1.68',
     color: '#1d1d1f',
-    backgroundColor: '#ffffff',
+    // Very subtle off-white to match body
+    backgroundColor: '#fcfcfc',
     textAlign: 'left',
-    // Mobile-first responsive padding - increased top padding to push content down
-    padding: 'clamp(80px, 15vh, 160px) clamp(20px, 5vw, 120px) clamp(32px, 6vh, 80px)',
+    // Mobile-first responsive padding - balanced vertical positioning
+    padding: 'clamp(64px, 12vh, 100px) clamp(20px, 5vw, 120px) clamp(32px, 6vh, 80px)',
     // Ensure smooth transitions
-    transition: 'padding 0.3s ease-in-out'
+    transition: 'padding 0.3s ease-in-out',
+    // Add subtle entrance animation
+    animation: 'fadeIn 0.8s ease-out forwards'
   };
 
   // Enhanced heading with better spacing
@@ -33,16 +36,6 @@ const MinimalPortfolio = () => {
     textAlign: 'left',
     letterSpacing: '-0.02em',
     lineHeight: '1.2'
-  };
-
-  // Improved tagline spacing - Not used currently but kept for reference
-  const taglineStyle = {
-    fontSize: 'clamp(18px, 2.5vw, 22px)',
-    fontWeight: '400',
-    margin: '0 0 clamp(20px, 2.5vw, 28px) 0',
-    color: '#374151',
-    textAlign: 'left',
-    lineHeight: '1.5'
   };
 
   // Enhanced paragraph spacing
@@ -125,19 +118,37 @@ const MinimalPortfolio = () => {
             margin: 0;
             padding: 0;
             overflow-x: hidden;
+            /* Font smoothing for crisp text */
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            /* Subtle off-white background for less eye strain */
+            background-color: #fcfcfc; 
+          }
+          
+          /* Elegant selection color */
+          ::selection {
+            background-color: rgba(29, 29, 31, 0.1); /* Very subtle gray */
+            color: #1d1d1f;
           }
           
           a {
-            transition: border-bottom-color 0.2s ease, color 0.2s ease;
+            transition: border-bottom-color 0.2s ease, color 0.2s ease, opacity 0.2s ease;
           }
           
           a:hover {
             border-bottom: 1px solid #1d1d1f;
+            opacity: 0.8;
           }
           
           /* Ensure smooth scrolling */
           html {
             scroll-behavior: smooth;
+          }
+
+          /* Fade-in animation - Opacity only to prevent layout shifts */
+          @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
           }
         `}</style>
       </Helmet>
