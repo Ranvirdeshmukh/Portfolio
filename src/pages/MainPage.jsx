@@ -18,8 +18,8 @@ const MinimalPortfolio = () => {
     color: '#1d1d1f',
     backgroundColor: '#ffffff',
     textAlign: 'left',
-    // Mobile-first responsive padding - fixed for mobile
-    padding: 'clamp(32px, 6vh, 80px) clamp(16px, 4vw, 120px)',
+    // Mobile-first responsive padding - increased top padding to push content down
+    padding: 'clamp(80px, 15vh, 160px) clamp(20px, 5vw, 120px) clamp(32px, 6vh, 80px)',
     // Ensure smooth transitions
     transition: 'padding 0.3s ease-in-out'
   };
