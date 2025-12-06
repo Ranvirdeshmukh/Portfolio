@@ -182,7 +182,7 @@ const MinimalPortfolio = () => {
           </p>
 
           <p style={paragraphStyle}>
-            I deeply value minimalistic design and creating the maximum impact through the products I create.
+            I deeply value minimalist design and creating maximum impact through the products I build.
           </p>
 
           <p style={paragraphStyle}>
