@@ -190,7 +190,7 @@ const MinimalPortfolio = () => {
           </p>
 
           <p style={paragraphStyle}>
-            I also occasionally produce, edit, and create <a href="https://www.youtube.com/watch?v=4FNZafeLKlY" target="_blank" rel="noopener noreferrer" style={linkStyle}>videos</a>.
+            Occasionally, I also produce, edit, and create <a href="https://www.youtube.com/watch?v=4FNZafeLKlY" target="_blank" rel="noopener noreferrer" style={linkStyle}>videos</a>.
           </p>
 
           <p style={socialLinksStyle}>
