@@ -189,6 +189,10 @@ const MinimalPortfolio = () => {
             Some other widely used tools I've made include <a href="https://courseme.ai" target="_blank" rel="noopener noreferrer" style={linkStyle}>CourseMe</a> and <a href="https://signpact.ai/" target="_blank" rel="noopener noreferrer" style={linkStyle}>SignPact</a>.
           </p>
 
+          <p style={paragraphStyle}>
+            I also occasionally produce, edit, and create videos — see an <a href="https://www.youtube.com/watch?v=4FNZafeLKlY" target="_blank" rel="noopener noreferrer" style={linkStyle}>example</a>.
+          </p>
+
           <p style={socialLinksStyle}>
             You can find my experiences on <a href="https://www.linkedin.com/in/ranvir-deshmukh-209706199/" target="_blank" rel="noopener noreferrer" style={linkStyle}>LinkedIn</a>, my witty side on <a href="https://x.com/ranvirdeshmukh_" target="_blank" rel="noopener noreferrer" style={linkStyle}>X</a>, and my code on <a href="https://github.com/Ranvirdeshmukh" target="_blank" rel="noopener noreferrer" style={linkStyle}>GitHub</a>.
           </p>
