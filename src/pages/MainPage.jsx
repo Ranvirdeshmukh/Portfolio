@@ -182,7 +182,8 @@ const MinimalPortfolio = () => {
           </p>
 
           <p style={paragraphStyle}>
-I try to make software that gets out of your way.          </p>
+            Good software disappears. I build tools that are minimal, intuitive, and unmistakably clear.
+          </p>
 
           <p style={paragraphStyle}>
             Some other widely used tools I've made include <a href="https://courseme.ai" target="_blank" rel="noopener noreferrer" style={linkStyle}>CourseMe</a> and <a href="https://signpact.ai/" target="_blank" rel="noopener noreferrer" style={linkStyle}>SignPact</a>.
