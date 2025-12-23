@@ -182,7 +182,7 @@ const MinimalPortfolio = () => {
           </p>
 
           <p style={paragraphStyle}>
-          I care about the last 10%: polish, clarity, and the “this just works” feeling.
+          I deeply care about the last 10%: polish, clarity, and the “this just works” feeling.
           </p>
 
           <p style={paragraphStyle}>
