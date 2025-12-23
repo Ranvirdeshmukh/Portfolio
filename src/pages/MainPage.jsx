@@ -182,7 +182,7 @@ const MinimalPortfolio = () => {
           </p>
 
           <p style={paragraphStyle}>
-            Good software disappears. I build tools that are minimal, intuitive, and unmistakably clear.
+          I care about the last 10%: polish, clarity, and the “this just works” feeling.
           </p>
 
           <p style={paragraphStyle}>
