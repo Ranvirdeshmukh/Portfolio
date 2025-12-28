@@ -18,35 +18,41 @@ const HiddenImagePage = () => {
     backgroundColor: '#fff'
   };
 
-  // Styling for the circular image container
-  const circleContainerStyle = {
-    width: '500px',
-    height: '500px',
+  // Outer wrapper for border effect
+  const outerWrapperStyle = {
+    width: '530px',
+    height: '530px',
     borderRadius: '50%',
-    overflow: 'hidden',
+    padding: '6px',
+    border: '1px solid rgba(200, 200, 200, 0.5)',
+    background: 'rgba(250, 250, 250, 0.05)',
     boxShadow: '0 10px 30px rgba(0, 0, 0, 0.05), 0 1px 8px rgba(0, 0, 0, 0.07)',
     position: 'relative',
-    border: '1px solid rgba(200, 200, 200, 0.5)',
-    padding: '6px', // Adds space for the inner border
-    background: 'rgba(250, 250, 250, 0.05)'
+    boxSizing: 'border-box'
   };
 
-  // Inner container with second subtle border
-  const innerCircleStyle = {
-    width: '100%',
-    height: '100%',
+  // Styling for the circular image container
+  const circleContainerStyle = {
+    width: '518px', // 530px - 12px (6px padding on each side)
+    height: '518px', // 530px - 12px (6px padding on each side)
     borderRadius: '50%',
     overflow: 'hidden',
+    position: 'absolute',
+    top: '6px',
+    left: '6px',
     border: '1px solid rgba(210, 210, 210, 0.4)',
-    position: 'relative'
+    boxSizing: 'border-box'
   };
 
   // Styling for the profile image itself
   const imageStyle = {
     width: '100%',
-    height: '105%', // Slightly reduced from 110% for minor zoom out
+    height: '102%',
     objectFit: 'cover',
-    objectPosition: '60% 50%' // Move slightly southeast
+    objectPosition: '65% 50%', // Positioned more to the left
+    display: 'block',
+    margin: 0,
+    padding: 0
   };
   
   // Track profile image view when component mounts
@@ -76,9 +82,9 @@ const HiddenImagePage = () => {
         <link rel="canonical" href="https://www.ranvirdeshmukh.com/profile-image" />
       </Helmet>
       <div style={pageStyle}>
-        <div style={circleContainerStyle} 
+        <div style={outerWrapperStyle} 
              onClick={() => trackEvent('Profile', 'ImageClick', 'ProfileImageClicked')}>
-          <div style={innerCircleStyle}>
+          <div style={circleContainerStyle}>
             <img 
               src="/profile.jpg" 
               alt="Ranvir Deshmukh Profile" 
