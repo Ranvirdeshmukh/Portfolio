@@ -17,38 +17,62 @@ async function createCircularProfile() {
   
   console.log(`Cropping ${size}x${size} square starting at x=${leftOffset}`);
   
-  // Create circular mask SVG
-  const circleMask = Buffer.from(
-    `<svg width="${size}" height="${size}">
-      <circle cx="${size/2}" cy="${size/2}" r="${size/2}" fill="white"/>
-    </svg>`
-  );
+  // Final output size and border settings
+  const outputSize = 1200;
+  const borderWidth = 12; // White border thickness
+  const innerSize = outputSize - (borderWidth * 2); // Size of the photo circle
   
-  // Process the image
-  await sharp(inputPath)
-    // Extract square region centered on face
+  // First, create the circular cropped photo
+  const circularPhoto = await sharp(inputPath)
     .extract({
       left: leftOffset,
       top: 0,
       width: size,
       height: size
     })
-    // Resize to a reasonable size for og:image (1200x1200 is good for social)
-    .resize(1200, 1200)
-    // Apply circular mask
+    .resize(innerSize, innerSize)
     .composite([{
       input: Buffer.from(
-        `<svg width="1200" height="1200">
-          <circle cx="600" cy="600" r="600" fill="white"/>
+        `<svg width="${innerSize}" height="${innerSize}">
+          <circle cx="${innerSize/2}" cy="${innerSize/2}" r="${innerSize/2}" fill="white"/>
         </svg>`
       ),
       blend: 'dest-in'
     }])
-    // Output as PNG with transparency
+    .png()
+    .toBuffer();
+  
+  // Create the final image with white border
+  await sharp({
+    create: {
+      width: outputSize,
+      height: outputSize,
+      channels: 4,
+      background: { r: 0, g: 0, b: 0, alpha: 0 }
+    }
+  })
+    .composite([
+      // White circle border (slightly larger)
+      {
+        input: Buffer.from(
+          `<svg width="${outputSize}" height="${outputSize}">
+            <circle cx="${outputSize/2}" cy="${outputSize/2}" r="${outputSize/2}" fill="white"/>
+          </svg>`
+        ),
+        blend: 'over'
+      },
+      // The circular photo on top
+      {
+        input: circularPhoto,
+        left: borderWidth,
+        top: borderWidth,
+        blend: 'over'
+      }
+    ])
     .png()
     .toFile(outputPath);
   
-  console.log(`✓ Circular profile image saved to: ${outputPath}`);
+  console.log(`✓ Circular profile image with white border saved to: ${outputPath}`);
 }
 
 createCircularProfile().catch(err => {
