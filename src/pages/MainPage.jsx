@@ -112,14 +112,14 @@ const MinimalPortfolio = () => {
         <meta property="og:url" content="https://www.ranvirdeshmukh.com/" />
         <meta property="og:title" content="Ranvir Deshmukh" />
         <meta property="og:description" content="Personal website of Ranvir Deshmukh - Building RealPact." />
-        <meta property="og:image" content="https://www.ranvirdeshmukh.com/profile.jpg" />
+        <meta property="og:image" content="https://www.ranvirdeshmukh.com/profile-circle.png" />
         
         {/* Twitter */}
         <meta property="twitter:card" content="summary_large_image" />
         <meta property="twitter:url" content="https://www.ranvirdeshmukh.com/" />
         <meta property="twitter:title" content="Ranvir Deshmukh" />
         <meta property="twitter:description" content="Personal website of Ranvir Deshmukh - Building RealPact." />
-        <meta property="twitter:image" content="https://www.ranvirdeshmukh.com/profile.jpg" />
+        <meta property="twitter:image" content="https://www.ranvirdeshmukh.com/profile-circle.png" />
         
         {/* Custom CSS for enhanced responsive design and link hover effects */}
         <style>{`
