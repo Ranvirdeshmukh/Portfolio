@@ -86,7 +86,7 @@ const HiddenImagePage = () => {
              onClick={() => trackEvent('Profile', 'ImageClick', 'ProfileImageClicked')}>
           <div style={circleContainerStyle}>
             <img 
-              src="/profile.jpg" 
+              src="/profile-circle.png" 
               alt="Ranvir Deshmukh Profile" 
               style={imageStyle}
               onLoad={() => trackEvent('Profile', 'ImageLoaded', 'ProfileImageLoaded')}

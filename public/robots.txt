@@ -1,7 +1,9 @@
 # https://www.robotstxt.org/robotstxt.html
 User-agent: *
 Disallow: /image-processor
+Disallow: /profile.jpg
 Allow: /profile-image
+Allow: /profile-circle.png
 Allow: /resume
 Allow: /
 
