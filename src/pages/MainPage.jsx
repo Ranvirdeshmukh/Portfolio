@@ -182,7 +182,7 @@ const MinimalPortfolio = () => {
           </p>
 
           <p style={paragraphStyle}>
-  I like keeping things simple—how I build and how I live. I just want to make useful things.
+  I like keeping things simple—how I build and how I live. I just want to make useful things for people.
 </p>
 
           <p style={paragraphStyle}>
