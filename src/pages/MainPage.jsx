@@ -182,8 +182,8 @@ const MinimalPortfolio = () => {
           </p>
 
           <p style={paragraphStyle}>
-          I deeply care about the last 10%: polish, clarity, and the “this just works” feeling.
-          </p>
+  I like keeping things simple—how I build and how I live. I just want to make useful things.
+</p>
 
           <p style={paragraphStyle}>
             Some other widely used tools I've made include <a href="https://courseme.ai" target="_blank" rel="noopener noreferrer" style={linkStyle}>CourseMe</a> and <a href="https://signpact.ai/" target="_blank" rel="noopener noreferrer" style={linkStyle}>SignPact</a>.
