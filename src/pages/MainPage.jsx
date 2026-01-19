@@ -54,11 +54,7 @@ const MinimalPortfolio = () => {
     color: '#1d1d1f',
     textDecoration: 'none',
     borderBottom: '1px solid transparent',
-    transition: 'border-bottom-color 0.2s ease',
-    // Add hover effect via pseudo-class
-    ':hover': {
-      borderBottomColor: '#1d1d1f'
-    }
+    transition: 'border-bottom-color 0.2s ease'
   };
 
   // Social links with better spacing
@@ -97,30 +93,30 @@ const MinimalPortfolio = () => {
     <>
       <Helmet>
         <title>Ranvir Deshmukh</title>
-        <meta name="description" content="Personal website of Ranvir Deshmukh - Building RealPact. AI native OS for real estate." />
+        <meta name="description" content="Personal website of Ranvir Deshmukh - Building RealPact. AI-native OS for real estate." />
         <meta name="keywords" content="Ranvir Deshmukh, software developer, RealPact, CourseMe, portfolio, computer science" />
         <meta name="author" content="Ranvir Deshmukh" />
-        
+
         {/* Viewport meta for responsive design */}
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        
+
         {/* Canonical URL */}
         <link rel="canonical" href="https://www.ranvirdeshmukh.com/" />
-        
+
         {/* Open Graph / Facebook */}
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://www.ranvirdeshmukh.com/" />
         <meta property="og:title" content="Ranvir Deshmukh" />
-        <meta property="og:description" content="Personal website of Ranvir Deshmukh - Building RealPact." />
+        <meta property="og:description" content="Personal website of Ranvir Deshmukh - Building RealPact. AI-native OS for real estate." />
         <meta property="og:image" content="https://www.ranvirdeshmukh.com/profile-circle.png" />
-        
+
         {/* Twitter */}
         <meta property="twitter:card" content="summary_large_image" />
         <meta property="twitter:url" content="https://www.ranvirdeshmukh.com/" />
         <meta property="twitter:title" content="Ranvir Deshmukh" />
-        <meta property="twitter:description" content="Personal website of Ranvir Deshmukh - Building RealPact." />
+        <meta property="twitter:description" content="Personal website of Ranvir Deshmukh - Building RealPact. AI-native OS for real estate." />
         <meta property="twitter:image" content="https://www.ranvirdeshmukh.com/profile-circle.png" />
-        
+
         {/* Custom CSS for enhanced responsive design and link hover effects */}
         <style>{`
           /* Global optimizations */
@@ -172,18 +168,18 @@ const MinimalPortfolio = () => {
           }
         `}</style>
       </Helmet>
-      
+
       <div style={containerStyle}>
         <div style={contentStyle}>
           <h1 style={headingStyle}>Ranvir Deshmukh</h1>
-          
+
           <p style={paragraphStyle}>
-            I am currently building <a href="https://realpact.ai" target="_blank" rel="noopener noreferrer" style={linkStyle}>RealPact</a> — an AI-native operating system for real estate brokerages, starting with contract automation.
+            I am currently building <a href="https://realpact.ai" target="_blank" rel="noopener noreferrer" style={linkStyle}>RealPact</a>—an AI-native operating system for real estate brokerages, starting with contract automation.
           </p>
 
           <p style={paragraphStyle}>
-  I like keeping things simple—how I build and how I live. I just want to make useful things for people.
-</p>
+            I like keeping things simple—how I build and how I live. I just want to make useful things for people.
+          </p>
 
           <p style={paragraphStyle}>
             Some other widely used tools I've made include <a href="https://courseme.ai" target="_blank" rel="noopener noreferrer" style={linkStyle}>CourseMe</a> and <a href="https://signpact.ai/" target="_blank" rel="noopener noreferrer" style={linkStyle}>SignPact</a>.
@@ -196,7 +192,7 @@ const MinimalPortfolio = () => {
           <p style={socialLinksStyle}>
             You can find my experiences on <a href="https://www.linkedin.com/in/ranvir-deshmukh-209706199/" target="_blank" rel="noopener noreferrer" style={linkStyle}>LinkedIn</a>, my thoughts on <a href="https://x.com/ranvirdeshmukh_" target="_blank" rel="noopener noreferrer" style={linkStyle}>X</a>, and my code on <a href="https://github.com/Ranvirdeshmukh" target="_blank" rel="noopener noreferrer" style={linkStyle}>GitHub</a>.
           </p>
-          
+
           <div style={logoStyle}>
             {"/>"}
           </div>
