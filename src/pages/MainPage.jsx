@@ -16,8 +16,8 @@ const MinimalPortfolio = () => {
     fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", system-ui, sans-serif',
     lineHeight: '1.68',
     color: '#1d1d1f',
-    // Very subtle off-white to match body
-    backgroundColor: '#fcfcfc',
+    // Apple's signature light gray background
+    backgroundColor: '#f5f5f7',
     textAlign: 'left',
     // Mobile-first responsive padding - balanced vertical positioning
     padding: 'clamp(64px, 12vh, 100px) clamp(20px, 5vw, 120px) clamp(32px, 6vh, 80px)',
@@ -131,8 +131,8 @@ const MinimalPortfolio = () => {
             /* Font smoothing for crisp text */
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
-            /* Subtle off-white background for less eye strain */
-            background-color: #fcfcfc; 
+            /* Apple's signature light gray background */
+            background-color: #f5f5f7; 
           }
           
           /* Elegant selection color */
