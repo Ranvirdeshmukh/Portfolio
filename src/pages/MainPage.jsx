@@ -52,9 +52,7 @@ const MinimalPortfolio = () => {
   // Refined link styling
   const linkStyle = {
     color: '#1d1d1f',
-    textDecoration: 'none',
-    position: 'relative',
-    display: 'inline',
+    textDecoration: 'none'
   };
 
   // Social links with better spacing
@@ -142,25 +140,13 @@ const MinimalPortfolio = () => {
           }
           
           a {
-            text-decoration: none;
-            position: relative;
+            border-bottom: 1px solid transparent;
+            transition: border-bottom-color 0.2s ease, color 0.2s ease, opacity 0.2s ease;
           }
           
-          a::after {
-            content: '';
-            position: absolute;
-            left: 0;
-            bottom: -1px;
-            width: 100%;
-            height: 1px;
-            background-color: currentColor;
-            transform: scaleX(0);
-            transform-origin: left;
-            transition: transform 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
-          }
-          
-          a:hover::after {
-            transform: scaleX(1);
+          a:hover {
+            border-bottom-color: #1d1d1f;
+            opacity: 0.8;
           }
           
           /* Ensure smooth scrolling */
