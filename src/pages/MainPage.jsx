@@ -4,7 +4,7 @@ Use of this source code is governed by a MIT-style license that can be found
 in the LICENSE file or at https://opensource.org/licenses/MIT.
 */
 
-import React, { useState, useRef, useCallback } from 'react';
+import React, { useState, useRef, useCallback, useEffect } from 'react';
 import { Helmet } from 'react-helmet';
 
 const MinimalPortfolio = () => {
@@ -19,6 +19,27 @@ const MinimalPortfolio = () => {
   const handleMouseLeave = useCallback(() => {
     hideTimeout.current = setTimeout(() => setShowCourseMe(false), 150);
   }, []);
+
+  const wrapperRef = useRef(null);
+
+  const handleCourseMeClick = useCallback((e) => {
+    if ('ontouchstart' in window && !showCourseMe) {
+      e.preventDefault();
+      setShowCourseMe(true);
+    }
+  }, [showCourseMe]);
+
+  useEffect(() => {
+    if (!showCourseMe) return;
+    const handleOutside = (e) => {
+      if (wrapperRef.current && !wrapperRef.current.contains(e.target)) {
+        setShowCourseMe(false);
+      }
+    };
+    document.addEventListener('pointerdown', handleOutside);
+    return () => document.removeEventListener('pointerdown', handleOutside);
+  }, [showCourseMe]);
+
   // Base container with responsive design
   const containerStyle = {
     maxWidth: '780px',
@@ -267,6 +288,25 @@ const MinimalPortfolio = () => {
             border-bottom: none !important;
             opacity: 1 !important;
           }
+
+          @media (max-width: 600px) {
+            .tooltip-card {
+              white-space: normal !important;
+              padding: 16px 18px 14px !important;
+              border-radius: 12px !important;
+              width: calc(100vw - 48px) !important;
+              max-width: 260px !important;
+            }
+            .tooltip-stats-row {
+              gap: 16px !important;
+            }
+            .tooltip-stat-number {
+              font-size: 18px !important;
+            }
+            .tooltip-stat-label {
+              font-size: 11px !important;
+            }
+          }
         `}</style>
       </Helmet>
 
@@ -285,25 +325,26 @@ const MinimalPortfolio = () => {
           <p style={paragraphStyle}>
             Before this, I made{' '}
             <span
+              ref={wrapperRef}
               style={tooltipWrapperStyle}
               onMouseEnter={handleMouseEnter}
               onMouseLeave={handleMouseLeave}
             >
-              <a href="https://courseme.ai" target="_blank" rel="noopener noreferrer" style={linkStyle}>CourseMe</a>
-              <span style={tooltipCardStyle} role="tooltip">
-                <span style={tooltipArrowStyle} />
-                <span style={tooltipStatsRowStyle}>
+              <a href="https://courseme.ai" target="_blank" rel="noopener noreferrer" style={linkStyle} onClick={handleCourseMeClick}>CourseMe</a>
+              <span style={tooltipCardStyle} role="tooltip" className="tooltip-card">
+                <span style={tooltipArrowStyle} className="tooltip-arrow" />
+                <span style={tooltipStatsRowStyle} className="tooltip-stats-row">
                   <span style={tooltipStatStyle}>
-                    <span style={tooltipStatNumberStyle}>4,000+</span>
-                    <span style={tooltipStatLabelStyle}>Dartmouth students</span>
+                    <span style={tooltipStatNumberStyle} className="tooltip-stat-number">4,000+</span>
+                    <span style={tooltipStatLabelStyle} className="tooltip-stat-label">Dartmouth students</span>
                   </span>
                   <span style={tooltipStatStyle}>
-                    <span style={tooltipStatNumberStyle}>1M+</span>
-                    <span style={tooltipStatLabelStyle}>page views</span>
+                    <span style={tooltipStatNumberStyle} className="tooltip-stat-number">1M+</span>
+                    <span style={tooltipStatLabelStyle} className="tooltip-stat-label">page views</span>
                   </span>
                   <span style={tooltipStatStyle}>
-                    <span style={tooltipStatNumberStyle}>~90%</span>
-                    <span style={tooltipStatLabelStyle}>of campus monthly</span>
+                    <span style={tooltipStatNumberStyle} className="tooltip-stat-number">~90%</span>
+                    <span style={tooltipStatLabelStyle} className="tooltip-stat-label">of campus monthly</span>
                   </span>
                 </span>
                 <hr style={tooltipDividerStyle} />
