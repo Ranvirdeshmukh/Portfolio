@@ -126,35 +126,35 @@ const MinimalPortfolio = () => {
 
   const tooltipCardStyle = {
     position: 'absolute',
-    top: 'calc(100% + 14px)',
+    top: 'calc(100% + 10px)',
     left: '50%',
-    transform: showCourseMe ? 'translateX(-50%) translateY(0)' : 'translateX(-50%) translateY(6px)',
+    transform: showCourseMe ? 'translateX(-50%) translateY(0)' : 'translateX(-50%) translateY(4px)',
     backgroundColor: '#ffffff',
-    borderRadius: '16px',
-    padding: '24px 28px 20px',
-    boxShadow: '0 8px 40px rgba(0, 0, 0, 0.12), 0 2px 8px rgba(0, 0, 0, 0.06)',
+    borderRadius: '12px',
+    padding: '16px 20px 14px',
+    boxShadow: '0 4px 24px rgba(0, 0, 0, 0.08), 0 1px 4px rgba(0, 0, 0, 0.04)',
     zIndex: 10,
     opacity: showCourseMe ? 1 : 0,
     pointerEvents: showCourseMe ? 'auto' : 'none',
-    transition: 'opacity 0.25s ease, transform 0.25s ease',
+    transition: 'opacity 0.2s ease, transform 0.2s ease',
     whiteSpace: 'nowrap'
   };
 
   const tooltipArrowStyle = {
     position: 'absolute',
-    top: '-6px',
+    top: '-5px',
     left: '50%',
     transform: 'translateX(-50%) rotate(45deg)',
-    width: '12px',
-    height: '12px',
+    width: '10px',
+    height: '10px',
     backgroundColor: '#ffffff',
-    boxShadow: '-2px -2px 4px rgba(0, 0, 0, 0.04)',
+    boxShadow: '-2px -2px 4px rgba(0, 0, 0, 0.03)',
     borderRadius: '2px'
   };
 
   const tooltipStatsRowStyle = {
     display: 'flex',
-    gap: '28px',
+    gap: '20px',
     alignItems: 'flex-start'
   };
 
@@ -165,20 +165,20 @@ const MinimalPortfolio = () => {
   };
 
   const tooltipStatNumberStyle = {
-    fontSize: '22px',
+    fontSize: '17px',
     fontWeight: '600',
     color: '#1d1d1f',
-    letterSpacing: '-0.03em',
+    letterSpacing: '-0.02em',
     lineHeight: '1.2',
     margin: 0
   };
 
   const tooltipStatLabelStyle = {
-    fontSize: '12px',
+    fontSize: '11px',
     fontWeight: '400',
     color: '#9ca3af',
     lineHeight: '1.4',
-    marginTop: '3px',
+    marginTop: '2px',
     letterSpacing: '0.01em'
   };
 
@@ -186,12 +186,12 @@ const MinimalPortfolio = () => {
     width: '100%',
     height: '1px',
     backgroundColor: '#f0f0f0',
-    margin: '16px 0 14px',
+    margin: '12px 0 10px',
     border: 'none'
   };
 
   const tooltipLinkStyle = {
-    fontSize: '13px',
+    fontSize: '12px',
     fontWeight: '500',
     color: '#9ca3af',
     textDecoration: 'none',
@@ -292,19 +292,19 @@ const MinimalPortfolio = () => {
           @media (max-width: 600px) {
             .tooltip-card {
               white-space: normal !important;
-              padding: 16px 18px 14px !important;
-              border-radius: 12px !important;
+              padding: 14px 16px 12px !important;
+              border-radius: 10px !important;
               width: calc(100vw - 48px) !important;
-              max-width: 260px !important;
+              max-width: 240px !important;
             }
             .tooltip-stats-row {
-              gap: 16px !important;
+              gap: 14px !important;
             }
             .tooltip-stat-number {
-              font-size: 18px !important;
+              font-size: 15px !important;
             }
             .tooltip-stat-label {
-              font-size: 11px !important;
+              font-size: 10px !important;
             }
           }
         `}</style>
