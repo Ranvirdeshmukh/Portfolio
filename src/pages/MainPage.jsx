@@ -4,10 +4,21 @@ Use of this source code is governed by a MIT-style license that can be found
 in the LICENSE file or at https://opensource.org/licenses/MIT.
 */
 
-import React from 'react';
+import React, { useState, useRef, useCallback } from 'react';
 import { Helmet } from 'react-helmet';
 
 const MinimalPortfolio = () => {
+  const [showCourseMe, setShowCourseMe] = useState(false);
+  const hideTimeout = useRef(null);
+
+  const handleMouseEnter = useCallback(() => {
+    clearTimeout(hideTimeout.current);
+    setShowCourseMe(true);
+  }, []);
+
+  const handleMouseLeave = useCallback(() => {
+    hideTimeout.current = setTimeout(() => setShowCourseMe(false), 150);
+  }, []);
   // Base container with responsive design
   const containerStyle = {
     maxWidth: '780px',
@@ -85,6 +96,88 @@ const MinimalPortfolio = () => {
     maxWidth: '100%',
     wordBreak: 'break-word',
     overflowWrap: 'break-word'
+  };
+
+  const tooltipWrapperStyle = {
+    position: 'relative',
+    display: 'inline-block'
+  };
+
+  const tooltipCardStyle = {
+    position: 'absolute',
+    top: 'calc(100% + 14px)',
+    left: '50%',
+    transform: showCourseMe ? 'translateX(-50%) translateY(0)' : 'translateX(-50%) translateY(6px)',
+    backgroundColor: '#ffffff',
+    borderRadius: '16px',
+    padding: '24px 28px 20px',
+    boxShadow: '0 8px 40px rgba(0, 0, 0, 0.12), 0 2px 8px rgba(0, 0, 0, 0.06)',
+    zIndex: 10,
+    opacity: showCourseMe ? 1 : 0,
+    pointerEvents: showCourseMe ? 'auto' : 'none',
+    transition: 'opacity 0.25s ease, transform 0.25s ease',
+    whiteSpace: 'nowrap'
+  };
+
+  const tooltipArrowStyle = {
+    position: 'absolute',
+    top: '-6px',
+    left: '50%',
+    transform: 'translateX(-50%) rotate(45deg)',
+    width: '12px',
+    height: '12px',
+    backgroundColor: '#ffffff',
+    boxShadow: '-2px -2px 4px rgba(0, 0, 0, 0.04)',
+    borderRadius: '2px'
+  };
+
+  const tooltipStatsRowStyle = {
+    display: 'flex',
+    gap: '28px',
+    alignItems: 'flex-start'
+  };
+
+  const tooltipStatStyle = {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'flex-start'
+  };
+
+  const tooltipStatNumberStyle = {
+    fontSize: '22px',
+    fontWeight: '600',
+    color: '#1d1d1f',
+    letterSpacing: '-0.03em',
+    lineHeight: '1.2',
+    margin: 0
+  };
+
+  const tooltipStatLabelStyle = {
+    fontSize: '12px',
+    fontWeight: '400',
+    color: '#9ca3af',
+    lineHeight: '1.4',
+    marginTop: '3px',
+    letterSpacing: '0.01em'
+  };
+
+  const tooltipDividerStyle = {
+    width: '100%',
+    height: '1px',
+    backgroundColor: '#f0f0f0',
+    margin: '16px 0 14px',
+    border: 'none'
+  };
+
+  const tooltipLinkStyle = {
+    fontSize: '13px',
+    fontWeight: '500',
+    color: '#9ca3af',
+    textDecoration: 'none',
+    display: 'inline-block',
+    borderBottom: 'none',
+    transition: 'color 0.2s ease',
+    letterSpacing: '0.01em'
   };
 
   return (
@@ -165,6 +258,15 @@ const MinimalPortfolio = () => {
             from { opacity: 0; }
             to { opacity: 1; }
           }
+
+          .tooltip-visit-link {
+            border-bottom: none !important;
+          }
+          .tooltip-visit-link:hover {
+            color: #1d1d1f !important;
+            border-bottom: none !important;
+            opacity: 1 !important;
+          }
         `}</style>
       </Helmet>
 
@@ -181,7 +283,42 @@ const MinimalPortfolio = () => {
           </p>
 
           <p style={paragraphStyle}>
-            Before this, I made <a href="https://courseme.ai" target="_blank" rel="noopener noreferrer" style={linkStyle}>CourseMe</a> — used by 4,000+ students at Dartmouth, with 1M+ page views since launch — and <a href="https://signpact.ai/" target="_blank" rel="noopener noreferrer" style={linkStyle}>SignPact</a>, which later evolved into RealPact.
+            Before this, I made{' '}
+            <span
+              style={tooltipWrapperStyle}
+              onMouseEnter={handleMouseEnter}
+              onMouseLeave={handleMouseLeave}
+            >
+              <a href="https://courseme.ai" target="_blank" rel="noopener noreferrer" style={linkStyle}>CourseMe</a>
+              <span style={tooltipCardStyle} role="tooltip">
+                <span style={tooltipArrowStyle} />
+                <span style={tooltipStatsRowStyle}>
+                  <span style={tooltipStatStyle}>
+                    <span style={tooltipStatNumberStyle}>4,000+</span>
+                    <span style={tooltipStatLabelStyle}>Dartmouth students</span>
+                  </span>
+                  <span style={tooltipStatStyle}>
+                    <span style={tooltipStatNumberStyle}>1M+</span>
+                    <span style={tooltipStatLabelStyle}>page views</span>
+                  </span>
+                  <span style={tooltipStatStyle}>
+                    <span style={tooltipStatNumberStyle}>~90%</span>
+                    <span style={tooltipStatLabelStyle}>of campus monthly</span>
+                  </span>
+                </span>
+                <hr style={tooltipDividerStyle} />
+                <a
+                  href="https://courseme.ai"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={tooltipLinkStyle}
+                  className="tooltip-visit-link"
+                >
+                  Visit CourseMe &#8594;
+                </a>
+              </span>
+            </span>{' '}
+            and <a href="https://signpact.ai/" target="_blank" rel="noopener noreferrer" style={linkStyle}>SignPact</a>, which later evolved into RealPact.
           </p>
 
           <p style={paragraphStyle}>
