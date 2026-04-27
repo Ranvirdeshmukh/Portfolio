@@ -205,7 +205,7 @@ const MinimalPortfolio = () => {
     <>
       <Helmet>
         <title>Ranvir Deshmukh</title>
-        <meta name="description" content="I'm currently building RealPact, a company creating an AI-native operating system for real estate brokerages, starting with contract automation. I like keeping things simple—how I build and how I live. I just want to make useful things for people." />
+        <meta name="description" content="I'm currently building RealPact, a company making real estate transactions run on AI, starting with contract automation for brokerages. I like keeping things simple—how I build and how I live. I just want to make useful things for people." />
         <meta name="keywords" content="Ranvir Deshmukh, software developer, RealPact, CourseMe, portfolio, computer science" />
         <meta name="author" content="Ranvir Deshmukh" />
 
@@ -219,14 +219,14 @@ const MinimalPortfolio = () => {
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://www.ranvirdeshmukh.com/" />
         <meta property="og:title" content="Ranvir Deshmukh" />
-        <meta property="og:description" content="I'm currently building RealPact, a company creating an AI-native operating system for real estate brokerages, starting with contract automation. I like keeping things simple—how I build and how I live. I just want to make useful things for people." />
+        <meta property="og:description" content="I'm currently building RealPact, a company making real estate transactions run on AI, starting with contract automation for brokerages. I like keeping things simple—how I build and how I live. I just want to make useful things for people." />
         <meta property="og:image" content="https://www.ranvirdeshmukh.com/profile-circle.png" />
 
         {/* Twitter */}
         <meta property="twitter:card" content="summary_large_image" />
         <meta property="twitter:url" content="https://www.ranvirdeshmukh.com/" />
         <meta property="twitter:title" content="Ranvir Deshmukh" />
-        <meta property="twitter:description" content="I'm currently building RealPact, a company creating an AI-native operating system for real estate brokerages, starting with contract automation. I like keeping things simple—how I build and how I live. I just want to make useful things for people." />
+        <meta property="twitter:description" content="I'm currently building RealPact, a company making real estate transactions run on AI, starting with contract automation for brokerages. I like keeping things simple—how I build and how I live. I just want to make useful things for people." />
         <meta property="twitter:image" content="https://www.ranvirdeshmukh.com/profile-circle.png" />
 
         {/* Custom CSS for enhanced responsive design and link hover effects */}
@@ -315,7 +315,7 @@ const MinimalPortfolio = () => {
           <h1 style={headingStyle}>Ranvir Deshmukh</h1>
 
           <p style={paragraphStyle}>
-            I'm currently building <a href="https://realpact.ai" target="_blank" rel="noopener noreferrer" style={linkStyle}>RealPact</a>, a company creating an AI-native operating system for real estate brokerages, starting with contract automation.
+            I'm currently building <a href="https://realpact.ai" target="_blank" rel="noopener noreferrer" style={linkStyle}>RealPact</a>, a company making real estate transactions run on AI, starting with contract automation for brokerages.
           </p>
 
           <p style={paragraphStyle}>
