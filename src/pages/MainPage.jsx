@@ -367,7 +367,7 @@ const MinimalPortfolio = () => {
           </p>
 
           <p style={socialLinksStyle}>
-            You can find my work on <a href="https://www.linkedin.com/in/ranvir-deshmukh-209706199/" target="_blank" rel="noopener noreferrer" style={linkStyle}>LinkedIn</a>, my thoughts on <a href="https://x.com/ranvirdeshmukh_" target="_blank" rel="noopener noreferrer" style={linkStyle}>X</a>, and my code on <a href="https://github.com/Ranvirdeshmukh" target="_blank" rel="noopener noreferrer" style={linkStyle}>GitHub</a>.
+            You can find my work on <a href="https://www.linkedin.com/in/ranvirdeshmukh" target="_blank" rel="noopener noreferrer" style={linkStyle}>LinkedIn</a>, my thoughts on <a href="https://x.com/ranvirdeshmukh_" target="_blank" rel="noopener noreferrer" style={linkStyle}>X</a>, and my code on <a href="https://github.com/Ranvirdeshmukh" target="_blank" rel="noopener noreferrer" style={linkStyle}>GitHub</a>.
           </p>
 
           <div style={logoStyle}>
