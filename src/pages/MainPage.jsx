@@ -363,7 +363,7 @@ const MinimalPortfolio = () => {
           </p>
 
           <p style={paragraphStyle}>
-            Occasionally, I make <a href="https://www.youtube.com/watch?v=4FNZafeLKlY" target="_blank" rel="noopener noreferrer" style={linkStyle}>videos</a> too.
+            Occasionally, I make <a href="https://youtu.be/IIdx9qdP0bU?si=iNvEc8qvX0FP7CGI" target="_blank" rel="noopener noreferrer" style={linkStyle}>videos</a> too.
           </p>
 
           <p style={socialLinksStyle}>
