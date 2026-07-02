@@ -96,7 +96,7 @@ const HiddenImagePage = () => {
         <div style={{ display: 'none' }}>
           <h1>Ranvir Deshmukh</h1>
           <p>Software Developer and Video Creator at Dartmouth College</p>
-          <p>Building CourseMe and creating educational content</p>
+          <p>I'm working on CourseMe and creating educational content</p>
           <p>This is the official profile image of Ranvir Deshmukh, a software developer and computer science student at Dartmouth College.</p>
           <p>Connect with me on LinkedIn: Ranvir Deshmukh</p>
           <p>Check out my projects on GitHub: RanvirDeshmukh</p>

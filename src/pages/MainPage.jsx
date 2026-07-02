@@ -315,7 +315,7 @@ const MinimalPortfolio = () => {
           <h1 style={headingStyle}>Ranvir Deshmukh</h1>
 
           <p style={paragraphStyle}>
-            I'm currently building <a href="https://realpact.ai" target="_blank" rel="noopener noreferrer" style={linkStyle}>RealPact</a>, a company making real estate transactions run on AI, starting with contract automation for brokerages.
+            I'm currently working on <a href="https://realpact.ai" target="_blank" rel="noopener noreferrer" style={linkStyle}>RealPact</a>, a company making real estate transactions run on AI, starting with contract automation for brokerages.
           </p>
 
           <p style={paragraphStyle}>
